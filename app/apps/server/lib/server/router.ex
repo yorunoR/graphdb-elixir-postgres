@@ -66,8 +66,8 @@ defmodule Server.Router do
   scope "/", Server do
     pipe_through [:browser, :redirect_if_admin_user_is_authenticated]
 
-    get "/admin_users/register", AdminUserRegistrationController, :new
-    post "/admin_users/register", AdminUserRegistrationController, :create
+    # get "/admin_users/register", AdminUserRegistrationController, :new
+    # post "/admin_users/register", AdminUserRegistrationController, :create
     get "/admin_users/log_in", AdminUserSessionController, :new
     post "/admin_users/log_in", AdminUserSessionController, :create
     get "/admin_users/reset_password", AdminUserResetPasswordController, :new
