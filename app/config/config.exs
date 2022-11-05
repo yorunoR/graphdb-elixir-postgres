@@ -28,8 +28,8 @@ config :u7406, U7406.Mailer, adapter: Swoosh.Adapters.Local
 config :swoosh, :api_client, false
 
 config :server,
-  ecto_repos: [Server.Repo],
-  generators: [context_app: false]
+  ecto_repos: [U7406.Repo],
+  generators: [context_app: :u7406]
 
 # Configures the endpoint
 config :server, Server.Endpoint,
