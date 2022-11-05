@@ -30,7 +30,10 @@ defmodule Server.AdminUserConfirmationControllerTest do
       assert Repo.get_by!(Admin.AdminUserToken, admin_user_id: admin_user.id).context == "confirm"
     end
 
-    test "does not send confirmation token if Admin user is confirmed", %{conn: conn, admin_user: admin_user} do
+    test "does not send confirmation token if Admin user is confirmed", %{
+      conn: conn,
+      admin_user: admin_user
+    } do
       Repo.update!(Admin.AdminUser.confirm_changeset(admin_user))
 
       conn =
@@ -83,7 +86,9 @@ defmodule Server.AdminUserConfirmationControllerTest do
       # When not logged in
       conn = post(conn, Routes.admin_user_confirmation_path(conn, :update, token))
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :error) =~ "Admin user confirmation link is invalid or it has expired"
+
+      assert get_flash(conn, :error) =~
+               "Admin user confirmation link is invalid or it has expired"
 
       # When logged in
       conn =
@@ -98,7 +103,10 @@ defmodule Server.AdminUserConfirmationControllerTest do
     test "does not confirm email with invalid token", %{conn: conn, admin_user: admin_user} do
       conn = post(conn, Routes.admin_user_confirmation_path(conn, :update, "oops"))
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :error) =~ "Admin user confirmation link is invalid or it has expired"
+
+      assert get_flash(conn, :error) =~
+               "Admin user confirmation link is invalid or it has expired"
+
       refute Admin.get_admin_user!(admin_user.id).confirmed_at
     end
   end

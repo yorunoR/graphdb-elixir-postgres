@@ -13,7 +13,11 @@ defmodule Server.AdminUserRegistrationControllerTest do
     end
 
     test "redirects if already logged in", %{conn: conn} do
-      conn = conn |> log_in_admin_user(admin_user_fixture()) |> get(Routes.admin_user_registration_path(conn, :new))
+      conn =
+        conn
+        |> log_in_admin_user(admin_user_fixture())
+        |> get(Routes.admin_user_registration_path(conn, :new))
+
       assert redirected_to(conn) == "/"
     end
   end

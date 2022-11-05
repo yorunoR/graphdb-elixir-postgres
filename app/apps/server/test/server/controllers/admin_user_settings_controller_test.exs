@@ -21,7 +21,10 @@ defmodule Server.AdminUserSettingsControllerTest do
   end
 
   describe "PUT /admin_users/settings (change password form)" do
-    test "updates the admin_user password and resets tokens", %{conn: conn, admin_user: admin_user} do
+    test "updates the admin_user password and resets tokens", %{
+      conn: conn,
+      admin_user: admin_user
+    } do
       new_password_conn =
         put(conn, Routes.admin_user_settings_path(conn, :update), %{
           "action" => "update_password",
@@ -33,7 +36,10 @@ defmodule Server.AdminUserSettingsControllerTest do
         })
 
       assert redirected_to(new_password_conn) == Routes.admin_user_settings_path(conn, :edit)
-      assert get_session(new_password_conn, :admin_user_token) != get_session(conn, :admin_user_token)
+
+      assert get_session(new_password_conn, :admin_user_token) !=
+               get_session(conn, :admin_user_token)
+
       assert get_flash(new_password_conn, :info) =~ "Password updated successfully"
       assert Admin.get_admin_user_by_email_and_password(admin_user.email, "new valid password")
     end
@@ -55,7 +61,8 @@ defmodule Server.AdminUserSettingsControllerTest do
       assert response =~ "does not match password"
       assert response =~ "is not valid"
 
-      assert get_session(old_password_conn, :admin_user_token) == get_session(conn, :admin_user_token)
+      assert get_session(old_password_conn, :admin_user_token) ==
+               get_session(conn, :admin_user_token)
     end
   end
 
@@ -95,13 +102,22 @@ defmodule Server.AdminUserSettingsControllerTest do
 
       token =
         extract_admin_user_token(fn url ->
-          Admin.deliver_update_email_instructions(%{admin_user | email: email}, admin_user.email, url)
+          Admin.deliver_update_email_instructions(
+            %{admin_user | email: email},
+            admin_user.email,
+            url
+          )
         end)
 
       %{token: token, email: email}
     end
 
-    test "updates the admin_user email once", %{conn: conn, admin_user: admin_user, token: token, email: email} do
+    test "updates the admin_user email once", %{
+      conn: conn,
+      admin_user: admin_user,
+      token: token,
+      email: email
+    } do
       conn = get(conn, Routes.admin_user_settings_path(conn, :confirm_email, token))
       assert redirected_to(conn) == Routes.admin_user_settings_path(conn, :edit)
       assert get_flash(conn, :info) =~ "Email changed successfully"

@@ -154,7 +154,10 @@ defmodule U7406.Admin do
 
     Ecto.Multi.new()
     |> Ecto.Multi.update(:admin_user, changeset)
-    |> Ecto.Multi.delete_all(:tokens, AdminUserToken.admin_user_and_contexts_query(admin_user, [context]))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdminUserToken.admin_user_and_contexts_query(admin_user, [context])
+    )
   end
 
   @doc """
@@ -166,12 +169,21 @@ defmodule U7406.Admin do
       {:ok, %{to: ..., body: ...}}
 
   """
-  def deliver_update_email_instructions(%AdminUser{} = admin_user, current_email, update_email_url_fun)
+  def deliver_update_email_instructions(
+        %AdminUser{} = admin_user,
+        current_email,
+        update_email_url_fun
+      )
       when is_function(update_email_url_fun, 1) do
-    {encoded_token, admin_user_token} = AdminUserToken.build_email_token(admin_user, "change:#{current_email}")
+    {encoded_token, admin_user_token} =
+      AdminUserToken.build_email_token(admin_user, "change:#{current_email}")
 
     Repo.insert!(admin_user_token)
-    AdminUserNotifier.deliver_update_email_instructions(admin_user, update_email_url_fun.(encoded_token))
+
+    AdminUserNotifier.deliver_update_email_instructions(
+      admin_user,
+      update_email_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -207,7 +219,10 @@ defmodule U7406.Admin do
 
     Ecto.Multi.new()
     |> Ecto.Multi.update(:admin_user, changeset)
-    |> Ecto.Multi.delete_all(:tokens, AdminUserToken.admin_user_and_contexts_query(admin_user, :all))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdminUserToken.admin_user_and_contexts_query(admin_user, :all)
+    )
     |> Repo.transaction()
     |> case do
       {:ok, %{admin_user: admin_user}} -> {:ok, admin_user}
@@ -256,14 +271,21 @@ defmodule U7406.Admin do
       {:error, :already_confirmed}
 
   """
-  def deliver_admin_user_confirmation_instructions(%AdminUser{} = admin_user, confirmation_url_fun)
+  def deliver_admin_user_confirmation_instructions(
+        %AdminUser{} = admin_user,
+        confirmation_url_fun
+      )
       when is_function(confirmation_url_fun, 1) do
     if admin_user.confirmed_at do
       {:error, :already_confirmed}
     else
       {encoded_token, admin_user_token} = AdminUserToken.build_email_token(admin_user, "confirm")
       Repo.insert!(admin_user_token)
-      AdminUserNotifier.deliver_confirmation_instructions(admin_user, confirmation_url_fun.(encoded_token))
+
+      AdminUserNotifier.deliver_confirmation_instructions(
+        admin_user,
+        confirmation_url_fun.(encoded_token)
+      )
     end
   end
 
@@ -276,7 +298,8 @@ defmodule U7406.Admin do
   def confirm_admin_user(token) do
     with {:ok, query} <- AdminUserToken.verify_email_token_query(token, "confirm"),
          %AdminUser{} = admin_user <- Repo.one(query),
-         {:ok, %{admin_user: admin_user}} <- Repo.transaction(confirm_admin_user_multi(admin_user)) do
+         {:ok, %{admin_user: admin_user}} <-
+           Repo.transaction(confirm_admin_user_multi(admin_user)) do
       {:ok, admin_user}
     else
       _ -> :error
@@ -286,7 +309,10 @@ defmodule U7406.Admin do
   defp confirm_admin_user_multi(admin_user) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:admin_user, AdminUser.confirm_changeset(admin_user))
-    |> Ecto.Multi.delete_all(:tokens, AdminUserToken.admin_user_and_contexts_query(admin_user, ["confirm"]))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdminUserToken.admin_user_and_contexts_query(admin_user, ["confirm"])
+    )
   end
 
   ## Reset password
@@ -300,11 +326,20 @@ defmodule U7406.Admin do
       {:ok, %{to: ..., body: ...}}
 
   """
-  def deliver_admin_user_reset_password_instructions(%AdminUser{} = admin_user, reset_password_url_fun)
+  def deliver_admin_user_reset_password_instructions(
+        %AdminUser{} = admin_user,
+        reset_password_url_fun
+      )
       when is_function(reset_password_url_fun, 1) do
-    {encoded_token, admin_user_token} = AdminUserToken.build_email_token(admin_user, "reset_password")
+    {encoded_token, admin_user_token} =
+      AdminUserToken.build_email_token(admin_user, "reset_password")
+
     Repo.insert!(admin_user_token)
-    AdminUserNotifier.deliver_reset_password_instructions(admin_user, reset_password_url_fun.(encoded_token))
+
+    AdminUserNotifier.deliver_reset_password_instructions(
+      admin_user,
+      reset_password_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -343,7 +378,10 @@ defmodule U7406.Admin do
   def reset_admin_user_password(admin_user, attrs) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:admin_user, AdminUser.password_changeset(admin_user, attrs))
-    |> Ecto.Multi.delete_all(:tokens, AdminUserToken.admin_user_and_contexts_query(admin_user, :all))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdminUserToken.admin_user_and_contexts_query(admin_user, :all)
+    )
     |> Repo.transaction()
     |> case do
       {:ok, %{admin_user: admin_user}} -> {:ok, admin_user}

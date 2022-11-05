@@ -17,7 +17,9 @@ defmodule Server.AdminUserSessionControllerTest do
     end
 
     test "redirects if already logged in", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> log_in_admin_user(admin_user) |> get(Routes.admin_user_session_path(conn, :new))
+      conn =
+        conn |> log_in_admin_user(admin_user) |> get(Routes.admin_user_session_path(conn, :new))
+
       assert redirected_to(conn) == "/"
     end
   end
@@ -26,7 +28,10 @@ defmodule Server.AdminUserSessionControllerTest do
     test "logs the admin_user in", %{conn: conn, admin_user: admin_user} do
       conn =
         post(conn, Routes.admin_user_session_path(conn, :create), %{
-          "admin_user" => %{"email" => admin_user.email, "password" => valid_admin_user_password()}
+          "admin_user" => %{
+            "email" => admin_user.email,
+            "password" => valid_admin_user_password()
+          }
         })
 
       assert get_session(conn, :admin_user_token)
@@ -82,7 +87,11 @@ defmodule Server.AdminUserSessionControllerTest do
 
   describe "DELETE /admin_users/log_out" do
     test "logs the admin_user out", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> log_in_admin_user(admin_user) |> delete(Routes.admin_user_session_path(conn, :delete))
+      conn =
+        conn
+        |> log_in_admin_user(admin_user)
+        |> delete(Routes.admin_user_session_path(conn, :delete))
+
       assert redirected_to(conn) == "/"
       refute get_session(conn, :admin_user_token)
       assert get_flash(conn, :info) =~ "Logged out successfully"

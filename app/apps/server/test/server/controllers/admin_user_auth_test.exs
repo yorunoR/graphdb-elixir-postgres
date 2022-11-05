@@ -20,23 +20,41 @@ defmodule Server.AdminUserAuthTest do
     test "stores the admin_user token in the session", %{conn: conn, admin_user: admin_user} do
       conn = AdminUserAuth.log_in_admin_user(conn, admin_user)
       assert token = get_session(conn, :admin_user_token)
-      assert get_session(conn, :live_socket_id) == "admin_users_sessions:#{Base.url_encode64(token)}"
+
+      assert get_session(conn, :live_socket_id) ==
+               "admin_users_sessions:#{Base.url_encode64(token)}"
+
       assert redirected_to(conn) == "/"
       assert Admin.get_admin_user_by_session_token(token)
     end
 
-    test "clears everything previously stored in the session", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> put_session(:to_be_removed, "value") |> AdminUserAuth.log_in_admin_user(admin_user)
+    test "clears everything previously stored in the session", %{
+      conn: conn,
+      admin_user: admin_user
+    } do
+      conn =
+        conn
+        |> put_session(:to_be_removed, "value")
+        |> AdminUserAuth.log_in_admin_user(admin_user)
+
       refute get_session(conn, :to_be_removed)
     end
 
     test "redirects to the configured path", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> put_session(:admin_user_return_to, "/hello") |> AdminUserAuth.log_in_admin_user(admin_user)
+      conn =
+        conn
+        |> put_session(:admin_user_return_to, "/hello")
+        |> AdminUserAuth.log_in_admin_user(admin_user)
+
       assert redirected_to(conn) == "/hello"
     end
 
     test "writes a cookie if remember_me is configured", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> fetch_cookies() |> AdminUserAuth.log_in_admin_user(admin_user, %{"remember_me" => "true"})
+      conn =
+        conn
+        |> fetch_cookies()
+        |> AdminUserAuth.log_in_admin_user(admin_user, %{"remember_me" => "true"})
+
       assert get_session(conn, :admin_user_token) == conn.cookies[@remember_me_cookie]
 
       assert %{value: signed_token, max_age: max_age} = conn.resp_cookies[@remember_me_cookie]
@@ -85,13 +103,20 @@ defmodule Server.AdminUserAuthTest do
   describe "fetch_current_admin_user/2" do
     test "authenticates admin_user from session", %{conn: conn, admin_user: admin_user} do
       admin_user_token = Admin.generate_admin_user_session_token(admin_user)
-      conn = conn |> put_session(:admin_user_token, admin_user_token) |> AdminUserAuth.fetch_current_admin_user([])
+
+      conn =
+        conn
+        |> put_session(:admin_user_token, admin_user_token)
+        |> AdminUserAuth.fetch_current_admin_user([])
+
       assert conn.assigns.current_admin_user.id == admin_user.id
     end
 
     test "authenticates admin_user from cookies", %{conn: conn, admin_user: admin_user} do
       logged_in_conn =
-        conn |> fetch_cookies() |> AdminUserAuth.log_in_admin_user(admin_user, %{"remember_me" => "true"})
+        conn
+        |> fetch_cookies()
+        |> AdminUserAuth.log_in_admin_user(admin_user, %{"remember_me" => "true"})
 
       admin_user_token = logged_in_conn.cookies[@remember_me_cookie]
       %{value: signed_token} = logged_in_conn.resp_cookies[@remember_me_cookie]
@@ -115,7 +140,11 @@ defmodule Server.AdminUserAuthTest do
 
   describe "redirect_if_admin_user_is_authenticated/2" do
     test "redirects if admin_user is authenticated", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> assign(:current_admin_user, admin_user) |> AdminUserAuth.redirect_if_admin_user_is_authenticated([])
+      conn =
+        conn
+        |> assign(:current_admin_user, admin_user)
+        |> AdminUserAuth.redirect_if_admin_user_is_authenticated([])
+
       assert conn.halted
       assert redirected_to(conn) == "/"
     end
@@ -162,7 +191,11 @@ defmodule Server.AdminUserAuthTest do
     end
 
     test "does not redirect if admin_user is authenticated", %{conn: conn, admin_user: admin_user} do
-      conn = conn |> assign(:current_admin_user, admin_user) |> AdminUserAuth.require_authenticated_admin_user([])
+      conn =
+        conn
+        |> assign(:current_admin_user, admin_user)
+        |> AdminUserAuth.require_authenticated_admin_user([])
+
       refute conn.halted
       refute conn.status
     end
