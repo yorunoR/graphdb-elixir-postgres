@@ -1,6 +1,8 @@
 defmodule Server.AdminUserRegistrationControllerTest do
   use Server.ConnCase, async: true
 
+  @moduletag :skip
+
   import U7406.AdminFixtures
 
   describe "GET /admin_users/register" do
