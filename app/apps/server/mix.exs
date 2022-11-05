@@ -51,7 +51,8 @@ defmodule Server.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:u7406, in_umbrella: true},
-      {:kaffy, "~> 0.9.4"}
+      {:kaffy, "~> 0.9.4"},
+      {:absinthe_phoenix, "~> 2.0"}
     ]
   end
 

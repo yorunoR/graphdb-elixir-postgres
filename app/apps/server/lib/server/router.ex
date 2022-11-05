@@ -31,6 +31,16 @@ defmodule Server.Router do
   # scope "/api", Server do
   #   pipe_through :api
   # end
+  scope "/" do
+    pipe_through :api
+
+    forward "/api", Absinthe.Plug, schema: Graphql.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: Graphql.Schema,
+      interface: :simple,
+      socket: ServerWeb.UserSocket
+  end
 
   # Enables LiveDashboard only for development
   #

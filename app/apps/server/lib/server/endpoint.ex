@@ -1,5 +1,6 @@
 defmodule Server.Endpoint do
   use Phoenix.Endpoint, otp_app: :server
+  use Absinthe.Phoenix.Endpoint
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -9,6 +10,10 @@ defmodule Server.Endpoint do
     key: "_server_key",
     signing_salt: "59IPyGgg"
   ]
+
+  socket "/socket", ServerWeb.UserSocket,
+    websocket: true,
+    longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
