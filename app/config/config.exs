@@ -33,7 +33,7 @@ config :server,
 config :server, Server.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: Server.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Server.PubSub,
+  pubsub_server: U7406.PubSub,
   live_view: [signing_salt: "lPFl4PBs"]
 
 # Configure esbuild (the version is required)
