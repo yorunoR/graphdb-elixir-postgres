@@ -9,6 +9,8 @@
 # move said applications out of the umbrella.
 import Config
 
+config :u7406, U7406.Repo, migration_timestamps: [type: :utc_datetime_usec]
+
 # Configure Mix tasks and generators
 config :u7406,
   ecto_repos: [U7406.Repo]
