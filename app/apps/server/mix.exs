@@ -37,6 +37,7 @@ defmodule Server.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:dataloader, "~> 1.0.0", runtime: false},
       {:phoenix, "~> 1.6.15"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.0"},
