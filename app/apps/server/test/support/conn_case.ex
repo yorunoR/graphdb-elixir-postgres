@@ -32,7 +32,7 @@ defmodule Server.ConnCase do
   end
 
   setup tags do
-    Server.DataCase.setup_sandbox(tags)
+    U7406.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 

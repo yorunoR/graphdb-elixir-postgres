@@ -1,5 +1,5 @@
 defmodule U7406.Admin.AdminUser do
-  use Ecto.Schema
+  use U7406.Schema
   import Ecto.Changeset
 
   schema "admin_users" do

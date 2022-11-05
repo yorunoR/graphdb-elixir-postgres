@@ -1,5 +1,5 @@
 defmodule U7406.Admin.AdminUserToken do
-  use Ecto.Schema
+  use U7406.Schema
   import Ecto.Query
   alias U7406.Admin.AdminUserToken
 
