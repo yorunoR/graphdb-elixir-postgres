@@ -52,7 +52,8 @@ defmodule Server.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:u7406, in_umbrella: true},
       {:kaffy, "~> 0.9.4"},
-      {:absinthe_phoenix, "~> 2.0"}
+      {:absinthe_phoenix, "~> 2.0"},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 

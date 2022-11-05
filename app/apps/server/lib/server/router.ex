@@ -18,6 +18,7 @@ defmodule Server.Router do
   end
 
   pipeline :api do
+    plug CORSPlug, headers: ["cid" | CORSPlug.defaults()[:headers]]
     plug :accepts, ["json"]
   end
 
