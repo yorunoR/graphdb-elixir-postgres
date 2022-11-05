@@ -50,7 +50,8 @@ defmodule Server.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:u7406, in_umbrella: true}
+      {:u7406, in_umbrella: true},
+      {:kaffy, "~> 0.9.4"}
     ]
   end
 

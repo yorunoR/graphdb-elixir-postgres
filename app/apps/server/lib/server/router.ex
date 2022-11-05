@@ -1,6 +1,10 @@
 defmodule Server.Router do
   use Server, :router
 
+  use Kaffy.Routes,
+    scope: "/admin",
+    pipe_through: [:fetch_current_admin_user, :require_authenticated_admin_user]
+
   import Server.AdminUserAuth
 
   pipeline :browser do
