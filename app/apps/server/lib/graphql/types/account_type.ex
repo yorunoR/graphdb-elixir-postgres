@@ -29,10 +29,10 @@ defmodule Graphql.Types.AccountType do
   end
 
   object :account_subscriptions do
-    # field :new_user, non_null(:user) do
-    #   config(fn _args, _ ->
-    #     {:ok, topic: "*"}
-    #   end)
-    # end
+    field :new_user, non_null(:user) do
+      config(fn _args, _ ->
+        {:ok, topic: "*"}
+      end)
+    end
   end
 end

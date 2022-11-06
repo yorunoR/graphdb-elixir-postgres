@@ -41,7 +41,7 @@ defmodule Graphql.Schema do
   # import_types(ResourceObject.Project)
   # import_types(ResourceObject.Rule)
   # import_types(ResourceObject.SubGraphFilter)
-  # import_types(ResourceObject.User)
+  import_types(ResourceObject.User)
 
   query do
     import_fields(:common_queries)
@@ -54,9 +54,9 @@ defmodule Graphql.Schema do
   #   import_fields(:graph_mutations)
   # end
 
-  # subscription do
-  #   import_fields(:account_subscriptions)
-  # end
+  subscription do
+    import_fields(:account_subscriptions)
+  end
 
   def context(ctx) do
     loader = Dataloader.new() |> Dataloader.add_source(:db, Db.data())
