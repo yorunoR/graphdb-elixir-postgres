@@ -10,7 +10,9 @@ module.exports = {
     withDefaults: 'readonly'
   },
   extends: [
-    'plugin:vue/vue3-essential',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:vue/vue3-recommended',
     '@vue/standard',
     '@vue/typescript/recommended'
   ],
@@ -18,8 +20,14 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    'import/namespace': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'import/order': ['error', {
+      'newlines-between': 'always',
+      alphabetize: { order: 'asc' }
+    }],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }]
   },
   overrides: [
     {
