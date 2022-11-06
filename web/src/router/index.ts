@@ -20,15 +20,15 @@ const routes: RouteRecordRaw[] = [
         name: 'ping',
         component: async () =>
           await import(/* webpackChunkName: "ping" */ '@/views/PingView.vue')
+      },
+      {
+        path: 'sign_in',
+        name: 'sign_in',
+        component: async () =>
+          await import(
+            /* webpackChunkName: "sign_in" */ '@/views/SignInView.vue'
+          )
       }
-      // {
-      //   path: "sign_in",
-      //   name: "sign_in",
-      //   component: async () =>
-      //     await import(
-      //       /* webpackChunkName: "sign_in" */ "@/views/SignInView.vue"
-      //     ),
-      // },
     ]
   }
   // {
