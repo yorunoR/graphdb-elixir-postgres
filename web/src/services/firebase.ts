@@ -1,4 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
+import type { FirebaseError } from 'firebase/app'
 import {
   getAuth,
   onAuthStateChanged,
@@ -12,13 +13,13 @@ import {
 } from 'firebase/auth'
 // import 'firebase/messaging'
 // import 'firebase/analytics'
-import swal from 'sweetalert'
-import type { FirebaseError } from 'firebase/app'
 import type { ActionCodeSettings, User } from 'firebase/auth'
+import swal from 'sweetalert'
+
 import i18n from '@/services/i18n'
 
 interface ErrorMessages {
-  [key: string]: string;
+  [key: string]: string
 }
 
 getApps().length === 0

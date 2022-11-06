@@ -3,12 +3,13 @@ import {
   createClient,
   dedupExchange,
   cacheExchange,
-  fetchExchange
-  // subscriptionExchange
+  fetchExchange,
+  subscriptionExchange
 } from '@urql/vue'
-// import { absintheConfig } from "@/services/absintheConfig";
-import { authConfig } from '@/services/authConfig'
 import type { Client } from '@urql/vue'
+
+import { absintheConfig } from '@/services/absintheConfig'
+import { authConfig } from '@/services/authConfig'
 
 const API_URL = process.env.VUE_APP_API_URL as string
 
@@ -19,8 +20,8 @@ export function makeClient (): Client {
       dedupExchange,
       cacheExchange,
       authExchange(authConfig),
-      fetchExchange
-      // subscriptionExchange(absintheConfig),
+      fetchExchange,
+      subscriptionExchange(absintheConfig)
     ]
   })
 }
