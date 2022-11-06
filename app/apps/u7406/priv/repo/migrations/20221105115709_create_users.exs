@@ -1,0 +1,18 @@
+defmodule U7406.Repo.Migrations.CreateUsers do
+  use Ecto.Migration
+  import Ecto.SoftDelete.Migration
+
+  def change do
+    create table(:users) do
+      add :activated, :boolean, null: false, default: false
+      add :email, :string, null: false
+      add :name, :string, null: false
+      add :profile_image, :string
+      add :role, :integer, null: false, default: 0
+      add :uid, :string
+
+      timestamps()
+      soft_delete_columns()
+    end
+  end
+end

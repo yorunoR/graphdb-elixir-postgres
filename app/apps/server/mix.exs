@@ -37,6 +37,7 @@ defmodule Server.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:dataloader, "~> 1.0.0", runtime: false},
       {:phoenix, "~> 1.6.15"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.0"},
@@ -49,7 +50,11 @@ defmodule Server.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:u7406, in_umbrella: true},
+      {:kaffy, "~> 0.9.4"},
+      {:absinthe_phoenix, "~> 2.0"},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 

@@ -9,6 +9,8 @@
 # move said applications out of the umbrella.
 import Config
 
+config :u7406, U7406.Repo, migration_timestamps: [type: :utc_datetime_usec]
+
 # Configure Mix tasks and generators
 config :u7406,
   ecto_repos: [U7406.Repo]
@@ -26,8 +28,8 @@ config :u7406, U7406.Mailer, adapter: Swoosh.Adapters.Local
 config :swoosh, :api_client, false
 
 config :server,
-  ecto_repos: [Server.Repo],
-  generators: [context_app: false]
+  ecto_repos: [U7406.Repo],
+  generators: [context_app: :u7406]
 
 # Configures the endpoint
 config :server, Server.Endpoint,
@@ -60,6 +62,11 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :kaffy,
+  otp_app: :u7406,
+  ecto_repo: U7406.Repo,
+  router: Server.Router
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
