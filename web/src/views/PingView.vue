@@ -15,19 +15,18 @@
       </div>
     </section>
     <hr>
-    <!--section>
+    <section>
       <h1>user</h1>
       <div v-if="userData">
         {{ userData.newUser.name }}
       </div>
-    </section-->
+    </section>
   </main>
 </template>
 
 <script setup lang="ts">
-// import { usePingQuery, useNewUserSubscription } from '@/auto_generated/graphql'
-import { usePingQuery } from '@/auto_generated/graphql'
+import { usePingQuery, useNewUserSubscription } from '@/auto_generated/graphql'
 
 const { fetching, error, data } = usePingQuery()
-// const { data: userData } = useNewUserSubscription()
+const { data: userData } = useNewUserSubscription()
 </script>
