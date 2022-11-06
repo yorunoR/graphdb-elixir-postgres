@@ -14,10 +14,12 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:vue/vue3-recommended',
     '@vue/standard',
-    '@vue/typescript/recommended'
+    '@vue/typescript/recommended',
+    'standard-with-typescript'
   ],
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2020,
+    project: ['./tsconfig.eslint.json']
   },
   rules: {
     'import/namespace': 'off',
