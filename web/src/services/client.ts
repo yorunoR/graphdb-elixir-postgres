@@ -6,9 +6,10 @@ import {
   fetchExchange,
   subscriptionExchange
 } from '@urql/vue'
+import type { Client } from '@urql/vue'
+
 import { absintheConfig } from '@/services/absintheConfig'
 import { authConfig } from '@/services/authConfig'
-import type { Client } from '@urql/vue'
 
 const API_URL = process.env.VUE_APP_API_URL as string
 

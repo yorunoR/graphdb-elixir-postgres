@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 // import BoardLayout from "@/layouts/BoardLayout.vue";
 // import ProjectLayout from "@/layouts/ProjectLayout.vue";
 // import DivisionLayout from "@/layouts/project/DivisionLayout.vue";
 // import SubGraphLayout from "@/layouts/project/SubGraphLayout.vue";
-import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {

@@ -1,11 +1,12 @@
 import { makeOperation } from '@urql/core'
-import firebase from '@/services/firebase'
-import storage from '@/services/storage'
 import type { AuthConfig } from '@urql/exchange-auth'
 
+import firebase from '@/services/firebase'
+import storage from '@/services/storage'
+
 interface AuthState {
-  token: string | null;
-  cid: string | null;
+  token: string | null
+  cid: string | null
 }
 
 export const authConfig: AuthConfig<AuthState> = {
