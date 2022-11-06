@@ -1,4 +1,4 @@
-// import { authExchange } from "@urql/exchange-auth";
+import { authExchange } from '@urql/exchange-auth'
 import {
   createClient,
   dedupExchange,
@@ -7,7 +7,7 @@ import {
   // subscriptionExchange
 } from '@urql/vue'
 // import { absintheConfig } from "@/services/absintheConfig";
-// import { authConfig } from "@/services/authConfig";
+import { authConfig } from '@/services/authConfig'
 import type { Client } from '@urql/vue'
 
 const API_URL = process.env.VUE_APP_API_URL as string
@@ -18,7 +18,7 @@ export function makeClient (): Client {
     exchanges: [
       dedupExchange,
       cacheExchange,
-      // authExchange(authConfig),
+      authExchange(authConfig),
       fetchExchange
       // subscriptionExchange(absintheConfig),
     ]
