@@ -12,6 +12,7 @@
     "code": "yarn codegen:only && yarn lint:fix"
   },
   "dependencies": {
+    "@urql/vue": "^1.0.2",
     "core-js": "^3.8.3",
     "graphql": "^16.6.0",
     "primeflex": "^3.2.1",
