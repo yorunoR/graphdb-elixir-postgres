@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import i18n from './services/i18n'
+import i18n from './services/i18n'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import 'primeflex/primeflex.css'
@@ -17,7 +17,7 @@ import Sidebar from 'primevue/sidebar'
 import Toast from 'primevue/toast'
 
 createApp(App)
-  // .use(i18n)
+  .use(i18n)
   .use(router)
   .use(store)
   .use(PrimeVue)
