@@ -3,7 +3,7 @@ defmodule Schemas.Account.Project do
   import Ecto.SoftDelete.Schema
 
   alias Schemas.Account.ProjectUser
-  # alias Schemas.Graph.Tower
+  alias Schemas.Graph.Tower
 
   schema "projects" do
     field :default, :boolean
@@ -14,6 +14,6 @@ defmodule Schemas.Account.Project do
 
     has_many :project_users, ProjectUser, on_delete: :delete_all
     has_many :users, through: [:project_users, :user]
-    # has_many :towers, Tower, on_delete: :delete_all
+    has_many :towers, Tower, on_delete: :delete_all
   end
 end
