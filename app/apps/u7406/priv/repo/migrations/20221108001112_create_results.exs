@@ -3,7 +3,7 @@ defmodule U7406.Repo.Migrations.CreateResults do
   import Ecto.SoftDelete.Migration
   import U7406.MigrationsHelper
 
-  def change do
+  def up do
     create table(:results) do
       add :project_id, references(:projects, on_delete: :nothing), null: false
       add :tower_id, references(:towers, on_delete: :nothing), null: false
@@ -31,5 +31,9 @@ defmodule U7406.Repo.Migrations.CreateResults do
       %{belongs_to: :divisions, id: :division_id},
       %{belongs_to: :sub_graph_filters, id: :sub_graph_filter_id}
     ])
+  end
+
+  def down do
+    drop table(:results)
   end
 end

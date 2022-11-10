@@ -2,7 +2,7 @@ defmodule U7406.Repo.Migrations.CreateNodesUploads do
   use Ecto.Migration
   import U7406.MigrationsHelper
 
-  def change do
+  def up do
     create table(:nodes_uploads) do
       add :project_id, references(:projects, on_delete: :nothing)
       add :tower_id, references(:towers, on_delete: :nothing)
@@ -36,5 +36,9 @@ defmodule U7406.Repo.Migrations.CreateNodesUploads do
       %{belongs_to: :towers, id: :tower_id},
       %{belongs_to: :node_types, id: :node_type_id}
     ])
+  end
+
+  def down do
+    drop table(:nodes_uploads)
   end
 end

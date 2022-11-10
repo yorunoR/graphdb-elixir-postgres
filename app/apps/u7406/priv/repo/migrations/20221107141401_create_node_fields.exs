@@ -3,7 +3,7 @@ defmodule U7406.Repo.Migrations.CreateNodeFields do
   import Ecto.SoftDelete.Migration
   import U7406.MigrationsHelper
 
-  def change do
+  def up do
     create table(:node_fields) do
       add :project_id, references(:projects, on_delete: :nothing), null: false
       add :tower_id, references(:towers, on_delete: :nothing), null: false
@@ -35,5 +35,9 @@ defmodule U7406.Repo.Migrations.CreateNodeFields do
       %{belongs_to: :divisions, id: :division_id},
       %{belongs_to: :node_types, id: :node_type_id}
     ])
+  end
+
+  def down do
+    drop table(:node_fields)
   end
 end

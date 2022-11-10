@@ -3,7 +3,7 @@ defmodule U7406.Repo.Migrations.CreateEdgeFields do
   import Ecto.SoftDelete.Migration
   import U7406.MigrationsHelper
 
-  def change do
+  def up do
     create table(:edge_fields) do
       add :project_id, references(:projects, on_delete: :nothing), null: false
       add :tower_id, references(:towers, on_delete: :nothing), null: false
@@ -35,5 +35,9 @@ defmodule U7406.Repo.Migrations.CreateEdgeFields do
       %{belongs_to: :divisions, id: :division_id},
       %{belongs_to: :edge_types, id: :edge_type_id}
     ])
+  end
+
+  def down do
+    drop table(:edge_fields)
   end
 end

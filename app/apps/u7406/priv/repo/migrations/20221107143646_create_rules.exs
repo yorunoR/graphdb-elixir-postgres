@@ -3,7 +3,7 @@ defmodule U7406.Repo.Migrations.CreateRules do
   import Ecto.SoftDelete.Migration
   import U7406.MigrationsHelper
 
-  def change do
+  def up do
     create table(:rules) do
       add :project_id, references(:projects, on_delete: :nothing), null: false
       add :tower_id, references(:towers, on_delete: :nothing), null: false
@@ -40,5 +40,9 @@ defmodule U7406.Repo.Migrations.CreateRules do
       %{belongs_to: :node_types, id: :start_node_type_id},
       %{belongs_to: :node_types, id: :end_node_type_id}
     ])
+  end
+
+  def down do
+    drop table(:rules)
   end
 end

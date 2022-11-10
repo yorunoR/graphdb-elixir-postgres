@@ -3,7 +3,7 @@ defmodule U7406.Repo.Migrations.CreateTowers do
   import Ecto.SoftDelete.Migration
   import U7406.MigrationsHelper
 
-  def change do
+  def up do
     create table(:towers) do
       add :project_id, references(:projects, on_delete: :nothing), null: false
       add :tower_id, references(:towers, on_delete: :nothing), null: true
@@ -20,5 +20,9 @@ defmodule U7406.Repo.Migrations.CreateTowers do
     create index(:towers, [:tower_id])
 
     add_policies(:towers)
+  end
+
+  def down do
+    drop table(:towers)
   end
 end
