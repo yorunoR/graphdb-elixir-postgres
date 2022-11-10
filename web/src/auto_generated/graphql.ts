@@ -16,8 +16,24 @@ export type Scalars = {
   DateTime: string;
 };
 
+export type Project = {
+  __typename?: 'Project';
+  default: Scalars['Boolean'];
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type RootMutationType = {
+  __typename?: 'RootMutationType';
+  signinUser?: Maybe<User>;
+};
+
 export type RootQueryType = {
   __typename?: 'RootQueryType';
+  currentProject?: Maybe<Project>;
+  currentUser: User;
   ping: Status;
 };
 
@@ -39,10 +55,16 @@ export type User = {
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
   profileImage?: Maybe<Scalars['String']>;
+  projects: Array<Project>;
   role: Scalars['Int'];
   uid?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
 };
+
+export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
 
 export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -55,6 +77,17 @@ export type NewUserSubscriptionVariables = Exact<{ [key: string]: never; }>;
 export type NewUserSubscription = { __typename?: 'RootSubscriptionType', newUser: { __typename?: 'User', id: string, name: string } };
 
 
+export const SigninUserDocument = gql`
+    mutation SigninUser {
+  signinUser {
+    uid
+  }
+}
+    `;
+
+export function useSigninUserMutation() {
+  return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
+};
 export const PingDocument = gql`
     query Ping {
   ping {
