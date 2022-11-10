@@ -17,9 +17,10 @@ defmodule Server.Router do
     plug :fetch_current_admin_user
   end
 
-  pipeline :api do
+  pipeline :graphql_api do
     plug CORSPlug, headers: ["cid" | CORSPlug.defaults()[:headers]]
     plug :accepts, ["json"]
+    plug Server.AbsintheAuthPlug
   end
 
   scope "/", Server do
@@ -33,7 +34,7 @@ defmodule Server.Router do
   #   pipe_through :api
   # end
   scope "/" do
-    pipe_through :api
+    pipe_through :graphql_api
 
     forward "/api", Absinthe.Plug, schema: Graphql.Schema
 
