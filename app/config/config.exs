@@ -65,7 +65,7 @@ config :phoenix, :json_library, Jason
 
 config :kaffy,
   otp_app: :u7406,
-  ecto_repo: U7406.Repo,
+  ecto_repo: U7406.AdminRepo,
   router: Server.Router
 
 # Import environment specific config. This must remain at the bottom
