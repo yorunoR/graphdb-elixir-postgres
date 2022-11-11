@@ -29,7 +29,11 @@ module.exports = {
       'newlines-between': 'always',
       alphabetize: { order: 'asc' }
     }],
-    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }]
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+    ]
   },
   overrides: [
     {
