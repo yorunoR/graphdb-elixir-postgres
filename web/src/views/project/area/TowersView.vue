@@ -1,6 +1,6 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Project</h1>
+    <h1>Tower</h1>
     <section>
       <Button
         class="w-full"
@@ -24,15 +24,15 @@
       <div v-else>
         <ul v-if="data">
           <li
-            v-for="project in data.currentUser.projects"
-            :key="project.id"
+            v-for="tower in data.currentProject?.towers"
+            :key="tower.id"
           >
             <div class="flex justify-content-between align-items-center">
-              <strong>{{ project.name }}</strong>
+              <strong>{{ tower.name }}</strong>
               <div style="cursor: pointer">
                 <i
                   class="pi pi-sign-in"
-                  @click="(_event) => moveToProject(project.id)"
+                  @click="(_event) => moveToTower(tower.id)"
                 />
               </div>
             </div>
@@ -46,7 +46,7 @@
     position="right"
   >
     <section>
-      <h2>Create Project</h2>
+      <h2>Create Tower</h2>
       <InputText
         v-model="name"
         class="w-full"
@@ -56,38 +56,48 @@
       <Button
         class="mt-3 w-full"
         label="Submit"
-        @click="clickCreateProject"
+        @click="clickCreateTower"
       />
     </section>
   </Sidebar>
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
 
 import {
-  useUserProjectsQuery,
-  useCreateProjectMutation
+  useProjectTowersQuery,
+  useCreateTowerMutation
 } from '@/auto_generated/graphql'
-import router from '@/router'
-import storage from '@/services/storage'
+// import router from '@/router'
 
-const { executeMutation: createProject } = useCreateProjectMutation()
+const toast = useToast()
+
+const { executeMutation: createTower } = useCreateTowerMutation()
 
 const visibleRight = ref(false)
 const name = ref('')
 
-const { fetching, error, data } = useUserProjectsQuery()
+const { fetching, error, data } = useProjectTowersQuery({
+  context: { additionalTypenames: ['Tower'] }
+})
 
-const clickCreateProject = async () => {
-  await createProject({
-    project: { name: name.value }
+const clickCreateTower = async () => {
+  const result = await createTower({
+    tower: { name: name.value }
   })
   visibleRight.value = false
+  if (result.error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Create tower',
+      detail: result.error.message
+    })
+  }
 }
 
-const moveToProject = (projectId) => {
-  storage.setCid(projectId)
-  router.push({ name: 'towers' })
+const moveToTower = (_towerId) => {
+  // router.push({ name: 'divisions', params: { towerId } })
 }
 </script>
