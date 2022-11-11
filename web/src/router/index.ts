@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
+import BoardLayout from '@/layouts/BoardLayout.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-// import BoardLayout from "@/layouts/BoardLayout.vue";
 // import ProjectLayout from "@/layouts/ProjectLayout.vue";
 // import DivisionLayout from "@/layouts/project/DivisionLayout.vue";
 // import SubGraphLayout from "@/layouts/project/SubGraphLayout.vue";
@@ -31,29 +31,29 @@ const routes: RouteRecordRaw[] = [
           )
       }
     ]
+  },
+  {
+    path: '/board',
+    component: BoardLayout,
+    children: [
+      {
+        path: 'select',
+        name: 'select',
+        component: async () =>
+          await import(
+            /* webpackChunkName: "select" */ '@/views/board/SelectView.vue'
+          )
+      },
+      {
+        path: 'about',
+        name: 'about',
+        component: async () =>
+          await import(
+            /* webpackChunkName: "about" */ '@/views/board/AboutView.vue'
+          )
+      }
+    ]
   }
-  // {
-  //   path: "/board",
-  //   component: BoardLayout,
-  //   children: [
-  //     {
-  //       path: "select",
-  //       name: "select",
-  //       component: async () =>
-  //         await import(
-  //           /* webpackChunkName: "select" */ "@/views/board/SelectView.vue"
-  //         ),
-  //     },
-  //     {
-  //       path: "about",
-  //       name: "about",
-  //       component: async () =>
-  //         await import(
-  //           /* webpackChunkName: "about" */ "@/views/board/AboutView.vue"
-  //         ),
-  //     },
-  //   ],
-  // },
   // {
   //   path: "/project",
   //   component: ProjectLayout,

@@ -13,7 +13,7 @@
 import { useToast } from 'primevue/usetoast'
 
 import { useSigninUserMutation } from '@/auto_generated/graphql'
-// import router from '@/router'
+import router from '@/router'
 import firebase from '@/services/firebase'
 
 const toast = useToast()
@@ -30,8 +30,7 @@ const signIn = async () => {
       detail: result.error.message
     })
   } else {
-    alert('ok')
-    // router.push({ name: 'select' })
+    router.push({ name: 'select' })
   }
 }
 </script>

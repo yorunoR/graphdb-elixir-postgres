@@ -16,6 +16,10 @@ export type Scalars = {
   DateTime: string;
 };
 
+export type InputProject = {
+  name: Scalars['String'];
+};
+
 export type Project = {
   __typename?: 'Project';
   default: Scalars['Boolean'];
@@ -27,7 +31,13 @@ export type Project = {
 
 export type RootMutationType = {
   __typename?: 'RootMutationType';
+  createProject?: Maybe<Project>;
   signinUser?: Maybe<User>;
+};
+
+
+export type RootMutationTypeCreateProjectArgs = {
+  project: InputProject;
 };
 
 export type RootQueryType = {
@@ -61,6 +71,13 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type CreateProjectMutationVariables = Exact<{
+  project: InputProject;
+}>;
+
+
+export type CreateProjectMutation = { __typename?: 'RootMutationType', createProject?: { __typename?: 'Project', id: string } | null };
+
 export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -71,12 +88,28 @@ export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PingQuery = { __typename?: 'RootQueryType', ping: { __typename?: 'Status', status?: boolean | null } };
 
+export type UserProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserProjectsQuery = { __typename?: 'RootQueryType', currentUser: { __typename?: 'User', id: string, projects: Array<{ __typename?: 'Project', id: string, name: string, default: boolean }> } };
+
 export type NewUserSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type NewUserSubscription = { __typename?: 'RootSubscriptionType', newUser: { __typename?: 'User', id: string, name: string } };
 
 
+export const CreateProjectDocument = gql`
+    mutation CreateProject($project: InputProject!) {
+  createProject(project: $project) {
+    id
+  }
+}
+    `;
+
+export function useCreateProjectMutation() {
+  return Urql.useMutation<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument);
+};
 export const SigninUserDocument = gql`
     mutation SigninUser {
   signinUser {
@@ -98,6 +131,22 @@ export const PingDocument = gql`
 
 export function usePingQuery(options: Omit<Urql.UseQueryArgs<never, PingQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PingQuery>({ query: PingDocument, ...options });
+};
+export const UserProjectsDocument = gql`
+    query UserProjects {
+  currentUser {
+    id
+    projects {
+      id
+      name
+      default
+    }
+  }
+}
+    `;
+
+export function useUserProjectsQuery(options: Omit<Urql.UseQueryArgs<never, UserProjectsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<UserProjectsQuery>({ query: UserProjectsDocument, ...options });
 };
 export const NewUserDocument = gql`
     subscription NewUser {
