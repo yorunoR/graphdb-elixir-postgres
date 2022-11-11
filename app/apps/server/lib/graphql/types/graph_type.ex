@@ -16,6 +16,11 @@ defmodule Graphql.Types.GraphType do
   end
 
   object :graph_mutations do
+    field(:create_tower, :tower) do
+      arg(:tower, non_null(:input_tower))
+      resolve(&GraphResolver.call(:create_tower, &1, &2, &3))
+    end
+
     # field(:create_division, :division) do
     #   arg(:division, non_null(:input_division))
     #   resolve(&GraphResolver.call(:create_division, &1, &2, &3))

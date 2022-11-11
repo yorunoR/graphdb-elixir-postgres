@@ -1,6 +1,7 @@
 defmodule Graphql.Sources.Db do
   import Ecto.Query
 
+  alias Graphql.Resolvers.GraphResolver
   alias U7406.Repo
 
   def data() do
@@ -17,5 +18,17 @@ defmodule Graphql.Sources.Db do
       {:offset, offset_from}, query ->
         query |> offset(^offset_from)
     end)
+  end
+
+  def graph_pagination_callback(results, parent, args, [action, item]) do
+    {:ok, [total]} = GraphResolver.call(action, parent, %{selections: [item]}, %{context: nil})
+
+    {:ok,
+     %{
+       entries: results,
+       offset: args.offset,
+       limit: args.limit,
+       total: total[:val]
+     }}
   end
 end
