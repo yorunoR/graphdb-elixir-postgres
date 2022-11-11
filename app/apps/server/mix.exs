@@ -54,7 +54,10 @@ defmodule Server.MixProject do
       {:u7406, in_umbrella: true},
       {:kaffy, "~> 0.9.4"},
       {:absinthe_phoenix, "~> 2.0"},
-      {:cors_plug, "~> 3.0"}
+      {:cors_plug, "~> 3.0"},
+      {:joken, "~> 2.5"},
+      {:httpoison, "~> 1.8"},
+      {:poison, "~> 5.0"}
     ]
   end
 

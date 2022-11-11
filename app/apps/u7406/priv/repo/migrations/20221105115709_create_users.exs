@@ -14,5 +14,8 @@ defmodule U7406.Repo.Migrations.CreateUsers do
       timestamps()
       soft_delete_columns()
     end
+
+    create index(:users, [:email], unique: true, where: "deleted_at IS NULL")
+    create index(:users, [:uid], unique: true, where: "deleted_at IS NULL")
   end
 end

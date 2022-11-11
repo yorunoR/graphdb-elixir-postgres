@@ -38,7 +38,7 @@ defmodule Graphql.Schema do
   # import_types(ResourceObject.Node)
   # import_types(ResourceObject.NodeField)
   # import_types(ResourceObject.NodeType)
-  # import_types(ResourceObject.Project)
+  import_types(ResourceObject.Project)
   # import_types(ResourceObject.Rule)
   # import_types(ResourceObject.SubGraphFilter)
   import_types(ResourceObject.User)
@@ -49,10 +49,10 @@ defmodule Graphql.Schema do
     import_fields(:graph_queries)
   end
 
-  # mutation do
-  #   import_fields(:account_mutations)
-  #   import_fields(:graph_mutations)
-  # end
+  mutation do
+    import_fields(:account_mutations)
+    import_fields(:graph_mutations)
+  end
 
   subscription do
     import_fields(:account_subscriptions)
