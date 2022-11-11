@@ -22,10 +22,10 @@ defmodule Graphql.Types.AccountType do
       resolve(&AccountResolver.call(:signin_user, &1, &2, &3))
     end
 
-    # field(:create_project, :project) do
-    #   arg(:project, non_null(:input_project))
-    #   resolve(&AccountResolver.call(:create_project, &1, &2, &3))
-    # end
+    field(:create_project, :project) do
+      arg(:project, non_null(:input_project))
+      resolve(&AccountResolver.call(:create_project, &1, &2, &3))
+    end
   end
 
   object :account_subscriptions do

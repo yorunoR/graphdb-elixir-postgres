@@ -23,7 +23,7 @@ defmodule Graphql.Schema do
   # import_types(InputObject.InputNode)
   # import_types(InputObject.InputNodeField)
   # import_types(InputObject.InputNodeType)
-  # import_types(InputObject.InputProject)
+  import_types(InputObject.InputProject)
   # import_types(InputObject.InputRule)
   # import_types(InputObject.InputSubGraphFilter)
   # import_types(CustomObject.DivisionSummary)
