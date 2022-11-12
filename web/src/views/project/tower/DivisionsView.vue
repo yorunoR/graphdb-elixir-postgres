@@ -67,7 +67,7 @@ import {
   useTowerDivisionsQuery,
   useCreateDivisionMutation
 } from '@/auto_generated/graphql'
-// import router from '@/router'
+import router from '@/router'
 
 const props = defineProps<{
   towerId: string;
@@ -100,8 +100,8 @@ const clickCreateDivision = async () => {
   }
 }
 
-const moveToDivision = (_divisionId) => {
-  // router.push({ name: 'summary', params: { divisionId } })
+const moveToDivision = (divisionId) => {
+  router.push({ name: 'summary', params: { divisionId } })
 }
 </script>
 

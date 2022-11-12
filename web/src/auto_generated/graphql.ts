@@ -24,7 +24,14 @@ export type Division = {
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
   project: Project;
+  summary: Array<Item>;
+  tower: Tower;
   updatedAt: Scalars['DateTime'];
+};
+
+
+export type DivisionSummaryArgs = {
+  selections: Array<Scalars['String']>;
 };
 
 export type DivisionList = {
@@ -93,8 +100,14 @@ export type RootQueryType = {
   __typename?: 'RootQueryType';
   currentProject?: Maybe<Project>;
   currentUser: User;
+  division?: Maybe<Division>;
   ping: Status;
   tower?: Maybe<Tower>;
+};
+
+
+export type RootQueryTypeDivisionArgs = {
+  divisionId: Scalars['ID'];
 };
 
 
@@ -174,6 +187,14 @@ export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
 
+export type DivisionSummaryQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+  selections: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type DivisionSummaryQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, project: { __typename?: 'Project', id: string, name: string, default: boolean }, tower: { __typename?: 'Tower', id: string, name: string }, summary: Array<{ __typename?: 'Item', key: string, val: string }> } | null };
+
 export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -247,6 +268,31 @@ export const SigninUserDocument = gql`
 
 export function useSigninUserMutation() {
   return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
+};
+export const DivisionSummaryDocument = gql`
+    query DivisionSummary($divisionId: ID!, $selections: [String!]!) {
+  division(divisionId: $divisionId) {
+    id
+    name
+    project {
+      id
+      name
+      default
+    }
+    tower {
+      id
+      name
+    }
+    summary(selections: $selections) {
+      key
+      val
+    }
+  }
+}
+    `;
+
+export function useDivisionSummaryQuery(options: Omit<Urql.UseQueryArgs<never, DivisionSummaryQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DivisionSummaryQuery>({ query: DivisionSummaryDocument, ...options });
 };
 export const PingDocument = gql`
     query Ping {
