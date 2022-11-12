@@ -5,6 +5,7 @@ import BoardLayout from '@/layouts/BoardLayout.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import ProjectLayout from '@/layouts/ProjectLayout.vue'
 import AreaLayout from '@/layouts/project/AreaLayout.vue'
+import TowerLayout from '@/layouts/project/TowerLayout.vue'
 // import DivisionLayout from "@/layouts/project/DivisionLayout.vue";
 // import SubGraphLayout from "@/layouts/project/SubGraphLayout.vue";
 
@@ -80,6 +81,29 @@ const routes: RouteRecordRaw[] = [
               )
           }
         ]
+      },
+      {
+        path: 'tower/:towerId(\\d+)',
+        component: TowerLayout,
+        props: (route) => ({ towerId: route.params.towerId }),
+        children: [
+          {
+            path: 'divisions',
+            name: 'divisions',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "divisions" */ '@/views/project/tower/DivisionsView.vue'
+              )
+          },
+          {
+            path: 'setting',
+            name: 'setting',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "setting" */ '@/views/project/tower/SettingView.vue'
+              )
+          }
+        ]
       }
       // {
       //   path: "division/:divisionId(\\d+)",
@@ -150,11 +174,11 @@ const routes: RouteRecordRaw[] = [
       //   props: (route) => ({ subGraphFilterId: route.params.subGraphFilterId }),
       //   children: [
       //     {
-      //       path: "setting",
-      //       name: "setting",
+      //       path: "search",
+      //       name: "search",
       //       component: async () =>
       //         await import(
-      //           /* webpackChunkName: "setting" */ "@/views/project/sub_graph/SettingView.vue"
+      //           /* webpackChunkName: "search" */ "@/views/project/sub_graph/SearchView.vue"
       //         ),
       //     },
       //   ],
