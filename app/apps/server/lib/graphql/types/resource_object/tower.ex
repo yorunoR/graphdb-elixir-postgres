@@ -22,15 +22,19 @@ defmodule Graphql.Types.ResourceObject.Tower do
       resolve(dataloader(:db))
     end
 
-    # field(:divisions, non_null(list_of(non_null(:division)))) do
-    #   arg(:offset, :integer)
-    #   arg(:limit, :integer)
+    field(:divisions, non_null(:division_list)) do
+      arg(:offset, :integer, default_value: 0)
+      arg(:limit, :integer, default_value: 10)
 
-    #   resolve(
-    #     dataloader(:db,
-    #       callback: &Db.graph_pagination_callback(&1, &2, &3, [:tower_summary, :division_count])
-    #     )
-    #   )
-    # end
+      resolve(
+        dataloader(:db,
+          callback: &Db.graph_pagination_callback(&1, &2, &3, [:tower_summary, "divisionCount"])
+        )
+      )
+    end
+
+    field(:summary, non_null(list_of(non_null(:item)))) do
+      resolve(&GraphResolver.call(:tower_summary, &1, &2, &3))
+    end
   end
 end
