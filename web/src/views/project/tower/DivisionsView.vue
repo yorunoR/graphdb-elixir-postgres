@@ -1,8 +1,5 @@
 <template>
-  <main
-    class="p-3"
-    style="max-width: 768px; margin: auto"
-  >
+  <main style="max-width: 768px; margin: auto">
     <h1>Division</h1>
     <section>
       <Button
@@ -12,30 +9,39 @@
       />
     </section>
     <section>
-      <div v-if="fetching">
+      <div
+        v-if="fetching"
+        class="mt-4"
+      >
         Loading...
       </div>
-      <div v-else-if="error">
+      <div
+        v-else-if="error"
+        class="mt-4"
+      >
         Oh no... {{ error }}
       </div>
-      <div v-else>
-        <ul v-if="data">
-          <li
-            v-for="division in data.tower.divisions.entries"
-            :key="division.id"
-          >
-            <div class="flex justify-content-between align-items-center">
-              <strong>{{ division.name }}</strong>
-              <div style="cursor: pointer">
-                <i
-                  class="pi pi-sign-in"
-                  @click="(_event) => moveToDivision(division.id)"
-                />
-              </div>
+      <ul v-else-if="data">
+        <li
+          v-for="division in data.tower.divisions.entries"
+          :key="division.id"
+        >
+          <div class="flex justify-content-between align-items-center">
+            <strong>{{ division.name }}</strong>
+            <div style="cursor: pointer">
+              <i
+                class="pi pi-sign-in"
+                @click="(_event) => moveToDivision(division.id)"
+              />
             </div>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+      </ul>
+      <Paginator
+        :rows="limit"
+        :total-records="data ? data.tower.divisions.total : 0"
+        @page="onPage($event)"
+      />
     </section>
   </main>
   <Sidebar
@@ -79,9 +85,11 @@ const { executeMutation: createDivision } = useCreateDivisionMutation()
 
 const visibleRight = ref(false)
 const name = ref('')
+const offset = ref(0)
+const limit = ref(10)
 
-const { fetching, error, data } = useTowerDivisionsQuery({
-  variables: { towerId: props.towerId },
+const { fetching, error, data, executeQuery } = useTowerDivisionsQuery({
+  variables: { towerId: props.towerId, offset, limit },
   context: { additionalTypenames: ['Division'] }
 })
 
@@ -102,6 +110,11 @@ const clickCreateDivision = async () => {
 
 const moveToDivision = (divisionId) => {
   router.push({ name: 'summary', params: { divisionId } })
+}
+
+const onPage = (event) => {
+  offset.value = event.first
+  executeQuery()
 }
 </script>
 

@@ -7,6 +7,7 @@ import 'primevue/resources/themes/saga-blue/theme.css'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
 import InputText from 'primevue/inputtext'
+import Paginator from 'primevue/paginator'
 import RadioButton from 'primevue/radiobutton'
 import Sidebar from 'primevue/sidebar'
 import Toast from 'primevue/toast'
@@ -27,6 +28,7 @@ createApp(App)
   .component('Button', Button)
   .component('Chip', Chip)
   .component('InputText', InputText)
+  .component('Paginator', Paginator)
   .component('RadioButton', RadioButton)
   .component('Sidebar', Sidebar)
   .component('Toast', Toast)
