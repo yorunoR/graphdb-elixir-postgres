@@ -2,8 +2,8 @@ defmodule Graphql.Types.ResourceObject.Tower do
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers
 
-  alias Graphql.Resolvers.GraphResolver
   alias Graphql.Sources.Db
+  alias Resolvers.GraphResolver
 
   object :tower do
     field(:id, non_null(:id))

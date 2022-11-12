@@ -1,7 +1,7 @@
 defmodule Graphql.Sources.Db do
   import Ecto.Query
 
-  alias Graphql.Resolvers.GraphResolver
+  alias Resolvers.GraphResolver
   alias U7406.Repo
 
   def data() do

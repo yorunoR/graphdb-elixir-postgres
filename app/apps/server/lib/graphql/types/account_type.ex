@@ -1,7 +1,7 @@
 defmodule Graphql.Types.AccountType do
   use Absinthe.Schema.Notation
 
-  alias Graphql.Resolvers.AccountResolver
+  alias Resolvers.AccountResolver
 
   object :account_queries do
     field(:current_user, non_null(:user)) do

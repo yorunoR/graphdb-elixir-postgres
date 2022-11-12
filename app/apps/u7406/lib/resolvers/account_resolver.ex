@@ -1,4 +1,4 @@
-defmodule Graphql.Resolvers.AccountResolver do
+defmodule Resolvers.AccountResolver do
   alias Actions.Account.Mutation
   alias Actions.Account.Query
   alias Schemas.Account.User

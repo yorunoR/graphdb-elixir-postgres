@@ -1,4 +1,4 @@
-defmodule Graphql.Resolvers.GraphResolver do
+defmodule Resolvers.GraphResolver do
   alias Actions.Graph.CustomField
   alias Actions.Graph.Mutation
   alias Actions.Graph.Query

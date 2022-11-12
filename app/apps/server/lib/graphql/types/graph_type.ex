@@ -1,7 +1,7 @@
 defmodule Graphql.Types.GraphType do
   use Absinthe.Schema.Notation
 
-  alias Graphql.Resolvers.GraphResolver
+  alias Resolvers.GraphResolver
 
   object :graph_queries do
     field(:tower, :tower) do
