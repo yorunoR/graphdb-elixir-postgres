@@ -9,10 +9,10 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:tower, &1, &2, &3))
     end
 
-    # field(:division, :division) do
-    #   arg(:division_id, non_null(:id))
-    #   resolve(&GraphResolver.call(:division, &1, &2, &3))
-    # end
+    field(:division, :division) do
+      arg(:division_id, non_null(:id))
+      resolve(&GraphResolver.call(:division, &1, &2, &3))
+    end
 
     # field(:sub_graph_filter, :sub_graph_filter) do
     #   arg(:sub_graph_filter_id, non_null(:id))
