@@ -35,7 +35,7 @@
   >
     <router-view />
   </div>
-  <Toast />
+  <Toast :breakpoints="{'576px': {width: '97%', left: '6px'}}" />
 </template>
 
 <script setup lang="ts">
