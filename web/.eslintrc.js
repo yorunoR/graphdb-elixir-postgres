@@ -33,7 +33,11 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [
       'warn',
       { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
-    ]
+    ],
+    'vue/v-on-event-hyphenation': 'off',
+    // 以下、重複または衝突しているため無効
+    'func-call-spacing': 'off',
+    'no-unused-vars': 'off'
   },
   overrides: [
     {
