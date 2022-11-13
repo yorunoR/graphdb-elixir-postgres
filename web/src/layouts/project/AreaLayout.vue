@@ -1,0 +1,72 @@
+<template>
+  <Sidebar v-model:visible="visibleLeft">
+    <div
+      class="h-screen adjust-height flex flex-column justify-content-between"
+    >
+      <section>
+        <h2>Project</h2>
+        <div v-if="data">
+          <ProjectMolecule v-bind="data.currentProject" />
+        </div>
+        <ul>
+          <li style="border: none">
+            <router-link :to="{ name: 'towers' }">
+              Towers
+            </router-link>
+          </li>
+          <li style="border: none">
+            <router-link :to="{ name: 'info' }">
+              Information
+            </router-link>
+          </li>
+          <li style="border: none">
+            <router-link :to="{ name: 'select' }">
+              Return Board
+            </router-link>
+          </li>
+        </ul>
+      </section>
+      <Button @click="signOut">
+        Sign Out
+      </Button>
+    </div>
+  </Sidebar>
+  <div class="flex flex-row p-3">
+    <Button
+      icon="pi pi-arrow-right"
+      @click="visibleLeft = true"
+    />
+  </div>
+  <div class="p-3">
+    <router-view />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import {
+  useProjectTowersQuery
+} from '@/auto_generated/graphql'
+import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
+import router from '@/router'
+import firebase from '@/services/firebase'
+
+const visibleLeft = ref(false)
+
+const { data } = useProjectTowersQuery({
+  context: { additionalTypenames: ['Tower'] }
+})
+
+const signOut = async () => {
+  await firebase.signout()
+  router.push({ name: 'sign_in' })
+}
+</script>
+
+<style lang="scss">
+.adjust-height {
+  margin-top: -80px;
+  padding-top: 80px;
+}
+</style>
