@@ -50,29 +50,29 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:create_node_field, &1, &2, &3))
     end
 
-    # field(:create_edge_type, :edge_type) do
-    #   arg(:division_id, non_null(:id))
-    #   arg(:edge_type, non_null(:input_edge_type))
-    #   resolve(&GraphResolver.call(:create_edge_type, &1, &2, &3))
-    # end
+    field(:create_edge_type, :edge_type) do
+      arg(:division_id, non_null(:id))
+      arg(:edge_type, non_null(:input_edge_type))
+      resolve(&GraphResolver.call(:create_edge_type, &1, &2, &3))
+    end
 
-    # field(:update_edge_type, :edge_type) do
-    #   arg(:edge_type_id, non_null(:id))
-    #   arg(:edge_type, non_null(:input_edge_type))
-    #   resolve(&GraphResolver.call(:update_edge_type, &1, &2, &3))
-    # end
+    field(:update_edge_type, :edge_type) do
+      arg(:edge_type_id, non_null(:id))
+      arg(:edge_type, non_null(:input_edge_type))
+      resolve(&GraphResolver.call(:update_edge_type, &1, &2, &3))
+    end
 
-    # field(:create_edge_field, :edge_field) do
-    #   arg(:edge_type_id, non_null(:id))
-    #   arg(:edge_field, non_null(:input_edge_field))
-    #   resolve(&GraphResolver.call(:create_edge_field, &1, &2, &3))
-    # end
+    field(:create_edge_field, :edge_field) do
+      arg(:edge_type_id, non_null(:id))
+      arg(:edge_field, non_null(:input_edge_field))
+      resolve(&GraphResolver.call(:create_edge_field, &1, &2, &3))
+    end
 
-    # field(:create_rule, :rule) do
-    #   arg(:edge_type_id, non_null(:id))
-    #   arg(:rule, non_null(:input_rule))
-    #   resolve(&GraphResolver.call(:create_rule, &1, &2, &3))
-    # end
+    field(:create_rule, :rule) do
+      arg(:edge_type_id, non_null(:id))
+      arg(:rule, non_null(:input_rule))
+      resolve(&GraphResolver.call(:create_rule, &1, &2, &3))
+    end
 
     # field(:create_node, :node) do
     #   arg(:node, non_null(:input_node))
