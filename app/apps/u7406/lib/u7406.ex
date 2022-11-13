@@ -1,17 +1,28 @@
 defmodule U7406 do
+  alias Schemas.Graph.Tower
   alias Schemas.Graph.Division
   alias Schemas.Graph.EdgeType
   alias Schemas.Graph.NodeType
   alias Schemas.Graph.Rule
 
+  def build_assoc(%Tower{} = tower, :divisions) do
+    attrs = %{project_id: tower.project_id}
+    Ecto.build_assoc(tower, :divisions, attrs)
+  end
+
   def build_assoc(%Division{} = division, :node_types) do
-    attrs = %{project_id: division.project_id}
+    attrs = %{
+      project_id: division.project_id,
+      tower_id: division.tower_id
+    }
+
     Ecto.build_assoc(division, :node_types, attrs)
   end
 
   def build_assoc(%NodeType{} = node_type, :node_fields) do
     attrs = %{
       project_id: node_type.project_id,
+      tower_id: node_type.tower_id,
       division_id: node_type.division_id
     }
 
@@ -21,6 +32,7 @@ defmodule U7406 do
   def build_assoc(%NodeType{} = node_type, :nodes) do
     attrs = %{
       project_id: node_type.project_id,
+      tower_id: node_type.tower_id,
       division_id: node_type.division_id
     }
 
@@ -28,13 +40,18 @@ defmodule U7406 do
   end
 
   def build_assoc(%Division{} = division, :edge_types) do
-    attrs = %{project_id: division.project_id}
+    attrs = %{
+      project_id: division.project_id,
+      tower_id: division.tower_id
+    }
+
     Ecto.build_assoc(division, :edge_types, attrs)
   end
 
   def build_assoc(%EdgeType{} = edge_type, :edge_fields) do
     attrs = %{
       project_id: edge_type.project_id,
+      tower_id: edge_type.tower_id,
       division_id: edge_type.division_id
     }
 
@@ -44,6 +61,7 @@ defmodule U7406 do
   def build_assoc(%EdgeType{} = edge_type, :rules) do
     attrs = %{
       project_id: edge_type.project_id,
+      tower_id: edge_type.tower_id,
       division_id: edge_type.division_id
     }
 
@@ -53,6 +71,7 @@ defmodule U7406 do
   def build_assoc(%Rule{} = rule, :edges) do
     attrs = %{
       project_id: rule.project_id,
+      tower_id: rule.tower_id,
       division_id: rule.division_id,
       edge_type_id: rule.edge_type_id
     }
@@ -63,6 +82,7 @@ defmodule U7406 do
   def build_assoc(%Division{} = division, :sub_graph_filters) do
     attrs = %{
       project_id: division.project_id,
+      tower_id: division.tower_id,
       division_id: division.id
     }
 
@@ -72,6 +92,7 @@ defmodule U7406 do
   def build_assoc(%NodeType{} = node_type, :nodes_upload_operations) do
     attrs = %{
       project_id: node_type.project_id,
+      tower_id: node_type.tower_id,
       division_id: node_type.division_id,
       node_type_id: node_type.id
     }
@@ -82,6 +103,7 @@ defmodule U7406 do
   def build_assoc(%EdgeType{} = edge_type, :edges_upload_operations) do
     attrs = %{
       project_id: edge_type.project_id,
+      tower_id: edge_type.tower_id,
       division_id: edge_type.division_id,
       edge_type_id: edge_type.id
     }

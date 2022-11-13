@@ -9,8 +9,8 @@ defmodule Graphql.Types.ResourceObject.Project do
     field(:inserted_at, non_null(:datetime))
     field(:updated_at, non_null(:datetime))
 
-    # field(:divisions, non_null(list_of(non_null(:division)))) do
-    #   resolve(dataloader(:db))
-    # end
+    field(:towers, non_null(list_of(non_null(:tower)))) do
+      resolve(dataloader(:db))
+    end
   end
 end

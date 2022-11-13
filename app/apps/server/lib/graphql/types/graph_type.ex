@@ -1,13 +1,18 @@
 defmodule Graphql.Types.GraphType do
   use Absinthe.Schema.Notation
 
-  alias Graphql.Resolvers.GraphResolver
+  alias Resolvers.GraphResolver
 
   object :graph_queries do
-    # field(:division, :division) do
-    #   arg(:division_id, non_null(:id))
-    #   resolve(&GraphResolver.call(:division, &1, &2, &3))
-    # end
+    field(:tower, :tower) do
+      arg(:tower_id, non_null(:id))
+      resolve(&GraphResolver.call(:tower, &1, &2, &3))
+    end
+
+    field(:division, :division) do
+      arg(:division_id, non_null(:id))
+      resolve(&GraphResolver.call(:division, &1, &2, &3))
+    end
 
     # field(:sub_graph_filter, :sub_graph_filter) do
     #   arg(:sub_graph_filter_id, non_null(:id))
@@ -16,10 +21,16 @@ defmodule Graphql.Types.GraphType do
   end
 
   object :graph_mutations do
-    # field(:create_division, :division) do
-    #   arg(:division, non_null(:input_division))
-    #   resolve(&GraphResolver.call(:create_division, &1, &2, &3))
-    # end
+    field(:create_tower, :tower) do
+      arg(:tower, non_null(:input_tower))
+      resolve(&GraphResolver.call(:create_tower, &1, &2, &3))
+    end
+
+    field(:create_division, :division) do
+      arg(:tower_id, non_null(:id))
+      arg(:division, non_null(:input_division))
+      resolve(&GraphResolver.call(:create_division, &1, &2, &3))
+    end
 
     # field(:create_node_type, :node_type) do
     #   arg(:division_id, non_null(:id))

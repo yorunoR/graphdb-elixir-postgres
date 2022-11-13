@@ -1,5 +1,7 @@
 if Code.ensure_loaded?(Ecto) do
   defmodule Dataloader.Ecto do
+    alias U7406.Repo
+
     @moduledoc """
     Ecto source for Dataloader
 
@@ -618,7 +620,12 @@ if Code.ensure_loaded?(Ecto) do
               start_time_mono = System.monotonic_time()
 
               emit_start_event(id, system_time, batch)
-              batch_result = run_batch(batch, source)
+
+              batch_result =
+                Repo.as_admin(fn ->
+                  run_batch(batch, source)
+                end)
+
               emit_stop_event(id, start_time_mono, batch)
 
               batch_result

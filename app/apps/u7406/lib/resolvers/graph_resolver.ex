@@ -1,0 +1,109 @@
+defmodule Resolvers.GraphResolver do
+  alias Actions.Graph.CustomField
+  alias Actions.Graph.Mutation
+  alias Actions.Graph.Query
+  alias Schemas.Account.Project
+  alias Schemas.Account.User
+  alias U7406.Repo
+
+  def call(action, parent, args, %{context: context}) do
+    case action do
+      action when action in [:tower_summary, :division_summary] ->
+        Repo.as_admin(fn ->
+          run(action, parent, args, context)
+        end)
+
+      _ ->
+        with %User{} <- Map.get(context, :current_user),
+             %Project{} = project <- Map.get(context, :current_project) do
+          Repo.as_user(project.id, fn ->
+            run(action, parent, args, context)
+          end)
+        else
+          _ -> {:error, "No current user or current project"}
+        end
+    end
+  end
+
+  def admin_call(action, parent, args, %{context: context}) do
+    Repo.as_admin(fn ->
+      run(action, parent, args, context)
+    end)
+  end
+
+  def run(action, parent, args, context) do
+    case action do
+      # CustomField
+      :tower_summary ->
+        CustomField.TowerSummary.run(parent, args, context)
+
+      :division_summary ->
+        CustomField.DivisionSummary.run(parent, args, context)
+
+      # Query
+      :tower ->
+        Query.Tower.run(parent, args, context)
+
+      :division ->
+        Query.Division.run(parent, args, context)
+
+      :sub_graph_filter ->
+        Query.SubGraphFilter.run(parent, args, context)
+
+      # Mutation
+      :create_tower ->
+        Mutation.CreateTower.run(parent, args, context)
+
+      :create_division ->
+        Mutation.CreateDivision.run(parent, args, context)
+
+      :create_node_type ->
+        Mutation.CreateNodeType.run(parent, args, context)
+
+      :update_node_type ->
+        Mutation.UpdateNodeType.run(parent, args, context)
+
+      :create_node_field ->
+        Mutation.CreateNodeField.run(parent, args, context)
+
+      :create_edge_type ->
+        Mutation.CreateEdgeType.run(parent, args, context)
+
+      :update_edge_type ->
+        Mutation.UpdateEdgeType.run(parent, args, context)
+
+      :create_edge_field ->
+        Mutation.CreateEdgeField.run(parent, args, context)
+
+      :create_rule ->
+        Mutation.CreateRule.run(parent, args, context)
+
+      :create_node ->
+        Mutation.CreateNode.run(parent, args, context)
+
+      :update_node ->
+        Mutation.UpdateNode.run(parent, args, context)
+
+      :create_edge ->
+        Mutation.CreateEdge.run(parent, args, context)
+
+      :update_edge ->
+        Mutation.UpdateEdge.run(parent, args, context)
+
+      :create_sub_graph_filter ->
+        Mutation.CreateSubGraphFilter.run(parent, args, context)
+
+      :update_sub_graph_filter ->
+        Mutation.UpdateSubGraphFilter.run(parent, args, context)
+
+      :upload_nodes ->
+        Mutation.UploadNodes.run(parent, args, context)
+
+      :upload_edges ->
+        Mutation.UploadEdges.run(parent, args, context)
+
+      _ ->
+        {:error, "Not defined in Graph context"}
+    end
+  end
+end
