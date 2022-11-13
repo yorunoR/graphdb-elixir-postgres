@@ -23,7 +23,7 @@
       </Button>
     </div>
   </Sidebar>
-  <div class="flex flex-row p-3">
+  <div class="fixed top-0 flex flex-row p-3">
     <Button
       icon="pi pi-arrow-right"
       @click="visibleLeft = true"
@@ -31,7 +31,7 @@
   </div>
   <div
     v-if="visibleMain"
-    class="p-3"
+    class="pt-6 px-3 pb-3"
   >
     <router-view />
   </div>
