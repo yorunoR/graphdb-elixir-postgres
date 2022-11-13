@@ -23,6 +23,7 @@ export type Division = {
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
+  nodeTypes: Array<NodeType>;
   project: Project;
   summary: Array<Item>;
   tower: Tower;
@@ -46,6 +47,17 @@ export type InputDivision = {
   name: Scalars['String'];
 };
 
+export type InputNodeField = {
+  name?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+  uid: Scalars['String'];
+};
+
+export type InputNodeType = {
+  name?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
+};
+
 export type InputProject = {
   name: Scalars['String'];
 };
@@ -62,6 +74,26 @@ export type Item = {
   val: Scalars['String'];
 };
 
+export type NodeField = {
+  __typename?: 'NodeField';
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  uid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type NodeType = {
+  __typename?: 'NodeType';
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  nodeFields: Array<NodeField>;
+  uid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type Project = {
   __typename?: 'Project';
   default: Scalars['Boolean'];
@@ -75,15 +107,30 @@ export type Project = {
 export type RootMutationType = {
   __typename?: 'RootMutationType';
   createDivision?: Maybe<Division>;
+  createNodeField?: Maybe<NodeField>;
+  createNodeType?: Maybe<NodeType>;
   createProject?: Maybe<Project>;
   createTower?: Maybe<Tower>;
   signinUser?: Maybe<User>;
+  updateNodeType?: Maybe<NodeType>;
 };
 
 
 export type RootMutationTypeCreateDivisionArgs = {
   division: InputDivision;
   towerId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeCreateNodeFieldArgs = {
+  nodeField: InputNodeField;
+  nodeTypeId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeCreateNodeTypeArgs = {
+  divisionId: Scalars['ID'];
+  nodeType: InputNodeType;
 };
 
 
@@ -94,6 +141,12 @@ export type RootMutationTypeCreateProjectArgs = {
 
 export type RootMutationTypeCreateTowerArgs = {
   tower: InputTower;
+};
+
+
+export type RootMutationTypeUpdateNodeTypeArgs = {
+  nodeType: InputNodeType;
+  nodeTypeId: Scalars['ID'];
 };
 
 export type RootQueryType = {
@@ -168,6 +221,22 @@ export type CreateDivisionMutationVariables = Exact<{
 
 export type CreateDivisionMutation = { __typename?: 'RootMutationType', createDivision?: { __typename?: 'Division', id: string } | null };
 
+export type CreateNodeFieldMutationVariables = Exact<{
+  nodeTypeId: Scalars['ID'];
+  nodeField: InputNodeField;
+}>;
+
+
+export type CreateNodeFieldMutation = { __typename?: 'RootMutationType', createNodeField?: { __typename?: 'NodeField', id: string } | null };
+
+export type CreateNodeTypeMutationVariables = Exact<{
+  divisionId: Scalars['ID'];
+  nodeType: InputNodeType;
+}>;
+
+
+export type CreateNodeTypeMutation = { __typename?: 'RootMutationType', createNodeType?: { __typename?: 'NodeType', id: string } | null };
+
 export type CreateProjectMutationVariables = Exact<{
   project: InputProject;
 }>;
@@ -186,6 +255,21 @@ export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
+
+export type UpdateNodeTypeMutationVariables = Exact<{
+  nodeTypeId: Scalars['ID'];
+  nodeType: InputNodeType;
+}>;
+
+
+export type UpdateNodeTypeMutation = { __typename?: 'RootMutationType', updateNodeType?: { __typename?: 'NodeType', id: string } | null };
+
+export type DivisionNodeTypesQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+}>;
+
+
+export type DivisionNodeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, nodeTypes: Array<{ __typename?: 'NodeType', id: string, name: string, uid: string, nodeFields: Array<{ __typename?: 'NodeField', id: string, name: string, type: string, uid: string }> }> } | null };
 
 export type DivisionSummaryQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -236,6 +320,28 @@ export const CreateDivisionDocument = gql`
 export function useCreateDivisionMutation() {
   return Urql.useMutation<CreateDivisionMutation, CreateDivisionMutationVariables>(CreateDivisionDocument);
 };
+export const CreateNodeFieldDocument = gql`
+    mutation CreateNodeField($nodeTypeId: ID!, $nodeField: InputNodeField!) {
+  createNodeField(nodeTypeId: $nodeTypeId, nodeField: $nodeField) {
+    id
+  }
+}
+    `;
+
+export function useCreateNodeFieldMutation() {
+  return Urql.useMutation<CreateNodeFieldMutation, CreateNodeFieldMutationVariables>(CreateNodeFieldDocument);
+};
+export const CreateNodeTypeDocument = gql`
+    mutation CreateNodeType($divisionId: ID!, $nodeType: InputNodeType!) {
+  createNodeType(divisionId: $divisionId, nodeType: $nodeType) {
+    id
+  }
+}
+    `;
+
+export function useCreateNodeTypeMutation() {
+  return Urql.useMutation<CreateNodeTypeMutation, CreateNodeTypeMutationVariables>(CreateNodeTypeDocument);
+};
 export const CreateProjectDocument = gql`
     mutation CreateProject($project: InputProject!) {
   createProject(project: $project) {
@@ -268,6 +374,40 @@ export const SigninUserDocument = gql`
 
 export function useSigninUserMutation() {
   return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
+};
+export const UpdateNodeTypeDocument = gql`
+    mutation UpdateNodeType($nodeTypeId: ID!, $nodeType: InputNodeType!) {
+  updateNodeType(nodeTypeId: $nodeTypeId, nodeType: $nodeType) {
+    id
+  }
+}
+    `;
+
+export function useUpdateNodeTypeMutation() {
+  return Urql.useMutation<UpdateNodeTypeMutation, UpdateNodeTypeMutationVariables>(UpdateNodeTypeDocument);
+};
+export const DivisionNodeTypesDocument = gql`
+    query DivisionNodeTypes($divisionId: ID!) {
+  division(divisionId: $divisionId) {
+    id
+    name
+    nodeTypes {
+      id
+      name
+      uid
+      nodeFields {
+        id
+        name
+        type
+        uid
+      }
+    }
+  }
+}
+    `;
+
+export function useDivisionNodeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionNodeTypesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DivisionNodeTypesQuery>({ query: DivisionNodeTypesDocument, ...options });
 };
 export const DivisionSummaryDocument = gql`
     query DivisionSummary($divisionId: ID!, $selections: [String!]!) {

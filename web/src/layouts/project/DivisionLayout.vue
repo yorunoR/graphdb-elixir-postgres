@@ -38,7 +38,6 @@
                   Summary
                 </router-link>
               </li>
-              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'node_types', params: { divisionId } }"
@@ -47,6 +46,7 @@
                   NodeTypes
                 </router-link>
               </li>
+              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'edge_types', params: { divisionId } }"
