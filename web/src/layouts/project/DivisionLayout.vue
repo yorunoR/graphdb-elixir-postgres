@@ -57,7 +57,6 @@
                   EdgeTypes
                 </router-link>
               </li>
-              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'nodes', params: { divisionId } }"
@@ -66,6 +65,7 @@
                   Nodes
                 </router-link>
               </li>
+              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'edges', params: { divisionId } }"
