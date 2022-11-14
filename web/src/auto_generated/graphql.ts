@@ -20,6 +20,7 @@ export type Division = {
   __typename?: 'Division';
   changedAt?: Maybe<Scalars['DateTime']>;
   divisionHash: Scalars['String'];
+  edgeTypes: Array<EdgeType>;
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
@@ -43,8 +44,40 @@ export type DivisionList = {
   total: Scalars['Int'];
 };
 
+export type EdgeField = {
+  __typename?: 'EdgeField';
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  uid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type EdgeType = {
+  __typename?: 'EdgeType';
+  edgeFields: Array<EdgeField>;
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  rules: Array<Rule>;
+  uid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type InputDivision = {
   name: Scalars['String'];
+};
+
+export type InputEdgeField = {
+  name?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+  uid: Scalars['String'];
+};
+
+export type InputEdgeType = {
+  name?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
 };
 
 export type InputNodeField = {
@@ -60,6 +93,14 @@ export type InputNodeType = {
 
 export type InputProject = {
   name: Scalars['String'];
+};
+
+export type InputRule = {
+  direction?: InputMaybe<Scalars['String']>;
+  endNodeTypeId: Scalars['ID'];
+  name: Scalars['String'];
+  startNodeTypeId: Scalars['ID'];
+  uid: Scalars['String'];
 };
 
 export type InputTower = {
@@ -107,11 +148,15 @@ export type Project = {
 export type RootMutationType = {
   __typename?: 'RootMutationType';
   createDivision?: Maybe<Division>;
+  createEdgeField?: Maybe<EdgeField>;
+  createEdgeType?: Maybe<EdgeType>;
   createNodeField?: Maybe<NodeField>;
   createNodeType?: Maybe<NodeType>;
   createProject?: Maybe<Project>;
+  createRule?: Maybe<Rule>;
   createTower?: Maybe<Tower>;
   signinUser?: Maybe<User>;
+  updateEdgeType?: Maybe<EdgeType>;
   updateNodeType?: Maybe<NodeType>;
 };
 
@@ -119,6 +164,18 @@ export type RootMutationType = {
 export type RootMutationTypeCreateDivisionArgs = {
   division: InputDivision;
   towerId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeCreateEdgeFieldArgs = {
+  edgeField: InputEdgeField;
+  edgeTypeId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeCreateEdgeTypeArgs = {
+  divisionId: Scalars['ID'];
+  edgeType: InputEdgeType;
 };
 
 
@@ -139,8 +196,20 @@ export type RootMutationTypeCreateProjectArgs = {
 };
 
 
+export type RootMutationTypeCreateRuleArgs = {
+  edgeTypeId: Scalars['ID'];
+  rule: InputRule;
+};
+
+
 export type RootMutationTypeCreateTowerArgs = {
   tower: InputTower;
+};
+
+
+export type RootMutationTypeUpdateEdgeTypeArgs = {
+  edgeType: InputEdgeType;
+  edgeTypeId: Scalars['ID'];
 };
 
 
@@ -171,6 +240,18 @@ export type RootQueryTypeTowerArgs = {
 export type RootSubscriptionType = {
   __typename?: 'RootSubscriptionType';
   newUser: User;
+};
+
+export type Rule = {
+  __typename?: 'Rule';
+  direction: Scalars['String'];
+  endNodeType: NodeType;
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  startNodeType: NodeType;
+  uid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Status = {
@@ -221,6 +302,22 @@ export type CreateDivisionMutationVariables = Exact<{
 
 export type CreateDivisionMutation = { __typename?: 'RootMutationType', createDivision?: { __typename?: 'Division', id: string } | null };
 
+export type CreateEdgeFieldMutationVariables = Exact<{
+  edgeTypeId: Scalars['ID'];
+  edgeField: InputEdgeField;
+}>;
+
+
+export type CreateEdgeFieldMutation = { __typename?: 'RootMutationType', createEdgeField?: { __typename?: 'EdgeField', id: string } | null };
+
+export type CreateEdgeTypeMutationVariables = Exact<{
+  divisionId: Scalars['ID'];
+  edgeType: InputEdgeType;
+}>;
+
+
+export type CreateEdgeTypeMutation = { __typename?: 'RootMutationType', createEdgeType?: { __typename?: 'EdgeType', id: string } | null };
+
 export type CreateNodeFieldMutationVariables = Exact<{
   nodeTypeId: Scalars['ID'];
   nodeField: InputNodeField;
@@ -244,6 +341,14 @@ export type CreateProjectMutationVariables = Exact<{
 
 export type CreateProjectMutation = { __typename?: 'RootMutationType', createProject?: { __typename?: 'Project', id: string } | null };
 
+export type CreateRuleMutationVariables = Exact<{
+  edgeTypeId: Scalars['ID'];
+  rule: InputRule;
+}>;
+
+
+export type CreateRuleMutation = { __typename?: 'RootMutationType', createRule?: { __typename?: 'Rule', id: string } | null };
+
 export type CreateTowerMutationVariables = Exact<{
   tower: InputTower;
 }>;
@@ -256,6 +361,14 @@ export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
 
+export type UpdateEdgeTypeMutationVariables = Exact<{
+  edgeTypeId: Scalars['ID'];
+  edgeType: InputEdgeType;
+}>;
+
+
+export type UpdateEdgeTypeMutation = { __typename?: 'RootMutationType', updateEdgeType?: { __typename?: 'EdgeType', id: string } | null };
+
 export type UpdateNodeTypeMutationVariables = Exact<{
   nodeTypeId: Scalars['ID'];
   nodeType: InputNodeType;
@@ -263,6 +376,13 @@ export type UpdateNodeTypeMutationVariables = Exact<{
 
 
 export type UpdateNodeTypeMutation = { __typename?: 'RootMutationType', updateNodeType?: { __typename?: 'NodeType', id: string } | null };
+
+export type DivisionEdgeTypesQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+}>;
+
+
+export type DivisionEdgeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edgeTypes: Array<{ __typename?: 'EdgeType', id: string, name: string, uid: string, edgeFields: Array<{ __typename?: 'EdgeField', id: string, name: string, type: string, uid: string }>, rules: Array<{ __typename?: 'Rule', id: string, name: string, uid: string, startNodeType: { __typename?: 'NodeType', id: string, name: string }, endNodeType: { __typename?: 'NodeType', id: string, name: string } }> }> } | null };
 
 export type DivisionNodeTypesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -320,6 +440,28 @@ export const CreateDivisionDocument = gql`
 export function useCreateDivisionMutation() {
   return Urql.useMutation<CreateDivisionMutation, CreateDivisionMutationVariables>(CreateDivisionDocument);
 };
+export const CreateEdgeFieldDocument = gql`
+    mutation CreateEdgeField($edgeTypeId: ID!, $edgeField: InputEdgeField!) {
+  createEdgeField(edgeTypeId: $edgeTypeId, edgeField: $edgeField) {
+    id
+  }
+}
+    `;
+
+export function useCreateEdgeFieldMutation() {
+  return Urql.useMutation<CreateEdgeFieldMutation, CreateEdgeFieldMutationVariables>(CreateEdgeFieldDocument);
+};
+export const CreateEdgeTypeDocument = gql`
+    mutation CreateEdgeType($divisionId: ID!, $edgeType: InputEdgeType!) {
+  createEdgeType(divisionId: $divisionId, edgeType: $edgeType) {
+    id
+  }
+}
+    `;
+
+export function useCreateEdgeTypeMutation() {
+  return Urql.useMutation<CreateEdgeTypeMutation, CreateEdgeTypeMutationVariables>(CreateEdgeTypeDocument);
+};
 export const CreateNodeFieldDocument = gql`
     mutation CreateNodeField($nodeTypeId: ID!, $nodeField: InputNodeField!) {
   createNodeField(nodeTypeId: $nodeTypeId, nodeField: $nodeField) {
@@ -353,6 +495,17 @@ export const CreateProjectDocument = gql`
 export function useCreateProjectMutation() {
   return Urql.useMutation<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument);
 };
+export const CreateRuleDocument = gql`
+    mutation CreateRule($edgeTypeId: ID!, $rule: InputRule!) {
+  createRule(edgeTypeId: $edgeTypeId, rule: $rule) {
+    id
+  }
+}
+    `;
+
+export function useCreateRuleMutation() {
+  return Urql.useMutation<CreateRuleMutation, CreateRuleMutationVariables>(CreateRuleDocument);
+};
 export const CreateTowerDocument = gql`
     mutation CreateTower($tower: InputTower!) {
   createTower(tower: $tower) {
@@ -375,6 +528,17 @@ export const SigninUserDocument = gql`
 export function useSigninUserMutation() {
   return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
 };
+export const UpdateEdgeTypeDocument = gql`
+    mutation UpdateEdgeType($edgeTypeId: ID!, $edgeType: InputEdgeType!) {
+  updateEdgeType(edgeTypeId: $edgeTypeId, edgeType: $edgeType) {
+    id
+  }
+}
+    `;
+
+export function useUpdateEdgeTypeMutation() {
+  return Urql.useMutation<UpdateEdgeTypeMutation, UpdateEdgeTypeMutationVariables>(UpdateEdgeTypeDocument);
+};
 export const UpdateNodeTypeDocument = gql`
     mutation UpdateNodeType($nodeTypeId: ID!, $nodeType: InputNodeType!) {
   updateNodeType(nodeTypeId: $nodeTypeId, nodeType: $nodeType) {
@@ -385,6 +549,42 @@ export const UpdateNodeTypeDocument = gql`
 
 export function useUpdateNodeTypeMutation() {
   return Urql.useMutation<UpdateNodeTypeMutation, UpdateNodeTypeMutationVariables>(UpdateNodeTypeDocument);
+};
+export const DivisionEdgeTypesDocument = gql`
+    query DivisionEdgeTypes($divisionId: ID!) {
+  division(divisionId: $divisionId) {
+    id
+    name
+    edgeTypes {
+      id
+      name
+      uid
+      edgeFields {
+        id
+        name
+        type
+        uid
+      }
+      rules {
+        id
+        name
+        uid
+        startNodeType {
+          id
+          name
+        }
+        endNodeType {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+export function useDivisionEdgeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionEdgeTypesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DivisionEdgeTypesQuery>({ query: DivisionEdgeTypesDocument, ...options });
 };
 export const DivisionNodeTypesDocument = gql`
     query DivisionNodeTypes($divisionId: ID!) {
