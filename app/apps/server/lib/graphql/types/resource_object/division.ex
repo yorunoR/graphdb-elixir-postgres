@@ -21,13 +21,13 @@ defmodule Graphql.Types.ResourceObject.Division do
       resolve(dataloader(:db))
     end
 
-    # field(:node_types, non_null(list_of(non_null(:node_type)))) do
-    #   resolve(dataloader(:db))
-    # end
+    field(:node_types, non_null(list_of(non_null(:node_type)))) do
+      resolve(dataloader(:db))
+    end
 
-    # field(:edge_types, non_null(list_of(non_null(:edge_type)))) do
-    #   resolve(dataloader(:db))
-    # end
+    field(:edge_types, non_null(list_of(non_null(:edge_type)))) do
+      resolve(dataloader(:db))
+    end
 
     # field(:nodes, non_null(:node_list)) do
     #   arg(:offset, :integer)
