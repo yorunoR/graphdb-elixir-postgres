@@ -6,7 +6,7 @@
       <section>
         <h2>Tower</h2>
         <div v-if="data">
-          <ProjectMolecule v-bind="data.tower.project" />
+          <ProjectMolecule v-bind="data.tower?.project" />
           <TowerMolecule
             class="mt-1"
             v-bind="data.tower"

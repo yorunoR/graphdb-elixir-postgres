@@ -21,7 +21,7 @@
       >
         Oh no... {{ error }}
       </div>
-      <ul v-else-if="data">
+      <ul v-else-if="data && data.tower">
         <li
           v-for="division in data.tower.divisions.entries"
           :key="division.id"
@@ -39,7 +39,7 @@
       </ul>
       <Paginator
         :rows="limit"
-        :total-records="data ? data.tower.divisions.total : 0"
+        :total-records="data && data.tower ? data.tower.divisions.total : 0"
         @page="onPage($event)"
       />
     </section>
