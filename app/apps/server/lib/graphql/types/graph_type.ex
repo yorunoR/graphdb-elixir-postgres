@@ -85,16 +85,16 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:update_node, &1, &2, &3))
     end
 
-    # field(:create_edge, :edge) do
-    #   arg(:edge, non_null(:input_edge))
-    #   resolve(&GraphResolver.call(:create_edge, &1, &2, &3))
-    # end
+    field(:create_edge, :edge) do
+      arg(:edge, non_null(:input_edge))
+      resolve(&GraphResolver.call(:create_edge, &1, &2, &3))
+    end
 
-    # field(:update_edge, :edge) do
-    #   arg(:edge_id, non_null(:id))
-    #   arg(:edge, non_null(:input_edge))
-    #   resolve(&GraphResolver.call(:update_edge, &1, &2, &3))
-    # end
+    field(:update_edge, :edge) do
+      arg(:edge_id, non_null(:id))
+      arg(:edge, non_null(:input_edge))
+      resolve(&GraphResolver.call(:update_edge, &1, &2, &3))
+    end
 
     # field(:create_sub_graph_filter, :sub_graph_filter) do
     #   arg(:division_id, non_null(:id))
