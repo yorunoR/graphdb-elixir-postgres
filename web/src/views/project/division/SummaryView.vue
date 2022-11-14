@@ -22,21 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import { useDivisionSummaryQuery } from '@/auto_generated/graphql'
+import { callDivisionSummaryQuery } from '@/call/queries'
 
 const props = defineProps<{
   divisionId: string;
 }>()
 
-const { data } = useDivisionSummaryQuery({
-  variables: {
-    divisionId: props.divisionId,
-    selections: [
-      'nodeTypeCount',
-      'edgeTypeCount',
-      'nodeCount',
-      'edgeCount'
-    ]
-  }
-})
+const { data } = callDivisionSummaryQuery(props.divisionId)
 </script>

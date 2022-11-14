@@ -116,7 +116,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { useDivisionSummaryQuery } from '@/auto_generated/graphql'
+import { callDivisionSummaryQuery } from '@/call/queries'
 import DivisionMolecule from '@/components/molecules/DivisionMolecule.vue'
 import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
 import TowerMolecule from '@/components/molecules/TowerMolecule.vue'
@@ -129,17 +129,7 @@ const props = defineProps<{
 
 const visibleLeft = ref(false)
 
-const { data } = useDivisionSummaryQuery({
-  variables: {
-    divisionId: props.divisionId,
-    selections: [
-      'nodeTypeCount',
-      'edgeTypeCount',
-      'nodeCount',
-      'edgeCount'
-    ]
-  }
-})
+const { data } = callDivisionSummaryQuery(props.divisionId)
 
 const signOut = async () => {
   await firebase.signout()

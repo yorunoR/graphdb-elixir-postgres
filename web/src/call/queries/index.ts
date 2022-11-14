@@ -1,10 +1,12 @@
 import type { UseQueryResponse, AnyVariables } from '@urql/vue'
 
 import {
+  useDivisionSummaryQuery,
   useDivisionNodeTypesQuery,
   useDivisionEdgeTypesQuery
 } from '@/auto_generated/graphql'
 import type {
+  DivisionSummaryQuery,
   DivisionNodeTypesQuery,
   DivisionEdgeTypesQuery
 } from '@/auto_generated/graphql'
@@ -24,5 +26,22 @@ export const callDivisionEdgeTypesQuery = (
   return useDivisionEdgeTypesQuery({
     variables: { divisionId },
     context: { additionalTypenames: ['EdgeType', 'EdgeField', 'Rule'] }
+  })
+}
+
+export const callDivisionSummaryQuery = (
+  divisionId: string
+): UseQueryResponse<DivisionSummaryQuery, AnyVariables> => {
+  return useDivisionSummaryQuery({
+    variables: {
+      divisionId,
+      selections: [
+        'nodeTypeCount',
+        'edgeTypeCount',
+        'nodeCount',
+        'edgeCount'
+      ]
+    },
+    context: { additionalTypenames: ['NodeType', 'Node', 'EdgeType', 'Edge'] }
   })
 }
