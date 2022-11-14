@@ -30,7 +30,7 @@ const signIn = async () => {
       detail: result.error.message
     })
   } else {
-    router.push({ name: 'select' })
+    router.push({ name: 'towers' })
   }
 }
 </script>

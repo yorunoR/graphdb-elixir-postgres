@@ -12,7 +12,7 @@ import TowerLayout from '@/layouts/project/TowerLayout.vue'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/board/select'
+    redirect: '/project/area/towers'
   },
   {
     path: '/',
