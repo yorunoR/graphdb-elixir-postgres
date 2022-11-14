@@ -4,7 +4,7 @@
     <section>
       <div v-if="data">
         <DataTable
-          :value="data.division.summary"
+          :value="data.division?.summary"
           responsive-layout="scroll"
         >
           <Column

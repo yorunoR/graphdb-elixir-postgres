@@ -6,10 +6,10 @@
       <section>
         <h2>Division</h2>
         <div v-if="data">
-          <ProjectMolecule v-bind="data.division.project" />
+          <ProjectMolecule v-bind="data.division?.project" />
           <TowerMolecule
             class="mt-1"
-            v-bind="data.division.tower"
+            v-bind="data.division?.tower"
           />
           <DivisionMolecule
             class="mt-1"
@@ -22,7 +22,10 @@
               Towers
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            v-if="data.division"
+            style="border: none"
+          >
             <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
               Divisions
             </router-link>
