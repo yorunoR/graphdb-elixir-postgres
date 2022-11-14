@@ -6,6 +6,8 @@ import 'primevue/resources/primevue.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
+import Column from 'primevue/column'
+import DataTable from 'primevue/datatable'
 import InputText from 'primevue/inputtext'
 import Paginator from 'primevue/paginator'
 import RadioButton from 'primevue/radiobutton'
@@ -27,6 +29,8 @@ createApp(App)
   .use(ToastService)
   .component('Button', Button)
   .component('Chip', Chip)
+  .component('Column', Column)
+  .component('DataTable', DataTable)
   .component('InputText', InputText)
   .component('Paginator', Paginator)
   .component('RadioButton', RadioButton)
