@@ -51,9 +51,9 @@ defmodule Graphql.Types.ResourceObject.Division do
       )
     end
 
-    # field(:sub_graph_filters, non_null(list_of(non_null(:sub_graph_filter)))) do
-    #   resolve(dataloader(:db))
-    # end
+    field(:sub_graph_filters, non_null(list_of(non_null(:sub_graph_filter)))) do
+      resolve(dataloader(:db))
+    end
 
     # field(:upload_operations, non_null(list_of(non_null(:upload_operation)))) do
     #   resolve(dataloader(:db))

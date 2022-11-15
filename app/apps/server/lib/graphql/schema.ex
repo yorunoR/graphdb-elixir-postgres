@@ -27,7 +27,7 @@ defmodule Graphql.Schema do
   import_types(InputObject.InputEdgeType)
   import_types(InputObject.InputEdgeField)
   import_types(InputObject.InputRule)
-  # import_types(InputObject.InputSubGraphFilter)
+  import_types(InputObject.InputSubGraphFilter)
   import_types(CustomObject.Item)
   import_types(CustomObject.Status)
   import_types(CustomObject.DivisionList)
@@ -44,7 +44,7 @@ defmodule Graphql.Schema do
   import_types(ResourceObject.EdgeType)
   import_types(ResourceObject.EdgeField)
   import_types(ResourceObject.Rule)
-  # import_types(ResourceObject.SubGraphFilter)
+  import_types(ResourceObject.SubGraphFilter)
   import_types(ResourceObject.User)
 
   query do
