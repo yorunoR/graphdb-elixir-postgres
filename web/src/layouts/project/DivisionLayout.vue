@@ -3,7 +3,9 @@
     <div
       class="h-screen adjust-height flex flex-column justify-content-between"
     >
-      <section>
+      <section
+        style="height: calc(100% - 72px)"
+      >
         <h2>Division</h2>
         <div v-if="data">
           <ProjectMolecule v-bind="data.division?.project" />
@@ -16,7 +18,10 @@
             v-bind="data.division"
           />
         </div>
-        <ul>
+        <ul
+          style="height: calc(100% - 140px)"
+          class="overflow-y-scroll"
+        >
           <li style="border: none">
             <router-link :to="{ name: 'towers' }">
               Towers
