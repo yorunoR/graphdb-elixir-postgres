@@ -6,8 +6,8 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import ProjectLayout from '@/layouts/ProjectLayout.vue'
 import AreaLayout from '@/layouts/project/AreaLayout.vue'
 import DivisionLayout from '@/layouts/project/DivisionLayout.vue'
+import SubGraphLayout from '@/layouts/project/SubGraphLayout.vue'
 import TowerLayout from '@/layouts/project/TowerLayout.vue'
-// import SubGraphLayout from "@/layouts/project/SubGraphLayout.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -149,15 +149,15 @@ const routes: RouteRecordRaw[] = [
               await import(
                 /* webpackChunkName: "edges" */ '@/views/project/division/EdgesView.vue'
               )
+          },
+          {
+            path: 'sub_graph_filters',
+            name: 'sub_graph_filters',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "sub_graph_filters" */ '@/views/project/division/SubGraphFiltersView.vue'
+              )
           }
-          // {
-          //   path: "sub_graph_filters",
-          //   name: "sub_graph_filters",
-          //   component: async () =>
-          //     await import(
-          //       /* webpackChunkName: "sub_graph_filters" */ "@/views/project/division/SubGraphFiltersView.vue"
-          //     ),
-          // },
           // {
           //   path: "upload_csv",
           //   name: "upload_csv",
@@ -167,22 +167,22 @@ const routes: RouteRecordRaw[] = [
           //     ),
           // },
         ]
+      },
+      {
+        path: 'sub_graph/:subGraphFilterId(\\d+)',
+        component: SubGraphLayout,
+        props: (route) => ({ subGraphFilterId: route.params.subGraphFilterId }),
+        children: [
+          {
+            path: 'search',
+            name: 'search',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "search" */ '@/views/project/sub_graph/SearchView.vue'
+              )
+          }
+        ]
       }
-      // {
-      //   path: "sub_graph/:subGraphFilterId(\\d+)",
-      //   component: SubGraphLayout,
-      //   props: (route) => ({ subGraphFilterId: route.params.subGraphFilterId }),
-      //   children: [
-      //     {
-      //       path: "search",
-      //       name: "search",
-      //       component: async () =>
-      //         await import(
-      //           /* webpackChunkName: "search" */ "@/views/project/sub_graph/SearchView.vue"
-      //         ),
-      //     },
-      //   ],
-      // },
     ]
   }
 ]
