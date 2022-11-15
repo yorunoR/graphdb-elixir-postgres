@@ -14,10 +14,10 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:division, &1, &2, &3))
     end
 
-    # field(:sub_graph_filter, :sub_graph_filter) do
-    #   arg(:sub_graph_filter_id, non_null(:id))
-    #   resolve(&GraphResolver.call(:sub_graph_filter, &1, &2, &3))
-    # end
+    field(:sub_graph_filter, :sub_graph_filter) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      resolve(&GraphResolver.call(:sub_graph_filter, &1, &2, &3))
+    end
   end
 
   object :graph_mutations do
@@ -96,16 +96,16 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:update_edge, &1, &2, &3))
     end
 
-    # field(:create_sub_graph_filter, :sub_graph_filter) do
-    #   arg(:division_id, non_null(:id))
-    #   arg(:sub_graph_filter, non_null(:input_sub_graph_filter))
-    #   resolve(&GraphResolver.call(:create_sub_graph_filter, &1, &2, &3))
-    # end
+    field(:create_sub_graph_filter, :sub_graph_filter) do
+      arg(:division_id, non_null(:id))
+      arg(:sub_graph_filter, non_null(:input_sub_graph_filter))
+      resolve(&GraphResolver.call(:create_sub_graph_filter, &1, &2, &3))
+    end
 
-    # field(:update_sub_graph_filter, :sub_graph_filter) do
-    #   arg(:sub_graph_filter_id, non_null(:id))
-    #   arg(:sub_graph_filter, non_null(:input_sub_graph_filter))
-    #   resolve(&GraphResolver.call(:update_sub_graph_filter, &1, &2, &3))
-    # end
+    field(:update_sub_graph_filter, :sub_graph_filter) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      arg(:sub_graph_filter, non_null(:input_sub_graph_filter))
+      resolve(&GraphResolver.call(:update_sub_graph_filter, &1, &2, &3))
+    end
   end
 end
