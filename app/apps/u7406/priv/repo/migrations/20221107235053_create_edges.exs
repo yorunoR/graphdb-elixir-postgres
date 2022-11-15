@@ -17,7 +17,7 @@ defmodule U7406.Repo.Migrations.CreateEdges do
 
       add :name, :string, null: false
       add :props, :map, default: "{}"
-      add :rondom, :integer, null: false
+      add :random, :integer, null: false
 
       timestamps()
       soft_delete_columns()
@@ -33,9 +33,9 @@ defmodule U7406.Repo.Migrations.CreateEdges do
     create index(:edges, [:end_node_type_id])
     create index(:edges, [:end_node_id])
 
-    create index(:edges, [:division_id, :rondom],
+    create index(:edges, [:division_id, :random],
              unique: true,
-             name: :edges_rondom_uniq_index
+             name: :edges_random_uniq_index
            )
 
     add_policies(:edges, [

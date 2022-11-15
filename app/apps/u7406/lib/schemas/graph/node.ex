@@ -19,7 +19,7 @@ defmodule Schemas.Graph.Node do
     field :start_edge_ids, :map
     field :end_edge_ids, :map
     field :props, :map
-    field :rondom, :integer
+    field :random, :integer
 
     timestamps()
     soft_delete_schema()

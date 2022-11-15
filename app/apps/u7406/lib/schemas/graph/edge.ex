@@ -23,7 +23,7 @@ defmodule Schemas.Graph.Edge do
 
     field :name, :string
     field :props, :map
-    field :rondom, :integer
+    field :random, :integer
 
     timestamps()
     soft_delete_schema()

@@ -29,27 +29,27 @@ defmodule Graphql.Types.ResourceObject.Division do
       resolve(dataloader(:db))
     end
 
-    # field(:nodes, non_null(:node_list)) do
-    #   arg(:offset, :integer)
-    #   arg(:limit, :integer)
+    field(:nodes, non_null(:node_list)) do
+      arg(:offset, :integer, default_value: 0)
+      arg(:limit, :integer, default_value: 10)
 
-    #   resolve(
-    #     dataloader(:db,
-    #       callback: &Db.graph_pagination_callback(&1, &2, &3, [:division_summary, :node_count])
-    #     )
-    #   )
-    # end
+      resolve(
+        dataloader(:db,
+          callback: &Db.graph_pagination_callback(&1, &2, &3, [:division_summary, "nodeCount"])
+        )
+      )
+    end
 
-    # field(:edges, non_null(:edge_list)) do
-    #   arg(:offset, :integer)
-    #   arg(:limit, :integer)
+    field(:edges, non_null(:edge_list)) do
+      arg(:offset, :integer, default_value: 0)
+      arg(:limit, :integer, default_value: 10)
 
-    #   resolve(
-    #     dataloader(:db,
-    #       callback: &Db.graph_pagination_callback(&1, &2, &3, [:division_summary, :edge_count])
-    #     )
-    #   )
-    # end
+      resolve(
+        dataloader(:db,
+          callback: &Db.graph_pagination_callback(&1, &2, &3, [:division_summary, "edgeCount"])
+        )
+      )
+    end
 
     # field(:sub_graph_filters, non_null(list_of(non_null(:sub_graph_filter)))) do
     #   resolve(dataloader(:db))
