@@ -157,15 +157,15 @@ const routes: RouteRecordRaw[] = [
               await import(
                 /* webpackChunkName: "sub_graph_filters" */ '@/views/project/division/SubGraphFiltersView.vue'
               )
+          },
+          {
+            path: 'upload_csv',
+            name: 'upload_csv',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "upload_csv" */ '@/views/project/division/UploadCsvView.vue'
+              )
           }
-          // {
-          //   path: "upload_csv",
-          //   name: "upload_csv",
-          //   component: async () =>
-          //     await import(
-          //       /* webpackChunkName: "upload_csv" */ "@/views/project/division/UploadCsvView.vue"
-          //     ),
-          // },
         ]
       },
       {
