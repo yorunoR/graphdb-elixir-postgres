@@ -28,6 +28,7 @@ export type Division = {
   nodeTypes: Array<NodeType>;
   nodes: NodeList;
   project: Project;
+  subGraphFilters: Array<SubGraphFilter>;
   summary: Array<Item>;
   tower: Tower;
   updatedAt: Scalars['DateTime'];
@@ -79,6 +80,11 @@ export type EdgeField = {
   type: Scalars['String'];
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type EdgeFilter = {
+  __typename?: 'EdgeFilter';
+  edgeTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type EdgeList = {
@@ -158,6 +164,11 @@ export type InputRule = {
   uid: Scalars['String'];
 };
 
+export type InputSubGraphFilter = {
+  name: Scalars['String'];
+  uid: Scalars['String'];
+};
+
 export type InputTower = {
   inheritable?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
@@ -190,6 +201,11 @@ export type NodeField = {
   type: Scalars['String'];
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type NodeFilter = {
+  __typename?: 'NodeFilter';
+  uids?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type NodeList = {
@@ -231,12 +247,14 @@ export type RootMutationType = {
   createNodeType?: Maybe<NodeType>;
   createProject?: Maybe<Project>;
   createRule?: Maybe<Rule>;
+  createSubGraphFilter?: Maybe<SubGraphFilter>;
   createTower?: Maybe<Tower>;
   signinUser?: Maybe<User>;
   updateEdge?: Maybe<Edge>;
   updateEdgeType?: Maybe<EdgeType>;
   updateNode?: Maybe<Node>;
   updateNodeType?: Maybe<NodeType>;
+  updateSubGraphFilter?: Maybe<SubGraphFilter>;
 };
 
 
@@ -291,6 +309,12 @@ export type RootMutationTypeCreateRuleArgs = {
 };
 
 
+export type RootMutationTypeCreateSubGraphFilterArgs = {
+  divisionId: Scalars['ID'];
+  subGraphFilter: InputSubGraphFilter;
+};
+
+
 export type RootMutationTypeCreateTowerArgs = {
   tower: InputTower;
 };
@@ -319,18 +343,30 @@ export type RootMutationTypeUpdateNodeTypeArgs = {
   nodeTypeId: Scalars['ID'];
 };
 
+
+export type RootMutationTypeUpdateSubGraphFilterArgs = {
+  subGraphFilter: InputSubGraphFilter;
+  subGraphFilterId: Scalars['ID'];
+};
+
 export type RootQueryType = {
   __typename?: 'RootQueryType';
   currentProject?: Maybe<Project>;
   currentUser: User;
   division?: Maybe<Division>;
   ping: Status;
+  subGraphFilter?: Maybe<SubGraphFilter>;
   tower?: Maybe<Tower>;
 };
 
 
 export type RootQueryTypeDivisionArgs = {
   divisionId: Scalars['ID'];
+};
+
+
+export type RootQueryTypeSubGraphFilterArgs = {
+  subGraphFilterId: Scalars['ID'];
 };
 
 
@@ -358,6 +394,20 @@ export type Rule = {
 export type Status = {
   __typename?: 'Status';
   status?: Maybe<Scalars['Boolean']>;
+};
+
+export type SubGraphFilter = {
+  __typename?: 'SubGraphFilter';
+  division: Division;
+  edgeFilter?: Maybe<EdgeFilter>;
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  nodeFilter?: Maybe<NodeFilter>;
+  project: Project;
+  tower: Tower;
+  uid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Tower = {
@@ -464,6 +514,14 @@ export type CreateRuleMutationVariables = Exact<{
 
 export type CreateRuleMutation = { __typename?: 'RootMutationType', createRule?: { __typename?: 'Rule', id: string } | null };
 
+export type CreateSubGraphFilterMutationVariables = Exact<{
+  divisionId: Scalars['ID'];
+  subGraphFilter: InputSubGraphFilter;
+}>;
+
+
+export type CreateSubGraphFilterMutation = { __typename?: 'RootMutationType', createSubGraphFilter?: { __typename?: 'SubGraphFilter', id: string } | null };
+
 export type CreateTowerMutationVariables = Exact<{
   tower: InputTower;
 }>;
@@ -508,6 +566,14 @@ export type UpdateNodeTypeMutationVariables = Exact<{
 
 export type UpdateNodeTypeMutation = { __typename?: 'RootMutationType', updateNodeType?: { __typename?: 'NodeType', id: string } | null };
 
+export type UpdateSubGraphFilterMutationVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+  subGraphFilter: InputSubGraphFilter;
+}>;
+
+
+export type UpdateSubGraphFilterMutation = { __typename?: 'RootMutationType', updateSubGraphFilter?: { __typename?: 'SubGraphFilter', id: string } | null };
+
 export type DivisionEdgeTypesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
 }>;
@@ -540,6 +606,13 @@ export type DivisionNodesQueryVariables = Exact<{
 
 export type DivisionNodesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, nodes: { __typename?: 'NodeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Node', id: string, name: string, uid: string, nodeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, nodeType: { __typename?: 'NodeType', id: string, name: string } }> } } | null };
 
+export type DivisionSubGraphFiltersQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+}>;
+
+
+export type DivisionSubGraphFiltersQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, subGraphFilters: Array<{ __typename?: 'SubGraphFilter', id: string, name: string, uid: string }> } | null };
+
 export type DivisionSummaryQueryVariables = Exact<{
   divisionId: Scalars['ID'];
   selections: Array<Scalars['String']> | Scalars['String'];
@@ -557,6 +630,13 @@ export type ProjectTowersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProjectTowersQuery = { __typename?: 'RootQueryType', currentProject?: { __typename?: 'Project', id: string, name: string, towers: Array<{ __typename?: 'Tower', id: string, name: string }> } | null };
+
+export type SubGraphFilterQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type SubGraphFilterQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, name: string, uid: string, division: { __typename?: 'Division', id: string, name: string }, tower: { __typename?: 'Tower', id: string, name: string }, project: { __typename?: 'Project', id: string, name: string, default: boolean } } | null };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -677,6 +757,17 @@ export const CreateRuleDocument = gql`
 export function useCreateRuleMutation() {
   return Urql.useMutation<CreateRuleMutation, CreateRuleMutationVariables>(CreateRuleDocument);
 };
+export const CreateSubGraphFilterDocument = gql`
+    mutation CreateSubGraphFilter($divisionId: ID!, $subGraphFilter: InputSubGraphFilter!) {
+  createSubGraphFilter(divisionId: $divisionId, subGraphFilter: $subGraphFilter) {
+    id
+  }
+}
+    `;
+
+export function useCreateSubGraphFilterMutation() {
+  return Urql.useMutation<CreateSubGraphFilterMutation, CreateSubGraphFilterMutationVariables>(CreateSubGraphFilterDocument);
+};
 export const CreateTowerDocument = gql`
     mutation CreateTower($tower: InputTower!) {
   createTower(tower: $tower) {
@@ -742,6 +833,20 @@ export const UpdateNodeTypeDocument = gql`
 
 export function useUpdateNodeTypeMutation() {
   return Urql.useMutation<UpdateNodeTypeMutation, UpdateNodeTypeMutationVariables>(UpdateNodeTypeDocument);
+};
+export const UpdateSubGraphFilterDocument = gql`
+    mutation UpdateSubGraphFilter($subGraphFilterId: ID!, $subGraphFilter: InputSubGraphFilter!) {
+  updateSubGraphFilter(
+    subGraphFilterId: $subGraphFilterId
+    subGraphFilter: $subGraphFilter
+  ) {
+    id
+  }
+}
+    `;
+
+export function useUpdateSubGraphFilterMutation() {
+  return Urql.useMutation<UpdateSubGraphFilterMutation, UpdateSubGraphFilterMutationVariables>(UpdateSubGraphFilterDocument);
 };
 export const DivisionEdgeTypesDocument = gql`
     query DivisionEdgeTypes($divisionId: ID!) {
@@ -874,6 +979,23 @@ export const DivisionNodesDocument = gql`
 export function useDivisionNodesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionNodesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionNodesQuery>({ query: DivisionNodesDocument, ...options });
 };
+export const DivisionSubGraphFiltersDocument = gql`
+    query DivisionSubGraphFilters($divisionId: ID!) {
+  division(divisionId: $divisionId) {
+    id
+    name
+    subGraphFilters {
+      id
+      name
+      uid
+    }
+  }
+}
+    `;
+
+export function useDivisionSubGraphFiltersQuery(options: Omit<Urql.UseQueryArgs<never, DivisionSubGraphFiltersQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DivisionSubGraphFiltersQuery>({ query: DivisionSubGraphFiltersDocument, ...options });
+};
 export const DivisionSummaryDocument = gql`
     query DivisionSummary($divisionId: ID!, $selections: [String!]!) {
   division(divisionId: $divisionId) {
@@ -925,6 +1047,32 @@ export const ProjectTowersDocument = gql`
 
 export function useProjectTowersQuery(options: Omit<Urql.UseQueryArgs<never, ProjectTowersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ProjectTowersQuery>({ query: ProjectTowersDocument, ...options });
+};
+export const SubGraphFilterDocument = gql`
+    query SubGraphFilter($subGraphFilterId: ID!) {
+  subGraphFilter(subGraphFilterId: $subGraphFilterId) {
+    id
+    name
+    uid
+    division {
+      id
+      name
+    }
+    tower {
+      id
+      name
+    }
+    project {
+      id
+      name
+      default
+    }
+  }
+}
+    `;
+
+export function useSubGraphFilterQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<SubGraphFilterQuery>({ query: SubGraphFilterDocument, ...options });
 };
 export const TowerDivisionsDocument = gql`
     query TowerDivisions($towerId: ID!, $offset: Int, $limit: Int) {
