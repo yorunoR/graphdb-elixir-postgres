@@ -58,8 +58,13 @@ const emit = defineEmits<{
 const offset = ref(0)
 const limit = ref(10)
 
-const { fetching, error, data } = useDivisionEdgesQuery({
+const { fetching, error, data, executeQuery } = useDivisionEdgesQuery({
   variables: { divisionId: props.divisionId, offset, limit },
   context: { additionalTypenames: ['Edge'] }
 })
+
+const onPage = (event) => {
+  offset.value = event.first
+  executeQuery()
+}
 </script>
