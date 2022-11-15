@@ -23,7 +23,7 @@
     <div v-else>
       <ul v-if="data">
         <li
-          v-for="edgeType in data.division.edgeTypes"
+          v-for="edgeType in data.division?.edgeTypes"
           :key="edgeType.id"
         >
           <EdgeTypeItemMolecule

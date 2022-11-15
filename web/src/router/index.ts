@@ -12,7 +12,7 @@ import TowerLayout from '@/layouts/project/TowerLayout.vue'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/board/select'
+    redirect: '/project/area/towers'
   },
   {
     path: '/',
@@ -133,23 +133,23 @@ const routes: RouteRecordRaw[] = [
               await import(
                 /* webpackChunkName: "edge_types" */ '@/views/project/division/EdgeTypesView.vue'
               )
+          },
+          {
+            path: 'nodes',
+            name: 'nodes',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "nodes" */ '@/views/project/division/NodesView.vue'
+              )
+          },
+          {
+            path: 'edges',
+            name: 'edges',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "edges" */ '@/views/project/division/EdgesView.vue'
+              )
           }
-          // {
-          //   path: "nodes",
-          //   name: "nodes",
-          //   component: async () =>
-          //     await import(
-          //       /* webpackChunkName: "nodes" */ "@/views/project/division/NodesView.vue"
-          //     ),
-          // },
-          // {
-          //   path: "edges",
-          //   name: "edges",
-          //   component: async () =>
-          //     await import(
-          //       /* webpackChunkName: "edges" */ "@/views/project/division/EdgesView.vue"
-          //     ),
-          // },
           // {
           //   path: "sub_graph_filters",
           //   name: "sub_graph_filters",

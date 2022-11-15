@@ -1,10 +1,10 @@
 <template>
   <main style="max-width: 768px; margin: auto">
+    <h1>Summary</h1>
     <section>
-      <h1>Summary</h1>
       <div v-if="data">
         <DataTable
-          :value="data.division.summary"
+          :value="data.division?.summary"
           responsive-layout="scroll"
         >
           <Column

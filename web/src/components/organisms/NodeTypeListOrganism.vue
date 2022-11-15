@@ -23,7 +23,7 @@
     <div v-else>
       <ul v-if="data">
         <li
-          v-for="nodeType in data.division.nodeTypes"
+          v-for="nodeType in data.division?.nodeTypes"
           :key="nodeType.id"
         >
           <NodeTypeItemMolecule
