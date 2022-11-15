@@ -1,6 +1,8 @@
 <template>
   <section>
-    <strong>Project: {{ name }}</strong>
+    <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+      <strong>P: {{ name }}</strong>
+    </div>
   </section>
 </template>
 
