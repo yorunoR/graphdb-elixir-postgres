@@ -141,15 +141,15 @@ const routes: RouteRecordRaw[] = [
               await import(
                 /* webpackChunkName: "nodes" */ '@/views/project/division/NodesView.vue'
               )
+          },
+          {
+            path: 'edges',
+            name: 'edges',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "edges" */ '@/views/project/division/EdgesView.vue'
+              )
           }
-          // {
-          //   path: "edges",
-          //   name: "edges",
-          //   component: async () =>
-          //     await import(
-          //       /* webpackChunkName: "edges" */ "@/views/project/division/EdgesView.vue"
-          //     ),
-          // },
           // {
           //   path: "sub_graph_filters",
           //   name: "sub_graph_filters",

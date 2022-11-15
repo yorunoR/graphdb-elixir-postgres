@@ -65,7 +65,6 @@
                   Nodes
                 </router-link>
               </li>
-              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'edges', params: { divisionId } }"
@@ -74,6 +73,7 @@
                   Edges
                 </router-link>
               </li>
+              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'sub_graph_filters', params: { divisionId } }"

@@ -106,10 +106,10 @@ export type InputDivision = {
 
 export type InputEdge = {
   edgeTypeId: Scalars['String'];
-  endNodeUid: Scalars['String'];
+  endNodeUid?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   props?: InputMaybe<Array<InputMaybe<InputItem>>>;
-  startNodeUid: Scalars['String'];
+  startNodeUid?: InputMaybe<Scalars['String']>;
 };
 
 export type InputEdgeField = {
@@ -403,6 +403,13 @@ export type CreateDivisionMutationVariables = Exact<{
 
 export type CreateDivisionMutation = { __typename?: 'RootMutationType', createDivision?: { __typename?: 'Division', id: string } | null };
 
+export type CreateEdgeMutationVariables = Exact<{
+  edge: InputEdge;
+}>;
+
+
+export type CreateEdgeMutation = { __typename?: 'RootMutationType', createEdge?: { __typename?: 'Edge', id: string } | null };
+
 export type CreateEdgeFieldMutationVariables = Exact<{
   edgeTypeId: Scalars['ID'];
   edgeField: InputEdgeField;
@@ -469,6 +476,14 @@ export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
 
+export type UpdateEdgeMutationVariables = Exact<{
+  edgeId: Scalars['ID'];
+  edge: InputEdge;
+}>;
+
+
+export type UpdateEdgeMutation = { __typename?: 'RootMutationType', updateEdge?: { __typename?: 'Edge', id: string } | null };
+
 export type UpdateEdgeTypeMutationVariables = Exact<{
   edgeTypeId: Scalars['ID'];
   edgeType: InputEdgeType;
@@ -499,6 +514,15 @@ export type DivisionEdgeTypesQueryVariables = Exact<{
 
 
 export type DivisionEdgeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edgeTypes: Array<{ __typename?: 'EdgeType', id: string, name: string, uid: string, edgeFields: Array<{ __typename?: 'EdgeField', id: string, name: string, type: string, uid: string }>, rules: Array<{ __typename?: 'Rule', id: string, name: string, uid: string, startNodeType: { __typename?: 'NodeType', id: string, name: string }, endNodeType: { __typename?: 'NodeType', id: string, name: string } }> }> } | null };
+
+export type DivisionEdgesQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type DivisionEdgesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edges: { __typename?: 'EdgeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', id: string, name: string, uid: string }, startNode: { __typename?: 'Node', id: string, name: string, uid: string }, endNode: { __typename?: 'Node', id: string, name: string, uid: string } }> } } | null };
 
 export type DivisionNodeTypesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -564,6 +588,17 @@ export const CreateDivisionDocument = gql`
 
 export function useCreateDivisionMutation() {
   return Urql.useMutation<CreateDivisionMutation, CreateDivisionMutationVariables>(CreateDivisionDocument);
+};
+export const CreateEdgeDocument = gql`
+    mutation CreateEdge($edge: InputEdge!) {
+  createEdge(edge: $edge) {
+    id
+  }
+}
+    `;
+
+export function useCreateEdgeMutation() {
+  return Urql.useMutation<CreateEdgeMutation, CreateEdgeMutationVariables>(CreateEdgeDocument);
 };
 export const CreateEdgeFieldDocument = gql`
     mutation CreateEdgeField($edgeTypeId: ID!, $edgeField: InputEdgeField!) {
@@ -664,6 +699,17 @@ export const SigninUserDocument = gql`
 export function useSigninUserMutation() {
   return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
 };
+export const UpdateEdgeDocument = gql`
+    mutation UpdateEdge($edgeId: ID!, $edge: InputEdge!) {
+  updateEdge(edgeId: $edgeId, edge: $edge) {
+    id
+  }
+}
+    `;
+
+export function useUpdateEdgeMutation() {
+  return Urql.useMutation<UpdateEdgeMutation, UpdateEdgeMutationVariables>(UpdateEdgeDocument);
+};
 export const UpdateEdgeTypeDocument = gql`
     mutation UpdateEdgeType($edgeTypeId: ID!, $edgeType: InputEdgeType!) {
   updateEdgeType(edgeTypeId: $edgeTypeId, edgeType: $edgeType) {
@@ -732,6 +778,47 @@ export const DivisionEdgeTypesDocument = gql`
 
 export function useDivisionEdgeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionEdgeTypesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionEdgeTypesQuery>({ query: DivisionEdgeTypesDocument, ...options });
+};
+export const DivisionEdgesDocument = gql`
+    query DivisionEdges($divisionId: ID!, $offset: Int, $limit: Int) {
+  division(divisionId: $divisionId) {
+    id
+    name
+    edges(offset: $offset, limit: $limit) {
+      entries {
+        id
+        name
+        edgeTypeId
+        props {
+          key
+          val
+        }
+        edgeType {
+          id
+          name
+          uid
+        }
+        startNode {
+          id
+          name
+          uid
+        }
+        endNode {
+          id
+          name
+          uid
+        }
+      }
+      limit
+      offset
+      total
+    }
+  }
+}
+    `;
+
+export function useDivisionEdgesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionEdgesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DivisionEdgesQuery>({ query: DivisionEdgesDocument, ...options });
 };
 export const DivisionNodeTypesDocument = gql`
     query DivisionNodeTypes($divisionId: ID!) {
