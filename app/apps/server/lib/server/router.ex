@@ -17,6 +17,12 @@ defmodule Server.Router do
     plug :fetch_current_admin_user
   end
 
+  pipeline :api do
+    plug CORSPlug, headers: ["cid" | CORSPlug.defaults()[:headers]]
+    plug :accepts, ["json"]
+    plug Server.AuthPlug
+  end
+
   pipeline :graphql_api do
     plug CORSPlug, headers: ["cid" | CORSPlug.defaults()[:headers]]
     plug :accepts, ["json"]
@@ -27,6 +33,15 @@ defmodule Server.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/", Server do
+    pipe_through :api
+
+    post "/upload/nodes/:node_type_id", UploadController, :nodes
+    options "/upload/nodes/:node_type_id", UploadController, :options
+    post "/upload/edges/:edge_type_id", UploadController, :edges
+    options "/upload/edges/:edge_type_id", UploadController, :options
   end
 
   # Other scopes may use custom stacks.

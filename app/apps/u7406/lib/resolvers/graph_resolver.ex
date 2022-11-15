@@ -96,12 +96,6 @@ defmodule Resolvers.GraphResolver do
       :update_sub_graph_filter ->
         Mutation.UpdateSubGraphFilter.run(parent, args, context)
 
-      :upload_nodes ->
-        Mutation.UploadNodes.run(parent, args, context)
-
-      :upload_edges ->
-        Mutation.UploadEdges.run(parent, args, context)
-
       _ ->
         {:error, "Not defined in Graph context"}
     end

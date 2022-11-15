@@ -7,7 +7,7 @@ defmodule Schemas.Graph.NodeType do
   alias Schemas.Graph.Division
   alias Schemas.Graph.NodeField
   alias Schemas.Graph.Node
-  # alias Schemas.Operation.NodesUpload
+  alias Schemas.Operation.NodesUpload
 
   schema "node_types" do
     belongs_to :project, Project
@@ -22,6 +22,6 @@ defmodule Schemas.Graph.NodeType do
 
     has_many :node_fields, NodeField, on_delete: :delete_all
     has_many :nodes, Node, on_delete: :delete_all
-    # has_many :nodes_uploads, NodesUpload, on_delete: :delete_all
+    has_many :nodes_uploads, NodesUpload, on_delete: :delete_all
   end
 end

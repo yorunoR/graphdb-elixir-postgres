@@ -10,7 +10,8 @@ defmodule Schemas.Graph.Division do
   alias Schemas.Graph.EdgeType
   alias Schemas.Graph.Rule
   alias Schemas.Graph.SubGraphFilter
-  # alias Schemas.Operation.NodesUpload
+  alias Schemas.Operation.NodesUpload
+  alias Schemas.Operation.EdgesUpload
 
   schema "divisions" do
     belongs_to :project, Project
@@ -29,6 +30,7 @@ defmodule Schemas.Graph.Division do
     has_many :nodes, Node, on_delete: :delete_all
     has_many :edges, Edge, on_delete: :delete_all
     has_many :sub_graph_filters, SubGraphFilter, on_delete: :delete_all
-    # has_many :nodes_uploads, NodesUpload, on_delete: :delete_all
+    has_many :nodes_uploads, NodesUpload, on_delete: :delete_all
+    has_many :edges_uploads, EdgesUpload, on_delete: :delete_all
   end
 end
