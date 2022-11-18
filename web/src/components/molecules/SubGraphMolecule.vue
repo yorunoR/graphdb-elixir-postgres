@@ -1,6 +1,8 @@
 <template>
   <section>
-    <strong>&emsp;&emsp;└ SubGraph: {{ name }}</strong>
+    <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+      <strong>&emsp;&emsp;└ S: {{ name }}</strong>
+    </div>
   </section>
 </template>
 

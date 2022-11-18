@@ -86,7 +86,6 @@
                   SubGraphFilters
                 </router-link>
               </li>
-              <!--
               <li style="border: none">
                 <router-link
                   :to="{ name: 'upload_csv', params: { divisionId } }"
@@ -95,7 +94,6 @@
                   Upload CSV
                 </router-link>
               </li>
-              -->
             </ul>
           </li>
           <li style="border: none">
