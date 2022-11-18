@@ -2,7 +2,7 @@ defmodule Actions.Operation.Mutation.UploadEdges do
   import Ecto.Changeset
   import U7406
 
-  alias Actions.Graph.Mutation.EdgeFuncs.Create
+  alias Actions.Graph.Mixin.EdgeFuncs.Create
   alias Ecto.Multi
   alias Schemas.Graph.EdgeType
   alias Schemas.Graph.Edge

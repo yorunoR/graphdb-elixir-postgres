@@ -13,7 +13,7 @@
 import Ecto.Changeset
 import U7406
 
-alias Actions.Graph.Mutation.DivisionFuncs.Create
+alias Actions.Graph.Mixin.DivisionFuncs.Create
 alias Schemas.Account.Project
 alias Schemas.Account.User
 alias Schemas.Graph.EdgeType

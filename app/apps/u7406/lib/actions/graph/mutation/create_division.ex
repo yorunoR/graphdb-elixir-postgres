@@ -2,7 +2,7 @@ defmodule Actions.Graph.Mutation.CreateDivision do
   import Ecto.Changeset
   import U7406
 
-  alias Actions.Graph.Mutation.DivisionFuncs.Create
+  alias Actions.Graph.Mixin.DivisionFuncs.Create
   alias Schemas.Graph.Tower
   alias Schemas.Graph.Division
   alias U7406.Repo

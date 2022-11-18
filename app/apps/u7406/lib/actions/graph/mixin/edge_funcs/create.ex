@@ -1,4 +1,4 @@
-defmodule Actions.Graph.Mutation.EdgeFuncs.Create do
+defmodule Actions.Graph.Mixin.EdgeFuncs.Create do
   import Ecto.Changeset
   import U7406
 
