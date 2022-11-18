@@ -8,7 +8,7 @@ defmodule Schemas.Graph.EdgeType do
   alias Schemas.Graph.Rule
   alias Schemas.Graph.EdgeField
   alias Schemas.Graph.Edge
-  # alias Schemas.Operation.EdgesUpload
+  alias Schemas.Operation.EdgesUpload
 
   schema "edge_types" do
     belongs_to :project, Project
@@ -24,6 +24,6 @@ defmodule Schemas.Graph.EdgeType do
     has_many :rules, Rule, on_delete: :delete_all
     has_many :edge_fields, EdgeField, on_delete: :delete_all
     has_many :edges, Edge, on_delete: :delete_all
-    # has_many :edges_uploads, EdgesUpload, on_delete: :delete_all
+    has_many :edges_uploads, EdgesUpload, on_delete: :delete_all
   end
 end

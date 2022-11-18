@@ -1,4 +1,4 @@
-defmodule Actions.Graph.Mutation.EdgeFuncs.Create do
+defmodule Actions.Graph.Mixin.EdgeFuncs.Create do
   import Ecto.Changeset
   import U7406
 
@@ -36,6 +36,8 @@ defmodule Actions.Graph.Mutation.EdgeFuncs.Create do
     edge =
       build_assoc(rule, :edges)
       |> change(attrs)
+      |> unique_constraint([:divieion_id, :uid], name: :edges_uid_uniq_index)
+      |> unique_constraint([:divieion_id, :random], name: :edges_random_uniq_index)
       |> repo.insert!
 
     {:ok, edge}

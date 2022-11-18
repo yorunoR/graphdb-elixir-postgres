@@ -89,7 +89,7 @@ defmodule U7406 do
     Ecto.build_assoc(division, :sub_graph_filters, attrs)
   end
 
-  def build_assoc(%NodeType{} = node_type, :nodes_upload_operations) do
+  def build_assoc(%NodeType{} = node_type, :nodes_uploads) do
     attrs = %{
       project_id: node_type.project_id,
       tower_id: node_type.tower_id,
@@ -97,10 +97,10 @@ defmodule U7406 do
       node_type_id: node_type.id
     }
 
-    Ecto.build_assoc(node_type, :nodes_upload_operations, attrs)
+    Ecto.build_assoc(node_type, :nodes_uploads, attrs)
   end
 
-  def build_assoc(%EdgeType{} = edge_type, :edges_upload_operations) do
+  def build_assoc(%EdgeType{} = edge_type, :edges_uploads) do
     attrs = %{
       project_id: edge_type.project_id,
       tower_id: edge_type.tower_id,
@@ -108,7 +108,7 @@ defmodule U7406 do
       edge_type_id: edge_type.id
     }
 
-    Ecto.build_assoc(edge_type, :edges_upload_operations, attrs)
+    Ecto.build_assoc(edge_type, :edges_uploads, attrs)
   end
 
   def build_assoc(struct, assoc, attrs \\ %{}) do

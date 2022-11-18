@@ -7,6 +7,8 @@ defmodule U7406.Application do
 
   @impl true
   def start(_type, _args) do
+    :erlang.system_flag(:backtrace_depth, 20)
+
     children = [
       # Start the Ecto repository
       U7406.Repo,

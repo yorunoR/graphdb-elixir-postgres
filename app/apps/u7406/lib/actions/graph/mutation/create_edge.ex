@@ -1,5 +1,5 @@
 defmodule Actions.Graph.Mutation.CreateEdge do
-  alias Actions.Graph.Mutation.EdgeFuncs.Create
+  alias Actions.Graph.Mixin.EdgeFuncs.Create
   alias Ecto.Multi
   alias Schemas.Graph.EdgeType
   alias Schemas.Graph.Node

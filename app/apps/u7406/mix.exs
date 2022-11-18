@@ -42,7 +42,8 @@ defmodule U7406.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.3"},
-      {:ecto_soft_delete, "~> 2.0"}
+      {:ecto_soft_delete, "~> 2.0"},
+      {:csv, "~> 3.0"}
     ]
   end
 
@@ -53,8 +54,9 @@ defmodule U7406.MixProject do
     [
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      "ecto.reset": ["ecto.rollback --all", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      store: ["run priv/repo/store_for_dev.exs"]
     ]
   end
 end
