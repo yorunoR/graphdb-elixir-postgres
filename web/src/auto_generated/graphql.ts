@@ -161,7 +161,6 @@ export type InputRule = {
   endNodeTypeId: Scalars['ID'];
   name: Scalars['String'];
   startNodeTypeId: Scalars['ID'];
-  uid: Scalars['String'];
 };
 
 export type InputSubGraphFilter = {
@@ -387,7 +386,6 @@ export type Rule = {
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
   startNodeType: NodeType;
-  uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
 
@@ -579,7 +577,7 @@ export type DivisionEdgeTypesQueryVariables = Exact<{
 }>;
 
 
-export type DivisionEdgeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edgeTypes: Array<{ __typename?: 'EdgeType', id: string, name: string, uid: string, edgeFields: Array<{ __typename?: 'EdgeField', id: string, name: string, type: string, uid: string }>, rules: Array<{ __typename?: 'Rule', id: string, name: string, uid: string, startNodeType: { __typename?: 'NodeType', id: string, name: string }, endNodeType: { __typename?: 'NodeType', id: string, name: string } }> }> } | null };
+export type DivisionEdgeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edgeTypes: Array<{ __typename?: 'EdgeType', id: string, name: string, uid: string, edgeFields: Array<{ __typename?: 'EdgeField', id: string, name: string, type: string, uid: string }>, rules: Array<{ __typename?: 'Rule', id: string, name: string, startNodeType: { __typename?: 'NodeType', id: string, name: string }, endNodeType: { __typename?: 'NodeType', id: string, name: string } }> }> } | null };
 
 export type DivisionEdgesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -866,7 +864,6 @@ export const DivisionEdgeTypesDocument = gql`
       rules {
         id
         name
-        uid
         startNodeType {
           id
           name

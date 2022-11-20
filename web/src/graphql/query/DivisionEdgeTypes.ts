@@ -16,7 +16,6 @@ const QUERY = /* GraphQL */ `
         rules {
           id
           name
-          uid
           startNodeType {
             id
             name

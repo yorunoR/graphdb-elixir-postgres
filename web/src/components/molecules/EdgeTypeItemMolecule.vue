@@ -46,9 +46,6 @@
       >
         <div>Name: {{ rule.name }}</div>
         <div class="mt-1">
-          UID: {{ rule.uid }}
-        </div>
-        <div class="mt-1">
           StartNodeType: {{ rule.startNodeType.name }}
         </div>
         <div class="mt-1">

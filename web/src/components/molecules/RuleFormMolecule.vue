@@ -10,17 +10,6 @@
       {{ nameErrors.join(" ") }}
     </div>
   </div>
-  <div class="mt-2">
-    <InputText
-      v-model="uid"
-      class="w-full"
-      type="text"
-      placeholder="UID"
-    />
-    <div class="mt-2 p-error">
-      {{ uidErrors.join(" ") }}
-    </div>
-  </div>
   <div class="mt-4">
     <strong>Start node</strong>
     <div
@@ -74,7 +63,6 @@ import type { InputRule, NodeType } from '@/auto_generated/graphql'
 
 const props = defineProps<{
   name?: string;
-  uid?: string;
   startNodeTypeId?: string;
   endNodeTypeId?: string;
   options?: [NodeType];
@@ -88,7 +76,6 @@ const emit = defineEmits<{
 const { meta, values } = useForm({
   initialValues: {
     name: props.name,
-    uid: props.uid,
     startNodeTypeId: props.startNodeTypeId,
     endNodeTypeId: props.endNodeTypeId
   }
@@ -96,7 +83,6 @@ const { meta, values } = useForm({
 
 const isRequired = (value) => (value ? true : 'This field is required')
 const { value: name, errors: nameErrors } = useField('name', isRequired)
-const { value: uid, errors: uidErrors } = useField('uid', isRequired)
 const { value: startNodeTypeId, errors: _startNodeTypeIdErrors } = useField(
   'startNodeTypeId',
   isRequired
