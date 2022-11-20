@@ -13,7 +13,6 @@ defmodule U7406.Repo.Migrations.CreateRules do
       add :end_node_type_id, references(:node_types, on_delete: :nothing), null: false
 
       add :name, :string, null: false
-      add :uid, :string, null: false
       add :direction, :integer, null: false, default: 0
 
       timestamps()
@@ -26,12 +25,6 @@ defmodule U7406.Repo.Migrations.CreateRules do
     create index(:rules, [:edge_type_id])
     create index(:rules, [:start_node_type_id])
     create index(:rules, [:end_node_type_id])
-
-    create index(:rules, [:division_id, :uid],
-             unique: true,
-             where: "deleted_at IS NULL",
-             name: :rules_uid_uniq_index
-           )
 
     add_policies(:rules, [
       %{belongs_to: :towers, id: :tower_id},

@@ -85,11 +85,11 @@ Repo.as_admin(fn ->
 
       rule_list = [
         %{uid: "direction", rules: [
-          %{uid: "director-movie", start_node_type_uid: "director", end_node_type_uid: "movie"}
+          %{start_node_type_uid: "director", end_node_type_uid: "movie"}
         ]},
         %{uid: "starring", rules: [
-          %{uid: "actor-movie", start_node_type_uid: "actor", end_node_type_uid: "movie"},
-          %{uid: "movie-actor", start_node_type_uid: "movie", end_node_type_uid: "actor"}
+          %{start_node_type_uid: "actor", end_node_type_uid: "movie"},
+          %{start_node_type_uid: "movie", end_node_type_uid: "actor"}
         ]},
       ]
 
@@ -104,8 +104,7 @@ Repo.as_admin(fn ->
           attrs = %{
             start_node_type_id: start_node_type.id,
             end_node_type_id: end_node_type.id,
-            name: edge_type.name,
-            uid: rule.uid
+            name: edge_type.name
           }
 
           build_assoc(edge_type, :rules)

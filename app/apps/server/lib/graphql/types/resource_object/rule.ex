@@ -5,7 +5,6 @@ defmodule Graphql.Types.ResourceObject.Rule do
   object :rule do
     field(:id, non_null(:id))
     field(:name, non_null(:string))
-    field(:uid, non_null(:string))
     field(:direction, non_null(:string))
     field(:inserted_at, non_null(:datetime))
     field(:updated_at, non_null(:datetime))

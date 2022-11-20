@@ -18,7 +18,6 @@ defmodule Schemas.Graph.Rule do
     belongs_to :end_node_type, NodeType
 
     field :name, :string
-    field :uid, :string
     field :direction, Ecto.Enum, values: [UNIDIRECTION: 0, BIDIRECTION: 1]
 
     timestamps()

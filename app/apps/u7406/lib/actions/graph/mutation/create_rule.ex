@@ -20,7 +20,7 @@ defmodule Actions.Graph.Mutation.CreateRule do
 
   def create_rule_changeset(%Rule{} = rule, attrs) do
     rule
-    |> cast(attrs, [:name, :uid, :start_node_type_id, :end_node_type_id])
-    |> validate_required([:name, :uid, :start_node_type_id, :end_node_type_id])
+    |> cast(attrs, [:name, :start_node_type_id, :end_node_type_id])
+    |> validate_required([:name, :start_node_type_id, :end_node_type_id])
   end
 end
