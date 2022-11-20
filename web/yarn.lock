@@ -10530,6 +10530,11 @@ vue-i18n@^9.2.2:
     "@intlify/vue-devtools" "9.2.2"
     "@vue/devtools-api" "^6.2.1"
 
+vue-json-pretty@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/vue-json-pretty/-/vue-json-pretty-2.2.3.tgz#7cf5c5af464ed5600c1883b6310aa848a8840a4d"
+  integrity sha512-tJo+4eFclQBt3gJ6EELXNdvo50wDKTZYthwmLpy9YS7UDldeJln5ff+IpdmUglfk+FqLVOX/re0+Ni/EOUPZgw==
+
 vue-loader@^17.0.0:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-17.0.1.tgz#c0ee8875e0610a0c2d13ba9b4d50a9c8442e7a3a"
