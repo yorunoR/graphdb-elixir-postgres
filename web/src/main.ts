@@ -10,10 +10,12 @@ import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
 import InputText from 'primevue/inputtext'
 import Paginator from 'primevue/paginator'
+import Panel from 'primevue/panel'
 import RadioButton from 'primevue/radiobutton'
 import Sidebar from 'primevue/sidebar'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
+import ToggleButton from 'primevue/togglebutton'
 import { createApp } from 'vue'
 
 import App from './App.vue'
@@ -33,7 +35,9 @@ createApp(App)
   .component('DataTable', DataTable)
   .component('InputText', InputText)
   .component('Paginator', Paginator)
+  .component('Panel', Panel)
   .component('RadioButton', RadioButton)
   .component('Sidebar', Sidebar)
   .component('Toast', Toast)
+  .component('ToggleButton', ToggleButton)
   .mount('#app')
