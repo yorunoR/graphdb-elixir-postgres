@@ -37,7 +37,9 @@ defmodule Actions.Operation.Mutation.UploadNodes do
           true ->
             props = Map.drop(line, ["skip", "uid", "name"])
 
-            random = :rand.uniform(@max_range)
+            random =
+              Stream.repeatedly(fn -> :rand.uniform(@max_range) end)
+              |> Enum.find(fn random -> Repo.get_by(Node, random: random) == nil end)
 
             build_assoc(node_type, :nodes)
             |> upload_node_changeset(
