@@ -18,6 +18,14 @@ defmodule Graphql.Types.GraphType do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:sub_graph_filter, &1, &2, &3))
     end
+
+    field(:nodes, non_null(:node_list)) do
+      arg(:division_id, non_null(:id))
+      arg(:q, :string, default_value: "[]")
+      arg(:offset, :integer, default_value: 0)
+      arg(:limit, :integer, default_value: 10)
+      resolve(&GraphResolver.call(:nodes, &1, &2, &3))
+    end
   end
 
   object :graph_mutations do
