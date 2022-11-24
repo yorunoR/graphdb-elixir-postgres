@@ -15,17 +15,15 @@ import U7406
 
 alias Actions.Graph.Mixin.DivisionFuncs.Create
 alias Schemas.Account.Project
-alias Schemas.Account.User
 alias Schemas.Graph.EdgeType
 alias Schemas.Graph.NodeType
+alias Schemas.Graph.Tower
 alias U7406.Repo
 
 Repo.as_admin(fn ->
-  case Repo.get_by(Project, name: "開発用テストプロジェクト") do
+  case Repo.get_by(Tower, name: "アニメ・漫画の実写映画化作品") do
     nil ->
-      user = Repo.one(User)
-      project = %Project{name: "開発用テストプロジェクト"} |> Repo.insert!
-      build_assoc(user, :project_users, %{project: project, privilege: 0}) |> Repo.insert!
+      project = Repo.one(Project)
 
       tower =
         build_assoc(project, :towers)
