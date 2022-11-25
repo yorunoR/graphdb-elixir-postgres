@@ -9,9 +9,9 @@
       class="flex flex-column"
     >
       <Button
-        label="NodeType"
+        label="EdgeType"
         class="p-button-outlined"
-        @click="selected = 'nodeType'"
+        @click="selected = 'edgeType'"
       />
       <Button
         label="Name"
@@ -19,9 +19,24 @@
         @click="selected = 'name'"
       />
       <Button
-        label="UID"
+        label="Start node name"
         class="p-button-outlined mt-2"
-        @click="selected = 'uid'"
+        @click="selected = 'startNodeName'"
+      />
+      <Button
+        label="End node name"
+        class="p-button-outlined mt-2"
+        @click="selected = 'endNodeName'"
+      />
+      <Button
+        label="Start node UID"
+        class="p-button-outlined mt-2"
+        @click="selected = 'startNodeUid'"
+      />
+      <Button
+        label="End node UID"
+        class="p-button-outlined mt-2"
+        @click="selected = 'endNodeUid'"
       />
     </div>
     <div
@@ -41,45 +56,93 @@
       />
     </div>
     <div
-      v-show="selected == 'uid'"
+      v-show="selected == 'startNodeName'"
       class="mt-2"
     >
       <LogicalInput
-        v-model:not="uidNot"
-        v-model:text="uid"
-        placeholder="UID"
-        :errors="uidErrors.join(' ')"
+        v-model:not="startNodeNameNot"
+        v-model:text="startNodeName"
+        placeholder="Start node name"
+        :errors="startNodeNameErrors.join(' ')"
         :showOr="parameters.length > 0"
-        :disabled="!uidMeta.valid"
+        :disabled="!startNodeNameMeta.valid"
         @click:cancel="selected = null"
-        @click:and="() => addParameter('uid', '*')"
-        @click:or="() => addParameter('uid', '+')"
+        @click:and="() => addParameter('startNodeName', '*')"
+        @click:or="() => addParameter('startNodeName', '+')"
       />
     </div>
     <div
-      v-show="selected == 'nodeType'"
+      v-show="selected == 'startNodeUid'"
+      class="mt-2"
+    >
+      <LogicalInput
+        v-model:not="startNodeUidNot"
+        v-model:text="startNodeUid"
+        placeholder="Start node UID"
+        :errors="startNodeUidErrors.join(' ')"
+        :showOr="parameters.length > 0"
+        :disabled="!startNodeUidMeta.valid"
+        @click:cancel="selected = null"
+        @click:and="() => addParameter('startNodeUid', '*')"
+        @click:or="() => addParameter('startNodeUid', '+')"
+      />
+    </div>
+    <div
+      v-show="selected == 'endNodeName'"
+      class="mt-2"
+    >
+      <LogicalInput
+        v-model:not="endNodeNameNot"
+        v-model:text="endNodeName"
+        placeholder="End node name"
+        :errors="endNodeNameErrors.join(' ')"
+        :showOr="parameters.length > 0"
+        :disabled="!endNodeNameMeta.valid"
+        @click:cancel="selected = null"
+        @click:and="() => addParameter('endNodeName', '*')"
+        @click:or="() => addParameter('endNodeName', '+')"
+      />
+    </div>
+    <div
+      v-show="selected == 'endNodeUid'"
+      class="mt-2"
+    >
+      <LogicalInput
+        v-model:not="endNodeUidNot"
+        v-model:text="endNodeUid"
+        placeholder="End node UID"
+        :errors="endNodeUidErrors.join(' ')"
+        :showOr="parameters.length > 0"
+        :disabled="!endNodeUidMeta.valid"
+        @click:cancel="selected = null"
+        @click:and="() => addParameter('endNodeUid', '*')"
+        @click:or="() => addParameter('endNodeUid', '+')"
+      />
+    </div>
+    <div
+      v-show="selected == 'edgeType'"
       class="text-left"
     >
       <div class="py-3">
-        <strong>NodeType</strong>
+        <strong>EdgeType</strong>
       </div>
       <div
         v-if="data && data.division"
         class="flex flex-row grid"
       >
         <div
-          v-for="option in data.division.nodeTypes ?? []"
+          v-for="option in data.division.edgeTypes ?? []"
           :key="option.uid"
           class="mx-2"
         >
           <RadioButton
-            v-model="nodeTypeUid"
-            :input-id="`nodeType-${option.uid}`"
-            name="nodeTypeUid"
+            v-model="edgeTypeUid"
+            :input-id="`edgeType-${option.uid}`"
+            name="edgeTypeUid"
             :value="option.uid"
           />
           <label
-            :for="`nodeType-${option.uid}`"
+            :for="`edgeType-${option.uid}`"
             class="ml-2 cursor-pointer"
           >{{
             option.name
@@ -88,11 +151,11 @@
       </div>
       <div class="mt-3">
         <LogicalExpressionButtons
-          :disabled="!nodeTypeUidMeta.valid"
+          :disabled="!edgeTypeUidMeta.valid"
           :show-or="parameters.length > 0"
           @click:cancel="selected = null"
-          @click:and="() => addParameter('nodeTypeUid', '*')"
-          @click:or="() => addParameter('nodeTypeUid', '+')"
+          @click:and="() => addParameter('edgeTypeUid', '*')"
+          @click:or="() => addParameter('edgeTypeUid', '+')"
         />
       </div>
     </div>
@@ -140,7 +203,7 @@ import { ref, computed } from 'vue'
 import VueJsonPretty from 'vue-json-pretty'
 import 'vue-json-pretty/lib/styles.css'
 
-import { callDivisionNodeTypesQuery } from '@/call/queries'
+import { callDivisionEdgeTypesQuery } from '@/call/queries'
 import LogicalExpressionButtons from '@/components/molecules/LogicalExpressionButtons.vue'
 import LogicalInput from '@/components/molecules/LogicalInput.vue'
 
@@ -155,22 +218,31 @@ const emit = defineEmits<{
 const selected = ref(null)
 const parameters = ref([])
 
-const { data } = callDivisionNodeTypesQuery(props.divisionId)
+const { data } = callDivisionEdgeTypesQuery(props.divisionId)
 
 const { resetForm, values: inputValues } = useForm({
   initialValues: {
     nameNot: false,
-    uidNot: false
+    startNodeUidNot: false,
+    startNodeNameNot: false,
+    endNodeUidNot: false,
+    endNodeNameNot: false
   }
 })
 
 const isRequired = (value) => (value ? true : 'This field is required')
 const { value: name, errors: nameErrors, meta: nameMeta } = useField('name', isRequired)
 const { value: nameNot } = useField('nameNot')
-const { value: uid, errors: uidErrors, meta: uidMeta } = useField('uid', isRequired)
-const { value: uidNot } = useField('uidNot')
-const { value: nodeTypeUid, errors: _nodeTypeUidErrors, meta: nodeTypeUidMeta } = useField(
-  'nodeTypeUid',
+const { value: startNodeName, errors: startNodeNameErrors, meta: startNodeNameMeta } = useField('startNodeName', isRequired)
+const { value: startNodeNameNot } = useField('startNodeNameNot')
+const { value: startNodeUid, errors: startNodeUidErrors, meta: startNodeUidMeta } = useField('startNodeUid', isRequired)
+const { value: startNodeUidNot } = useField('startNodeUidNot')
+const { value: endNodeName, errors: endNodeNameErrors, meta: endNodeNameMeta } = useField('endNodeName', isRequired)
+const { value: endNodeNameNot } = useField('endNodeNameNot')
+const { value: endNodeUid, errors: endNodeUidErrors, meta: endNodeUidMeta } = useField('endNodeUid', isRequired)
+const { value: endNodeUidNot } = useField('endNodeUidNot')
+const { value: edgeTypeUid, errors: _edgeTypeUidErrors, meta: edgeTypeUidMeta } = useField(
+  'edgeTypeUid',
   isRequired
 )
 

@@ -21,29 +21,15 @@ export type Division = {
   changedAt?: Maybe<Scalars['DateTime']>;
   divisionHash: Scalars['String'];
   edgeTypes: Array<EdgeType>;
-  edges: EdgeList;
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
   nodeTypes: Array<NodeType>;
-  nodes: NodeList;
   project: Project;
   subGraphFilters: Array<SubGraphFilter>;
   summary: Array<Item>;
   tower: Tower;
   updatedAt: Scalars['DateTime'];
-};
-
-
-export type DivisionEdgesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type DivisionNodesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -353,6 +339,7 @@ export type RootQueryType = {
   currentProject?: Maybe<Project>;
   currentUser: User;
   division?: Maybe<Division>;
+  edges: EdgeList;
   nodes: NodeList;
   ping: Status;
   subGraphFilter?: Maybe<SubGraphFilter>;
@@ -362,6 +349,14 @@ export type RootQueryType = {
 
 export type RootQueryTypeDivisionArgs = {
   divisionId: Scalars['ID'];
+};
+
+
+export type RootQueryTypeEdgesArgs = {
+  divisionId: Scalars['ID'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  q?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -588,30 +583,12 @@ export type DivisionEdgeTypesQueryVariables = Exact<{
 
 export type DivisionEdgeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edgeTypes: Array<{ __typename?: 'EdgeType', id: string, name: string, uid: string, edgeFields: Array<{ __typename?: 'EdgeField', id: string, name: string, type: string, uid: string }>, rules: Array<{ __typename?: 'Rule', id: string, name: string, startNodeType: { __typename?: 'NodeType', id: string, name: string }, endNodeType: { __typename?: 'NodeType', id: string, name: string } }> }> } | null };
 
-export type DivisionEdgesQueryVariables = Exact<{
-  divisionId: Scalars['ID'];
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type DivisionEdgesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, edges: { __typename?: 'EdgeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', id: string, name: string, uid: string }, startNode: { __typename?: 'Node', id: string, name: string, uid: string }, endNode: { __typename?: 'Node', id: string, name: string, uid: string } }> } } | null };
-
 export type DivisionNodeTypesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
 }>;
 
 
 export type DivisionNodeTypesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, nodeTypes: Array<{ __typename?: 'NodeType', id: string, name: string, uid: string, nodeFields: Array<{ __typename?: 'NodeField', id: string, name: string, type: string, uid: string }> }> } | null };
-
-export type DivisionNodesQueryVariables = Exact<{
-  divisionId: Scalars['ID'];
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type DivisionNodesQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, nodes: { __typename?: 'NodeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Node', id: string, name: string, uid: string, nodeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, nodeType: { __typename?: 'NodeType', id: string, name: string } }> } } | null };
 
 export type DivisionSubGraphFiltersQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -627,6 +604,16 @@ export type DivisionSummaryQueryVariables = Exact<{
 
 
 export type DivisionSummaryQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, project: { __typename?: 'Project', id: string, name: string, default: boolean }, tower: { __typename?: 'Tower', id: string, name: string }, summary: Array<{ __typename?: 'Item', key: string, val: string }> } | null };
+
+export type EdgesQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+  q?: InputMaybe<Scalars['String']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type EdgesQuery = { __typename?: 'RootQueryType', edges: { __typename?: 'EdgeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', id: string, name: string, uid: string }, startNode: { __typename?: 'Node', id: string, name: string, uid: string }, endNode: { __typename?: 'Node', id: string, name: string, uid: string } }> } };
 
 export type NodesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -900,47 +887,6 @@ export const DivisionEdgeTypesDocument = gql`
 export function useDivisionEdgeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionEdgeTypesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionEdgeTypesQuery>({ query: DivisionEdgeTypesDocument, ...options });
 };
-export const DivisionEdgesDocument = gql`
-    query DivisionEdges($divisionId: ID!, $offset: Int, $limit: Int) {
-  division(divisionId: $divisionId) {
-    id
-    name
-    edges(offset: $offset, limit: $limit) {
-      entries {
-        id
-        name
-        edgeTypeId
-        props {
-          key
-          val
-        }
-        edgeType {
-          id
-          name
-          uid
-        }
-        startNode {
-          id
-          name
-          uid
-        }
-        endNode {
-          id
-          name
-          uid
-        }
-      }
-      limit
-      offset
-      total
-    }
-  }
-}
-    `;
-
-export function useDivisionEdgesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionEdgesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<DivisionEdgesQuery>({ query: DivisionEdgesDocument, ...options });
-};
 export const DivisionNodeTypesDocument = gql`
     query DivisionNodeTypes($divisionId: ID!) {
   division(divisionId: $divisionId) {
@@ -963,37 +909,6 @@ export const DivisionNodeTypesDocument = gql`
 
 export function useDivisionNodeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionNodeTypesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionNodeTypesQuery>({ query: DivisionNodeTypesDocument, ...options });
-};
-export const DivisionNodesDocument = gql`
-    query DivisionNodes($divisionId: ID!, $offset: Int, $limit: Int) {
-  division(divisionId: $divisionId) {
-    id
-    name
-    nodes(offset: $offset, limit: $limit) {
-      entries {
-        id
-        name
-        uid
-        nodeTypeId
-        props {
-          key
-          val
-        }
-        nodeType {
-          id
-          name
-        }
-      }
-      limit
-      offset
-      total
-    }
-  }
-}
-    `;
-
-export function useDivisionNodesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionNodesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<DivisionNodesQuery>({ query: DivisionNodesDocument, ...options });
 };
 export const DivisionSubGraphFiltersDocument = gql`
     query DivisionSubGraphFilters($divisionId: ID!) {
@@ -1036,6 +951,43 @@ export const DivisionSummaryDocument = gql`
 
 export function useDivisionSummaryQuery(options: Omit<Urql.UseQueryArgs<never, DivisionSummaryQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionSummaryQuery>({ query: DivisionSummaryDocument, ...options });
+};
+export const EdgesDocument = gql`
+    query Edges($divisionId: ID!, $q: String, $offset: Int, $limit: Int) {
+  edges(divisionId: $divisionId, q: $q, offset: $offset, limit: $limit) {
+    entries {
+      id
+      name
+      edgeTypeId
+      props {
+        key
+        val
+      }
+      edgeType {
+        id
+        name
+        uid
+      }
+      startNode {
+        id
+        name
+        uid
+      }
+      endNode {
+        id
+        name
+        uid
+      }
+    }
+    limit
+    offset
+    total
+  }
+}
+    `;
+
+export function useEdgesQuery(options: Omit<Urql.UseQueryArgs<never, EdgesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<EdgesQuery>({ query: EdgesDocument, ...options });
 };
 export const NodesDocument = gql`
     query Nodes($divisionId: ID!, $q: String, $offset: Int, $limit: Int) {
