@@ -1,6 +1,10 @@
 <template>
   <h1>Nodes</h1>
-  <section>
+  <NodeSearchOrganism
+    :division-id="divisionId"
+    @search="search($event)"
+  />
+  <section class="mt-3">
     <Button
       class="w-full"
       label="Create"
@@ -20,9 +24,9 @@
     >
       Oh no... {{ error }}
     </div>
-    <ul v-else-if="data && data.division">
+    <ul v-else-if="data">
       <li
-        v-for="node in data.division.nodes.entries"
+        v-for="node in data.nodes.entries"
         :key="node.id"
       >
         <NodeItemMolecule
@@ -32,8 +36,8 @@
       </li>
     </ul>
     <Paginator
-      :rows="limit"
-      :total-records="data && data.division ? data.division.nodes.total : 0"
+      :rows="variables.limit"
+      :total-records="data ? data.nodes.total : 0"
       @page="onPage($event)"
     />
   </section>
@@ -42,9 +46,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { useDivisionNodesQuery } from '@/auto_generated/graphql'
+import { useNodesQuery } from '@/auto_generated/graphql'
 import type { Node } from '@/auto_generated/graphql'
 import NodeItemMolecule from '@/components/molecules/NodeItemMolecule.vue'
+import NodeSearchOrganism from '@/components/organisms/NodeSearchOrganism.vue'
 
 const props = defineProps<{
   divisionId: string;
@@ -55,16 +60,22 @@ const emit = defineEmits<{
   (e: 'click:updateNode', node: Node);
 }>()
 
-const offset = ref(0)
-const limit = ref(10)
+const variables = ref({
+  divisionId: props.divisionId,
+  offset: 0,
+  limit: 10
+})
 
-const { fetching, error, data, executeQuery } = useDivisionNodesQuery({
-  variables: { divisionId: props.divisionId, offset, limit },
+const { fetching, error, data } = useNodesQuery({
+  variables,
   context: { additionalTypenames: ['Node'] }
 })
 
 const onPage = (event) => {
-  offset.value = event.first
-  executeQuery()
+  variables.value.offset = event.first
+}
+
+const search = (parameters) => {
+  variables.value.q = parameters
 }
 </script>

@@ -35,6 +35,7 @@ module.exports = {
       { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
     ],
     'vue/v-on-event-hyphenation': 'off',
+    'vue/attribute-hyphenation': 'off',
     // 以下、重複または衝突しているため無効
     'func-call-spacing': 'off',
     'no-unused-vars': 'off'

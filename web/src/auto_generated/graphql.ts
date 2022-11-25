@@ -353,6 +353,7 @@ export type RootQueryType = {
   currentProject?: Maybe<Project>;
   currentUser: User;
   division?: Maybe<Division>;
+  nodes: NodeList;
   ping: Status;
   subGraphFilter?: Maybe<SubGraphFilter>;
   tower?: Maybe<Tower>;
@@ -361,6 +362,14 @@ export type RootQueryType = {
 
 export type RootQueryTypeDivisionArgs = {
   divisionId: Scalars['ID'];
+};
+
+
+export type RootQueryTypeNodesArgs = {
+  divisionId: Scalars['ID'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  q?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -618,6 +627,16 @@ export type DivisionSummaryQueryVariables = Exact<{
 
 
 export type DivisionSummaryQuery = { __typename?: 'RootQueryType', division?: { __typename?: 'Division', id: string, name: string, project: { __typename?: 'Project', id: string, name: string, default: boolean }, tower: { __typename?: 'Tower', id: string, name: string }, summary: Array<{ __typename?: 'Item', key: string, val: string }> } | null };
+
+export type NodesQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+  q?: InputMaybe<Scalars['String']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type NodesQuery = { __typename?: 'RootQueryType', nodes: { __typename?: 'NodeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Node', id: string, name: string, uid: string, nodeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, nodeType: { __typename?: 'NodeType', id: string, name: string } }> } };
 
 export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1017,6 +1036,33 @@ export const DivisionSummaryDocument = gql`
 
 export function useDivisionSummaryQuery(options: Omit<Urql.UseQueryArgs<never, DivisionSummaryQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionSummaryQuery>({ query: DivisionSummaryDocument, ...options });
+};
+export const NodesDocument = gql`
+    query Nodes($divisionId: ID!, $q: String, $offset: Int, $limit: Int) {
+  nodes(divisionId: $divisionId, q: $q, offset: $offset, limit: $limit) {
+    entries {
+      id
+      name
+      uid
+      nodeTypeId
+      props {
+        key
+        val
+      }
+      nodeType {
+        id
+        name
+      }
+    }
+    limit
+    offset
+    total
+  }
+}
+    `;
+
+export function useNodesQuery(options: Omit<Urql.UseQueryArgs<never, NodesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<NodesQuery>({ query: NodesDocument, ...options });
 };
 export const PingDocument = gql`
     query Ping {

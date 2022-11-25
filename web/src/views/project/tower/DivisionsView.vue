@@ -38,7 +38,7 @@
         </li>
       </ul>
       <Paginator
-        :rows="limit"
+        :rows="variables.limit"
         :total-records="data && data.tower ? data.tower.divisions.total : 0"
         @page="onPage($event)"
       />
@@ -85,11 +85,14 @@ const { executeMutation: createDivision } = useCreateDivisionMutation()
 
 const visibleRight = ref(false)
 const name = ref('')
-const offset = ref(0)
-const limit = ref(10)
+const variables = ref({
+  towerId: props.towerId,
+  offset: 0,
+  limit: 10
+})
 
-const { fetching, error, data, executeQuery } = useTowerDivisionsQuery({
-  variables: { towerId: props.towerId, offset, limit },
+const { fetching, error, data } = useTowerDivisionsQuery({
+  variables,
   context: { additionalTypenames: ['Division'] }
 })
 
@@ -113,8 +116,7 @@ const moveToDivision = (divisionId) => {
 }
 
 const onPage = (event) => {
-  offset.value = event.first
-  executeQuery()
+  variables.value.offset = event.first
 }
 </script>
 
