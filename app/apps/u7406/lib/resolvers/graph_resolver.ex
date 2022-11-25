@@ -50,6 +50,9 @@ defmodule Resolvers.GraphResolver do
       :sub_graph_filter ->
         Query.SubGraphFilter.run(parent, args, context)
 
+      :nodes ->
+        Query.Nodes.run(parent, args, context)
+
       # Mutation
       :create_tower ->
         Mutation.CreateTower.run(parent, args, context)
