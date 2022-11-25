@@ -1,6 +1,10 @@
 <template>
   <h1>Edges</h1>
-  <section>
+  <EdgeSearchOrganism
+    :division-id="divisionId"
+    @search="search($event)"
+  />
+  <section class="mt-3">
     <Button
       class="w-full"
       label="Create"
@@ -20,9 +24,9 @@
     >
       Oh no... {{ error }}
     </div>
-    <ul v-else-if="data && data.division">
+    <ul v-else-if="data">
       <li
-        v-for="edge in data.division.edges.entries"
+        v-for="edge in data.edges.entries"
         :key="edge.id"
       >
         <EdgeItemMolecule
@@ -32,8 +36,8 @@
       </li>
     </ul>
     <Paginator
-      :rows="limit"
-      :total-records="data && data.division ? data.division.edges.total : 0"
+      :rows="variables.limit"
+      :total-records="data ? data.edges.total : 0"
       @page="onPage($event)"
     />
   </section>
@@ -42,9 +46,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { useDivisionEdgesQuery } from '@/auto_generated/graphql'
+import { useEdgesQuery } from '@/auto_generated/graphql'
 import type { Edge } from '@/auto_generated/graphql'
 import EdgeItemMolecule from '@/components/molecules/EdgeItemMolecule.vue'
+import EdgeSearchOrganism from '@/components/organisms/EdgeSearchOrganism.vue'
 
 const props = defineProps<{
   divisionId: string;
@@ -55,16 +60,22 @@ const emit = defineEmits<{
   (e: 'click:updateEdge', edge: Edge);
 }>()
 
-const offset = ref(0)
-const limit = ref(10)
+const variables = ref({
+  divisionId: props.divisionId,
+  offset: 0,
+  limit: 10
+})
 
-const { fetching, error, data, executeQuery } = useDivisionEdgesQuery({
-  variables: { divisionId: props.divisionId, offset, limit },
+const { fetching, error, data } = useEdgesQuery({
+  variables,
   context: { additionalTypenames: ['Edge'] }
 })
 
 const onPage = (event) => {
-  offset.value = event.first
-  executeQuery()
+  variables.value.offset = event.first
+}
+
+const search = (parameters) => {
+  variables.value.q = parameters
 }
 </script>
