@@ -26,6 +26,14 @@ defmodule Graphql.Types.GraphType do
       arg(:limit, :integer, default_value: 10)
       resolve(&GraphResolver.call(:nodes, &1, &2, &3))
     end
+
+    field(:edges, non_null(:edge_list)) do
+      arg(:division_id, non_null(:id))
+      arg(:q, :string, default_value: "[]")
+      arg(:offset, :integer, default_value: 0)
+      arg(:limit, :integer, default_value: 10)
+      resolve(&GraphResolver.call(:edges, &1, &2, &3))
+    end
   end
 
   object :graph_mutations do

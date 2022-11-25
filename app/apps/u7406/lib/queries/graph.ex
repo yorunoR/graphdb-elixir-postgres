@@ -37,6 +37,14 @@ defmodule Queries.Graph do
                 [:edge_type, :uid]
                 |> dynamic_condition(values, like: false)
 
+              "startNodeUid" ->
+                [:start_node, :uid]
+                |> dynamic_condition(values, like: false)
+
+              "endNodeUid" ->
+                [:end_node, :uid]
+                |> dynamic_condition(values, like: false)
+
               "startNodeName" ->
                 [:start_node, :name]
                 |> dynamic_condition(values, like: true)

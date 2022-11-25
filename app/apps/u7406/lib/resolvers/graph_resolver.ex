@@ -53,6 +53,9 @@ defmodule Resolvers.GraphResolver do
       :nodes ->
         Query.Nodes.run(parent, args, context)
 
+      :edges ->
+        Query.Edges.run(parent, args, context)
+
       # Mutation
       :create_tower ->
         Mutation.CreateTower.run(parent, args, context)
