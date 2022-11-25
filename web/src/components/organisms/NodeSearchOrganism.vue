@@ -100,12 +100,14 @@
       <div class="text-left">
         <strong>Parameters</strong>
         <VueJsonPretty
-          :data="parameters"
+          v-model:data="parameters"
           show-icon
           show-length
           collapsed-on-click-brackets
           :show-line="false"
           :show-double-quotes="false"
+          editable
+          editableTrigger="dblclick"
         />
       </div>
     </section>
