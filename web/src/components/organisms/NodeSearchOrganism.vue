@@ -9,19 +9,19 @@
       class="flex flex-column"
     >
       <Button
-        label="Name"
+        label="NodeType"
         class="p-button-outlined"
+        @click="selected = 'nodeType'"
+      />
+      <Button
+        label="Name"
+        class="p-button-outlined mt-2"
         @click="selected = 'name'"
       />
       <Button
         label="UID"
         class="p-button-outlined mt-2"
         @click="selected = 'uid'"
-      />
-      <Button
-        label="NodeType"
-        class="p-button-outlined mt-2"
-        @click="selected = 'nodeType'"
       />
     </div>
     <div
