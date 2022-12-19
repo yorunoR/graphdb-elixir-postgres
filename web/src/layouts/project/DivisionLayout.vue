@@ -18,90 +18,97 @@
             v-bind="data.division"
           />
         </div>
-        <ul
-          style="height: calc(100% - 140px)"
+        <div
+          style="height: calc(100% - 124px)"
           class="overflow-y-scroll"
         >
-          <li style="border: none">
-            <router-link :to="{ name: 'towers' }">
-              Towers
-            </router-link>
-          </li>
-          <li
-            v-if="data.division"
-            style="border: none"
-          >
-            <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
-              Divisions
-            </router-link>
-          </li>
-          <li style="border: none">
-            <div>Division</div>
-            <ul class="mt-3">
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'summary', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  Summary
-                </router-link>
-              </li>
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'node_types', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  NodeTypes
-                </router-link>
-              </li>
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'edge_types', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  EdgeTypes
-                </router-link>
-              </li>
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'nodes', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  Nodes
-                </router-link>
-              </li>
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'edges', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  Edges
-                </router-link>
-              </li>
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'sub_graph_filters', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  SubGraphFilters
-                </router-link>
-              </li>
-              <li style="border: none">
-                <router-link
-                  :to="{ name: 'upload_csv', params: { divisionId } }"
-                  @click="() => close()"
-                >
-                  Upload CSV
-                </router-link>
-              </li>
-            </ul>
-          </li>
-          <li style="border: none">
-            <router-link to="/board/select">
-              Return Board
-            </router-link>
-          </li>
-        </ul>
+          <ul>
+            <li style="border: none">
+              <router-link :to="{ name: 'towers' }">
+                Towers
+              </router-link>
+            </li>
+            <li
+              v-if="data.division"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
+                Divisions
+              </router-link>
+            </li>
+            <li
+              class="mt-3 py-0"
+              style="border: none"
+            >
+              <div>Division</div>
+              <ul class="my-0">
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'summary', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    Summary
+                  </router-link>
+                </li>
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'node_types', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    NodeTypes
+                  </router-link>
+                </li>
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'edge_types', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    EdgeTypes
+                  </router-link>
+                </li>
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'nodes', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    Nodes
+                  </router-link>
+                </li>
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'edges', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    Edges
+                  </router-link>
+                </li>
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'sub_graph_filters', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    SubGraphFilters
+                  </router-link>
+                </li>
+                <li style="border: none">
+                  <router-link
+                    :to="{ name: 'upload_csv', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    Upload CSV
+                  </router-link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li style="border: none">
+              <router-link to="/board/select">
+                Return Board
+              </router-link>
+            </li>
+          </ul>
+        </div>
       </section>
       <Button @click="signOut">
         Sign Out
