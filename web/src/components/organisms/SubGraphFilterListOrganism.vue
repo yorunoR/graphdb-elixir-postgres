@@ -25,6 +25,7 @@
         <li
           v-for="subGraphFilter in data.division.subGraphFilters"
           :key="subGraphFilter.id"
+          class="list"
         >
           <SubGraphFilterItemMolecule
             :division-id="divisionId"

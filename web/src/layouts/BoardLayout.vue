@@ -6,12 +6,18 @@
       <section>
         <h2>Board</h2>
         <ul>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link to="/board/select">
               Select
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link to="/board/about">
               About
             </router-link>

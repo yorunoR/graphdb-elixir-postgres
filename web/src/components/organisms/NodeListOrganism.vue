@@ -28,6 +28,7 @@
       <li
         v-for="node in data.nodes.entries"
         :key="node.id"
+        class="list"
       >
         <NodeItemMolecule
           :node="node"

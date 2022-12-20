@@ -13,22 +13,34 @@
           />
         </div>
         <ul>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'towers' }">
               Towers
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'divisions' }">
               Divisions
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'setting' }">
               Setting
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'select' }">
               Return Board
             </router-link>

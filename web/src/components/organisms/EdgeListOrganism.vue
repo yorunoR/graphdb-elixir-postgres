@@ -28,6 +28,7 @@
       <li
         v-for="edge in data.edges.entries"
         :key="edge.id"
+        class="list"
       >
         <EdgeItemMolecule
           :edge="edge"

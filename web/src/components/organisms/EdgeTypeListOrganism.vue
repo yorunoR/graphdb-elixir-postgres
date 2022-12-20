@@ -25,6 +25,7 @@
         <li
           v-for="edgeType in data.division?.edgeTypes"
           :key="edgeType.id"
+          class="list"
         >
           <EdgeTypeItemMolecule
             :edge-type="edgeType"

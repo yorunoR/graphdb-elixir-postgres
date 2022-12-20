@@ -45,7 +45,10 @@
             v-show="visibleToggle"
             class="pl-3 my-0"
           >
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'summary',
@@ -56,7 +59,10 @@
                 Summary
               </router-link>
             </li>
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'node_types',
@@ -67,7 +73,10 @@
                 NodeTypes
               </router-link>
             </li>
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'edge_types',
@@ -78,7 +87,10 @@
                 EdgeTypes
               </router-link>
             </li>
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'nodes',
@@ -89,7 +101,10 @@
                 Nodes
               </router-link>
             </li>
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'edges',
@@ -100,7 +115,10 @@
                 Edges
               </router-link>
             </li>
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'sub_graph_filters',
@@ -115,7 +133,10 @@
             SubGraph
           </div>
           <ul class="pl-3 mt-0">
-            <li style="border: none">
+            <li
+              class="list"
+              style="border: none"
+            >
               <router-link
                 :to="{
                   name: 'search',
@@ -129,6 +150,7 @@
           </ul>
           <ul>
             <li
+              class="list"
               style="border: none"
             >
               <router-link to="/board/select">
