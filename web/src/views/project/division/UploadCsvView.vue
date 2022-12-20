@@ -1,8 +1,6 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <section>
-      <h1>Upload CSV</h1>
-    </section>
+    <h1>Upload CSV</h1>
     <section
       v-if="nodeTypesData && nodeTypesData.division"
       class="text-left mt-4"
