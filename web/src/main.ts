@@ -13,6 +13,8 @@ import Paginator from 'primevue/paginator'
 import Panel from 'primevue/panel'
 import RadioButton from 'primevue/radiobutton'
 import Sidebar from 'primevue/sidebar'
+import TabPanel from 'primevue/tabpanel'
+import TabView from 'primevue/tabview'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 import ToggleButton from 'primevue/togglebutton'
@@ -38,6 +40,8 @@ createApp(App)
   .component('Panel', Panel)
   .component('RadioButton', RadioButton)
   .component('Sidebar', Sidebar)
+  .component('TabPanel', TabPanel)
+  .component('TabView', TabView)
   .component('Toast', Toast)
   .component('ToggleButton', ToggleButton)
   .mount('#app')

@@ -2,6 +2,9 @@
   <h1>Edges</h1>
   <EdgeSearchOrganism
     :division-id="divisionId"
+    toggleable
+    nodeSearch
+    buttonLabel="Search"
     @search="search($event)"
   />
   <section class="mt-3">

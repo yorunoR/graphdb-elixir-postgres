@@ -171,8 +171,14 @@
       @click="visibleLeft = true"
     />
   </div>
-  <div class="pt-6 px-3 pb-3">
-    <router-view :sub-graph-filter-id="subGraphFilterId" />
+  <div
+    v-if="data && data.subGraphFilter"
+    class="pt-6 px-3 pb-3"
+  >
+    <router-view
+      :divisionId="data.subGraphFilter.division.id"
+      :subGraphFilterId="subGraphFilterId"
+    />
   </div>
 </template>
 
