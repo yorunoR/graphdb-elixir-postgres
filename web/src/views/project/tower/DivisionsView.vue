@@ -25,6 +25,7 @@
         <li
           v-for="division in data.tower.divisions.entries"
           :key="division.id"
+          class="list"
         >
           <div class="flex justify-content-between align-items-center">
             <strong>{{ division.name }}</strong>

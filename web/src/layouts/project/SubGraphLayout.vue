@@ -3,7 +3,9 @@
     <div
       class="h-screen adjust-height flex flex-column justify-content-between"
     >
-      <section v-if="data">
+      <section
+        style="height: calc(100% - 96px)"
+      >
         <h2>SubGraph</h2>
         <div>
           <ProjectMolecule v-bind="data.subGraphFilter?.project" />
@@ -21,130 +23,162 @@
           />
         </div>
         <div
-          class="pl-3 mt-4 cursor-pointer"
-          @click="visibleToggle = !visibleToggle"
+          style="height: calc(100% - 124px)"
+          class="overflow-y-scroll"
         >
-          <span>Division </span>
-          <i
-            v-show="!visibleToggle"
-            class="pi pi-plus"
-          />
-          <i
-            v-show="visibleToggle"
-            class="pi pi-minus"
-          />
-        </div>
-        <ul
-          v-if="data && data.subGraphFilter"
-          v-show="visibleToggle"
-          class="pl-3 mt-0"
-        >
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'summary',
-                params: { divisionId: data.subGraphFilter.division.id },
-              }"
-              @click="() => close()"
-            >
-              Summary
-            </router-link>
-          </li>
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'node_types',
-                params: { divisionId: data.subGraphFilter.division.id },
-              }"
-              @click="() => close()"
-            >
-              NodeTypes
-            </router-link>
-          </li>
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'edge_types',
-                params: { divisionId: data.subGraphFilter.division.id },
-              }"
-              @click="() => close()"
-            >
-              EdgeTypes
-            </router-link>
-          </li>
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'nodes',
-                params: { divisionId: data.subGraphFilter.division.id },
-              }"
-              @click="() => close()"
-            >
-              Nodes
-            </router-link>
-          </li>
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'edges',
-                params: { divisionId: data.subGraphFilter.division.id },
-              }"
-              @click="() => close()"
-            >
-              Edges
-            </router-link>
-          </li>
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'sub_graph_filters',
-                params: { divisionId: data.subGraphFilter.division.id },
-              }"
-            >
-              SubGraphFilters
-            </router-link>
-          </li>
-        </ul>
-        <div class="pl-3 mt-4">
-          SubGraph
-        </div>
-        <ul class="pl-3 mt-0">
-          <li style="border: none">
-            <router-link
-              :to="{
-                name: 'search',
-                params: { subGraphFilterId },
-              }"
-              @click="() => close()"
-            >
-              Search
-            </router-link>
-          </li>
-        </ul>
-        <ul>
-          <li
-            class="mt-1"
-            style="border: none"
+          <div
+            class="pl-3 mt-4 cursor-pointer flex align-items-center"
+            @click="visibleToggle = !visibleToggle"
           >
-            <router-link to="/board/select">
-              Return Board
-            </router-link>
-          </li>
-        </ul>
+            <span>Division </span>
+            <i
+              v-show="!visibleToggle"
+              class="ml-2 pi pi-angle-left"
+            />
+            <i
+              v-show="visibleToggle"
+              class="ml-2 pi pi-angle-down"
+            />
+          </div>
+          <ul
+            v-if="data && data.subGraphFilter"
+            v-show="visibleToggle"
+            class="pl-3 my-0"
+          >
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'summary',
+                  params: { divisionId: data.subGraphFilter.division.id },
+                }"
+                @click="() => close()"
+              >
+                Summary
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'node_types',
+                  params: { divisionId: data.subGraphFilter.division.id },
+                }"
+                @click="() => close()"
+              >
+                NodeTypes
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'edge_types',
+                  params: { divisionId: data.subGraphFilter.division.id },
+                }"
+                @click="() => close()"
+              >
+                EdgeTypes
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'nodes',
+                  params: { divisionId: data.subGraphFilter.division.id },
+                }"
+                @click="() => close()"
+              >
+                Nodes
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'edges',
+                  params: { divisionId: data.subGraphFilter.division.id },
+                }"
+                @click="() => close()"
+              >
+                Edges
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'sub_graph_filters',
+                  params: { divisionId: data.subGraphFilter.division.id },
+                }"
+              >
+                SubGraphFilters
+              </router-link>
+            </li>
+          </ul>
+          <div class="pl-3 mt-4">
+            SubGraph
+          </div>
+          <ul class="pl-3 mt-0">
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'search',
+                  params: { subGraphFilterId },
+                }"
+                @click="() => close()"
+              >
+                Search
+              </router-link>
+            </li>
+          </ul>
+          <ul>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link to="/board/select">
+                Return Board
+              </router-link>
+            </li>
+          </ul>
+        </div>
       </section>
       <Button @click="signOut">
         Sign Out
       </Button>
     </div>
   </Sidebar>
-  <div class="flex flex-row p-3">
+  <div class="fixed top-0 flex flex-row p-3">
     <Button
       icon="pi pi-arrow-right"
       @click="visibleLeft = true"
     />
   </div>
-  <div class="p-3">
-    <router-view :sub-graph-filter-id="subGraphFilterId" />
+  <div
+    v-if="data && data.subGraphFilter"
+    class="pt-6 px-3 pb-3"
+  >
+    <router-view
+      :divisionId="data.subGraphFilter.division.id"
+      :subGraphFilterId="subGraphFilterId"
+    />
   </div>
 </template>
 

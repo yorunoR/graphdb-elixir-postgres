@@ -2,6 +2,8 @@
   <h1>Nodes</h1>
   <NodeSearchOrganism
     :division-id="divisionId"
+    toggleable
+    buttonLabel="Search"
     @search="search($event)"
   />
   <section class="mt-3">
@@ -28,6 +30,7 @@
       <li
         v-for="node in data.nodes.entries"
         :key="node.id"
+        class="list"
       >
         <NodeItemMolecule
           :node="node"

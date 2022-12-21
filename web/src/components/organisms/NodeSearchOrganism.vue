@@ -1,8 +1,8 @@
 <template>
   <Panel
     header="Search"
-    :toggleable="true"
-    :collapsed="true"
+    :toggleable="toggleable"
+    :collapsed="toggleable"
   >
     <div
       v-if="!selected"
@@ -126,7 +126,7 @@
         <Button
           :disabled="selected"
           class="w-full"
-          label="Search"
+          :label="buttonLabel"
           @click="() => search()"
         />
       </div>
@@ -146,6 +146,8 @@ import LogicalInput from '@/components/molecules/LogicalInput.vue'
 
 const props = defineProps<{
   divisionId: string;
+  toggleable?: boolean;
+  buttonLabel: string;
 }>()
 
 const emit = defineEmits<{

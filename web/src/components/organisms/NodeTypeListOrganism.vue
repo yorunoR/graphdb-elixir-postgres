@@ -25,6 +25,7 @@
         <li
           v-for="nodeType in data.division?.nodeTypes"
           :key="nodeType.id"
+          class="list"
         >
           <NodeTypeItemMolecule
             :node-type="nodeType"

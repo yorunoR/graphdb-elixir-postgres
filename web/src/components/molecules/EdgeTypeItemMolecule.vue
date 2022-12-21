@@ -43,6 +43,7 @@
       <li
         v-for="rule in edgeType.rules"
         :key="objId(rule)"
+        class="list"
       >
         <div>Name: {{ rule.name }}</div>
         <div class="mt-1">

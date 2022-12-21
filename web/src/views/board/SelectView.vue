@@ -26,6 +26,7 @@
           <li
             v-for="project in data.currentUser.projects"
             :key="project.id"
+            class="list"
           >
             <div class="flex justify-content-between align-items-center">
               <strong>{{ project.name }}</strong>

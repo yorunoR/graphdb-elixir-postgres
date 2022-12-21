@@ -9,17 +9,26 @@
           <ProjectMolecule v-bind="data.currentProject" />
         </div>
         <ul>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'towers' }">
               Towers
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'info' }">
               Information
             </router-link>
           </li>
-          <li style="border: none">
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'select' }">
               Return Board
             </router-link>

@@ -1,8 +1,8 @@
 <template>
   <Panel
     header="Search"
-    :toggleable="true"
-    :collapsed="true"
+    :toggleable="toggleable"
+    :collapsed="toggleable"
   >
     <div
       v-if="!selected"
@@ -19,21 +19,25 @@
         @click="selected = 'name'"
       />
       <Button
+        v-show="nodeSearch"
         label="Start node name"
         class="p-button-outlined mt-2"
         @click="selected = 'startNodeName'"
       />
       <Button
+        v-show="nodeSearch"
         label="End node name"
         class="p-button-outlined mt-2"
         @click="selected = 'endNodeName'"
       />
       <Button
+        v-show="nodeSearch"
         label="Start node UID"
         class="p-button-outlined mt-2"
         @click="selected = 'startNodeUid'"
       />
       <Button
+        v-show="nodeSearch"
         label="End node UID"
         class="p-button-outlined mt-2"
         @click="selected = 'endNodeUid'"
@@ -189,7 +193,7 @@
         <Button
           :disabled="selected"
           class="w-full"
-          label="Search"
+          :label="buttonLabel"
           @click="() => search()"
         />
       </div>
@@ -209,6 +213,9 @@ import LogicalInput from '@/components/molecules/LogicalInput.vue'
 
 const props = defineProps<{
   divisionId: string;
+  toggleable?: boolean;
+  nodeSearch?: boolean;
+  buttonLabel: string;
 }>()
 
 const emit = defineEmits<{

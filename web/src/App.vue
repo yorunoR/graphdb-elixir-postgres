@@ -34,9 +34,12 @@ ul {
 
 li {
   list-style-type: none;
-  padding: 1rem;
-  border: solid 1px;
-  border-bottom: none;
+
+  &.list {
+    padding: 1rem;
+    border: solid 1px;
+    border-bottom: none;
+  }
 }
 li:last-child {
   border-bottom: solid 1px;

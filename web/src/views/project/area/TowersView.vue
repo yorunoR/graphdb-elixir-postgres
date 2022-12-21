@@ -26,6 +26,7 @@
           <li
             v-for="tower in data.currentProject?.towers"
             :key="tower.id"
+            class="list"
           >
             <div class="flex justify-content-between align-items-center">
               <strong>{{ tower.name }}</strong>
