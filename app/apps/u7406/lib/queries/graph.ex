@@ -11,6 +11,18 @@ defmodule Queries.Graph do
     end)
   end
 
+  def join_bind_assocs(query, associations, bind_query) when is_list(associations) do
+    Enum.reduce(associations, query, fn association, query ->
+      column = :"#{association}_id"
+
+      query
+      |> join(:inner, [e], n in subquery(bind_query),
+        on: field(e, ^column) == n.id,
+        as: ^association
+      )
+    end)
+  end
+
   def search(query, parameters) do
     next_operator = :and
 
@@ -80,7 +92,7 @@ defmodule Queries.Graph do
   def dynamic_condition([association, column], values, like: like_option) do
     connect_operator = :and
 
-    [dynamic_filter, connect_operator] =
+    [dynamic_filter, _connect_operator] =
       Enum.reduce(values, [dynamic(true), connect_operator], fn
         %{"type" => "term", "value" => value}, [dynamic, connect_operator] ->
           matcher = "%#{value}%"
@@ -128,7 +140,7 @@ defmodule Queries.Graph do
 
           [dynamic, connect_operator]
 
-        %{"type" => "operator", "value" => value}, [dynamic, connect_operator] ->
+        %{"type" => "operator", "value" => value}, [dynamic, _connect_operator] ->
           connect_operator =
             case value do
               "+" -> :or
@@ -148,7 +160,7 @@ defmodule Queries.Graph do
   def dynamic_condition(column, values, like: like_option) do
     connect_operator = :and
 
-    [dynamic_filter, connect_operator] =
+    [dynamic_filter, _connect_operator] =
       Enum.reduce(values, [dynamic(true), connect_operator], fn
         %{"type" => "term", "value" => value}, [dynamic, connect_operator] ->
           matcher = "%#{value}%"
@@ -178,7 +190,7 @@ defmodule Queries.Graph do
 
           [dynamic, connect_operator]
 
-        %{"type" => "operator", "value" => value}, [dynamic, connect_operator] ->
+        %{"type" => "operator", "value" => value}, [dynamic, _connect_operator] ->
           connect_operator =
             case value do
               "+" -> :or

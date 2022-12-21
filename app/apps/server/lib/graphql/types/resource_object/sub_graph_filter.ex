@@ -9,8 +9,17 @@ defmodule Graphql.Types.ResourceObject.SubGraphFilter do
     field(:inserted_at, non_null(:datetime))
     field(:updated_at, non_null(:datetime))
 
-    field(:node_filter, :node_filter)
-    field(:edge_filter, :edge_filter)
+    field(:node_filter, :string) do
+      resolve(fn parent, _args, %{context: _context} ->
+        Poison.encode(parent.node_filter)
+      end)
+    end
+
+    field(:edge_filter, :string) do
+      resolve(fn parent, _args, %{context: _context} ->
+        Poison.encode(parent.edge_filter)
+      end)
+    end
 
     field(:project, non_null(:project)) do
       resolve(dataloader(:db))
@@ -23,13 +32,5 @@ defmodule Graphql.Types.ResourceObject.SubGraphFilter do
     field(:division, non_null(:division)) do
       resolve(dataloader(:db))
     end
-  end
-
-  object :node_filter do
-    field(:uids, list_of(:string))
-  end
-
-  object :edge_filter do
-    field(:edge_types, list_of(:string))
   end
 end
