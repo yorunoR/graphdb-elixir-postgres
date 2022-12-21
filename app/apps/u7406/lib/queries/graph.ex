@@ -11,6 +11,18 @@ defmodule Queries.Graph do
     end)
   end
 
+  def join_bind_assocs(query, associations, bind_query) when is_list(associations) do
+    Enum.reduce(associations, query, fn association, query ->
+      column = :"#{association}_id"
+
+      query
+      |> join(:inner, [e], n in subquery(bind_query),
+        on: field(e, ^column) == n.id,
+        as: ^association
+      )
+    end)
+  end
+
   def search(query, parameters) do
     next_operator = :and
 
