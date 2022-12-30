@@ -21,3 +21,7 @@ export const listToMap = (list: [Item] | undefined): StringKeyObject => {
     return map
   }, {})
 }
+
+export const mapToList = (map: StringKeyObject): Item[] => {
+  return Object.entries(map).map(([key, val]) => ({ key, val }))
+}
