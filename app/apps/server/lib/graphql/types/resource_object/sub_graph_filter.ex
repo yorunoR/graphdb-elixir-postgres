@@ -11,13 +11,13 @@ defmodule Graphql.Types.ResourceObject.SubGraphFilter do
 
     field(:node_filter, :string) do
       resolve(fn parent, _args, %{context: _context} ->
-        Poison.encode(parent.node_filter)
+        Map.get(parent.node_filter, "q", []) |> Poison.encode()
       end)
     end
 
     field(:edge_filter, :string) do
       resolve(fn parent, _args, %{context: _context} ->
-        Poison.encode(parent.edge_filter)
+        Map.get(parent.edge_filter, "q", []) |> Poison.encode()
       end)
     end
 

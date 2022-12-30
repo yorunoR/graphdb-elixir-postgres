@@ -129,7 +129,9 @@ defmodule Graphql.Types.GraphType do
 
     field(:update_sub_graph_filter, :sub_graph_filter) do
       arg(:sub_graph_filter_id, non_null(:id))
-      arg(:sub_graph_filter, non_null(:input_sub_graph_filter))
+      arg(:sub_graph_filter, :input_sub_graph_filter)
+      arg(:q_node, :string)
+      arg(:q_edge, :string)
       resolve(&GraphResolver.call(:update_sub_graph_filter, &1, &2, &3))
     end
   end
