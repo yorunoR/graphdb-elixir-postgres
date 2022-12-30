@@ -59,6 +59,9 @@ defmodule Resolvers.GraphResolver do
       :node_bound_edges ->
         Query.NodeBoundEdges.run(parent, args, context)
 
+      :sub_graph_status ->
+        Query.SubGraphStatus.run(parent, args, context)
+
       # Mutation
       :create_tower ->
         Mutation.CreateTower.run(parent, args, context)
@@ -104,6 +107,12 @@ defmodule Resolvers.GraphResolver do
 
       :update_sub_graph_filter ->
         Mutation.UpdateSubGraphFilter.run(parent, args, context)
+
+      :start_sub_graph ->
+        Mutation.StartSubGraph.run(parent, args, context)
+
+      :stop_sub_graph ->
+        Mutation.StopSubGraph.run(parent, args, context)
 
       _ ->
         {:error, "Not defined in Graph context"}
