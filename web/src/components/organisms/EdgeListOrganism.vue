@@ -5,6 +5,7 @@
     toggleable
     nodeSearch
     buttonLabel="Search"
+    initial="[]"
     @search="search($event)"
   />
   <section class="mt-3">

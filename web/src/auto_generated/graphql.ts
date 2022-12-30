@@ -68,11 +68,6 @@ export type EdgeField = {
   updatedAt: Scalars['DateTime'];
 };
 
-export type EdgeFilter = {
-  __typename?: 'EdgeFilter';
-  edgeTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
 export type EdgeList = {
   __typename?: 'EdgeList';
   entries: Array<Edge>;
@@ -186,11 +181,6 @@ export type NodeField = {
   type: Scalars['String'];
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-};
-
-export type NodeFilter = {
-  __typename?: 'NodeFilter';
-  uids?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type NodeList = {
@@ -330,7 +320,9 @@ export type RootMutationTypeUpdateNodeTypeArgs = {
 
 
 export type RootMutationTypeUpdateSubGraphFilterArgs = {
-  subGraphFilter: InputSubGraphFilter;
+  qEdge?: InputMaybe<Scalars['String']>;
+  qNode?: InputMaybe<Scalars['String']>;
+  subGraphFilter?: InputMaybe<InputSubGraphFilter>;
   subGraphFilterId: Scalars['ID'];
 };
 
@@ -340,6 +332,7 @@ export type RootQueryType = {
   currentUser: User;
   division?: Maybe<Division>;
   edges: EdgeList;
+  nodeBoundEdges: EdgeList;
   nodes: NodeList;
   ping: Status;
   subGraphFilter?: Maybe<SubGraphFilter>;
@@ -357,6 +350,15 @@ export type RootQueryTypeEdgesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   q?: InputMaybe<Scalars['String']>;
+};
+
+
+export type RootQueryTypeNodeBoundEdgesArgs = {
+  divisionId: Scalars['ID'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  q?: InputMaybe<Scalars['String']>;
+  qNode?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -401,11 +403,11 @@ export type Status = {
 export type SubGraphFilter = {
   __typename?: 'SubGraphFilter';
   division: Division;
-  edgeFilter?: Maybe<EdgeFilter>;
+  edgeFilter?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
-  nodeFilter?: Maybe<NodeFilter>;
+  nodeFilter?: Maybe<Scalars['String']>;
   project: Project;
   tower: Tower;
   uid: Scalars['String'];
@@ -570,7 +572,9 @@ export type UpdateNodeTypeMutation = { __typename?: 'RootMutationType', updateNo
 
 export type UpdateSubGraphFilterMutationVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
-  subGraphFilter: InputSubGraphFilter;
+  subGraphFilter?: InputMaybe<InputSubGraphFilter>;
+  qNode?: InputMaybe<Scalars['String']>;
+  qEdge?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -615,6 +619,17 @@ export type EdgesQueryVariables = Exact<{
 
 export type EdgesQuery = { __typename?: 'RootQueryType', edges: { __typename?: 'EdgeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', id: string, name: string, uid: string }, startNode: { __typename?: 'Node', id: string, name: string, uid: string }, endNode: { __typename?: 'Node', id: string, name: string, uid: string } }> } };
 
+export type NodeBoundEdgesQueryVariables = Exact<{
+  divisionId: Scalars['ID'];
+  q?: InputMaybe<Scalars['String']>;
+  qNode?: InputMaybe<Scalars['String']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type NodeBoundEdgesQuery = { __typename?: 'RootQueryType', nodeBoundEdges: { __typename?: 'EdgeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', id: string, name: string, uid: string }, startNode: { __typename?: 'Node', id: string, name: string, uid: string }, endNode: { __typename?: 'Node', id: string, name: string, uid: string } }> } };
+
 export type NodesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
   q?: InputMaybe<Scalars['String']>;
@@ -640,7 +655,7 @@ export type SubGraphFilterQueryVariables = Exact<{
 }>;
 
 
-export type SubGraphFilterQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, name: string, uid: string, division: { __typename?: 'Division', id: string, name: string }, tower: { __typename?: 'Tower', id: string, name: string }, project: { __typename?: 'Project', id: string, name: string, default: boolean } } | null };
+export type SubGraphFilterQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, name: string, uid: string, nodeFilter?: string | null, edgeFilter?: string | null, division: { __typename?: 'Division', id: string, name: string }, tower: { __typename?: 'Tower', id: string, name: string }, project: { __typename?: 'Project', id: string, name: string, default: boolean } } | null };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -839,10 +854,12 @@ export function useUpdateNodeTypeMutation() {
   return Urql.useMutation<UpdateNodeTypeMutation, UpdateNodeTypeMutationVariables>(UpdateNodeTypeDocument);
 };
 export const UpdateSubGraphFilterDocument = gql`
-    mutation UpdateSubGraphFilter($subGraphFilterId: ID!, $subGraphFilter: InputSubGraphFilter!) {
+    mutation UpdateSubGraphFilter($subGraphFilterId: ID!, $subGraphFilter: InputSubGraphFilter, $qNode: String, $qEdge: String) {
   updateSubGraphFilter(
     subGraphFilterId: $subGraphFilterId
     subGraphFilter: $subGraphFilter
+    qNode: $qNode
+    qEdge: $qEdge
   ) {
     id
   }
@@ -989,6 +1006,49 @@ export const EdgesDocument = gql`
 export function useEdgesQuery(options: Omit<Urql.UseQueryArgs<never, EdgesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<EdgesQuery>({ query: EdgesDocument, ...options });
 };
+export const NodeBoundEdgesDocument = gql`
+    query NodeBoundEdges($divisionId: ID!, $q: String, $qNode: String, $offset: Int, $limit: Int) {
+  nodeBoundEdges(
+    divisionId: $divisionId
+    q: $q
+    qNode: $qNode
+    offset: $offset
+    limit: $limit
+  ) {
+    entries {
+      id
+      name
+      edgeTypeId
+      props {
+        key
+        val
+      }
+      edgeType {
+        id
+        name
+        uid
+      }
+      startNode {
+        id
+        name
+        uid
+      }
+      endNode {
+        id
+        name
+        uid
+      }
+    }
+    limit
+    offset
+    total
+  }
+}
+    `;
+
+export function useNodeBoundEdgesQuery(options: Omit<Urql.UseQueryArgs<never, NodeBoundEdgesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<NodeBoundEdgesQuery>({ query: NodeBoundEdgesDocument, ...options });
+};
 export const NodesDocument = gql`
     query Nodes($divisionId: ID!, $q: String, $offset: Int, $limit: Int) {
   nodes(divisionId: $divisionId, q: $q, offset: $offset, limit: $limit) {
@@ -1049,6 +1109,8 @@ export const SubGraphFilterDocument = gql`
     id
     name
     uid
+    nodeFilter
+    edgeFilter
     division {
       id
       name

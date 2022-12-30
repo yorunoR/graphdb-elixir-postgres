@@ -148,6 +148,7 @@ const props = defineProps<{
   divisionId: string;
   toggleable?: boolean;
   buttonLabel: string;
+  initial: string;
 }>()
 
 const emit = defineEmits<{
@@ -155,7 +156,7 @@ const emit = defineEmits<{
 }>()
 
 const selected = ref(null)
-const parameters = ref([])
+const parameters = ref(JSON.parse(props.initial))
 
 const { data } = callDivisionNodeTypesQuery(props.divisionId)
 

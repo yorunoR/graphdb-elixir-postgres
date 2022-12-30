@@ -4,6 +4,7 @@
     :division-id="divisionId"
     toggleable
     buttonLabel="Search"
+    initial="[]"
     @search="search($event)"
   />
   <section class="mt-3">

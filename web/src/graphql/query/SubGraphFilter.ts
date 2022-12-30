@@ -4,6 +4,8 @@ const QUERY = /* GraphQL */ `
       id
       name
       uid
+      nodeFilter
+      edgeFilter
       division {
         id
         name

@@ -216,6 +216,7 @@ const props = defineProps<{
   toggleable?: boolean;
   nodeSearch?: boolean;
   buttonLabel: string;
+  initial: string;
 }>()
 
 const emit = defineEmits<{
@@ -223,7 +224,7 @@ const emit = defineEmits<{
 }>()
 
 const selected = ref(null)
-const parameters = ref([])
+const parameters = ref(JSON.parse(props.initial))
 
 const { data } = callDivisionEdgeTypesQuery(props.divisionId)
 

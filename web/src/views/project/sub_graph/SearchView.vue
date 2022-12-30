@@ -2,13 +2,11 @@
   <main style="max-width: 768px; margin: auto">
     <h1>Search condition</h1>
     <section
+      v-if="data"
       class="text-left mt-4"
       style="padding: 0 5px"
     >
-      <div
-        v-if="data"
-        class="grid"
-      >
+      <div class="grid">
         <div
           class="p-3 col-12 md:col-6 lg:col-6 border-round panel-outline"
         >
@@ -16,6 +14,7 @@
           <NodeSearchOrganism
             :divisionId="divisionId"
             buttonLabel="Save"
+            :initial="data.subGraphFilter.nodeFilter"
             @search="saveNodeFilter($event)"
           />
         </div>
@@ -26,12 +25,14 @@
           <EdgeSearchOrganism
             :divisionId="divisionId"
             buttonLabel="Save"
+            :initial="data.subGraphFilter.edgeFilter"
             @search="saveEdgeFilter($event)"
           />
         </div>
       </div>
     </section>
     <section
+      v-if="data"
       class="mt-3"
     >
       <TabView
@@ -60,7 +61,7 @@
         <TabPanel header="Edges">
           <ul v-if="edgesData">
             <li
-              v-for="edge in edgesData.edges.entries"
+              v-for="edge in edgesData.nodeBoundEdges.entries"
               :key="edge.id"
               class="list"
             >
@@ -72,7 +73,7 @@
           </ul>
           <Paginator
             :rows="edgesVariables.limit"
-            :total-records="edgesData ? edgesData.edges.total : 0"
+            :total-records="edgesData ? edgesData.nodeBoundEdges.total : 0"
             @page="onEdgesPage($event)"
           />
         </TabPanel>
@@ -82,9 +83,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-import { useEdgesQuery, useNodesQuery, useSubGraphFilterQuery } from '@/auto_generated/graphql'
+import { useNodeBoundEdgesQuery, useNodesQuery, useSubGraphFilterQuery, useUpdateSubGraphFilterMutation } from '@/auto_generated/graphql'
 import EdgeItemMolecule from '@/components/molecules/EdgeItemMolecule.vue'
 import NodeItemMolecule from '@/components/molecules/NodeItemMolecule.vue'
 import EdgeSearchOrganism from '@/components/organisms/EdgeSearchOrganism.vue'
@@ -96,6 +97,10 @@ const props = defineProps<{
 }>()
 
 const active = ref(0)
+const pause = ref(true)
+
+const { executeMutation: updateSubGraphFilter } =
+  useUpdateSubGraphFilterMutation()
 
 const nodesVariables = ref({
   divisionId: props.divisionId,
@@ -109,27 +114,46 @@ const edgesVariables = ref({
   limit: 10
 })
 
-const { data: nodesData } = useNodesQuery({
-  variables: nodesVariables,
-  context: { additionalTypenames: ['Node'] }
-})
-
-const { data: edgesData } = useEdgesQuery({
-  variables: edgesVariables,
-  context: { additionalTypenames: ['Edge'] }
-})
-
 const { data } = useSubGraphFilterQuery({
   variables: { subGraphFilterId: props.subGraphFilterId }
 })
 
+watch([data], () => {
+  if (data.value == null) {
+    pause.value = true
+  } else {
+    nodesVariables.value.q = data.value.subGraphFilter.nodeFilter
+    edgesVariables.value.q = data.value.subGraphFilter.edgeFilter
+    edgesVariables.value.qNode = data.value.subGraphFilter.nodeFilter
+    pause.value = false
+  }
+}, { immediate: true })
+
+const { data: nodesData } = useNodesQuery({
+  variables: nodesVariables,
+  context: { additionalTypenames: ['Node'] },
+  pause
+})
+
+const { data: edgesData } = useNodeBoundEdgesQuery({
+  variables: edgesVariables,
+  context: { additionalTypenames: ['Edge', 'Node'] },
+  pause
+})
+
 const saveNodeFilter = (parameters) => {
-  nodesVariables.value.q = parameters
+  updateSubGraphFilter({
+    subGraphFilterId: props.subGraphFilterId,
+    qNode: parameters
+  })
   active.value = 0
 }
 
 const saveEdgeFilter = (parameters) => {
-  edgesVariables.value.q = parameters
+  updateSubGraphFilter({
+    subGraphFilterId: props.subGraphFilterId,
+    qEdge: parameters
+  })
   active.value = 1
 }
 
