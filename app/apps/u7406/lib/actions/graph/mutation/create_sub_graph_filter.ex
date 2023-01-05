@@ -19,8 +19,11 @@ defmodule Actions.Graph.Mutation.CreateSubGraphFilter do
   end
 
   def create_sub_graph_filter_changeset(%SubGraphFilter{} = sub_graph_filter, attrs) do
+    now = DateTime.utc_now()
+
     sub_graph_filter
     |> cast(attrs, [:name, :uid])
     |> validate_required([:name, :uid])
+    |> put_change(:changed_at, now)
   end
 end

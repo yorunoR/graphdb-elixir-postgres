@@ -38,7 +38,11 @@ defmodule Actions.Graph.Mutation.UpdateSubGraphFilter do
 
   def put_filter(changeset, filter, q) do
     parameters = Jason.decode!(q)
-    put_change(changeset, filter, %{q: parameters, version: "1.0"})
+    now = DateTime.utc_now()
+
+    changeset
+    |> put_change(filter, %{q: parameters, version: "1.0"})
+    |> put_change(:changed_at, now)
   end
 
   def check_filter(args, field, privious_filter) do

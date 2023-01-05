@@ -13,6 +13,7 @@ defmodule Schemas.Graph.SubGraphFilter do
 
     field :name, :string
     field :uid, :string
+    field :changed_at, :utc_datetime_usec
     field :node_filter, :map
     field :edge_filter, :map
 
