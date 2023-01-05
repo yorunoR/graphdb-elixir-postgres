@@ -11,6 +11,7 @@ defmodule U7406.Repo.Migrations.CreateSubGraphFilters do
 
       add :name, :string, null: false
       add :uid, :string, null: false
+      add :changed_at, :utc_datetime_usec, null: false
       add :node_filter, :map, default: "{}"
       add :edge_filter, :map, default: "{}"
 
