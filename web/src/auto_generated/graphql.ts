@@ -225,6 +225,8 @@ export type RootMutationType = {
   createSubGraphFilter?: Maybe<SubGraphFilter>;
   createTower?: Maybe<Tower>;
   signinUser?: Maybe<User>;
+  startSubGraph: SubGraphStatus;
+  stopSubGraph: SubGraphStatus;
   updateEdge?: Maybe<Edge>;
   updateEdgeType?: Maybe<EdgeType>;
   updateNode?: Maybe<Node>;
@@ -295,6 +297,16 @@ export type RootMutationTypeCreateTowerArgs = {
 };
 
 
+export type RootMutationTypeStartSubGraphArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeStopSubGraphArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
 export type RootMutationTypeUpdateEdgeArgs = {
   edge: InputEdge;
   edgeId: Scalars['ID'];
@@ -336,6 +348,7 @@ export type RootQueryType = {
   nodes: NodeList;
   ping: Status;
   subGraphFilter?: Maybe<SubGraphFilter>;
+  subGraphStatus: SubGraphStatus;
   tower?: Maybe<Tower>;
 };
 
@@ -371,6 +384,11 @@ export type RootQueryTypeNodesArgs = {
 
 
 export type RootQueryTypeSubGraphFilterArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
+export type RootQueryTypeSubGraphStatusArgs = {
   subGraphFilterId: Scalars['ID'];
 };
 
@@ -412,6 +430,14 @@ export type SubGraphFilter = {
   tower: Tower;
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type SubGraphStatus = {
+  __typename?: 'SubGraphStatus';
+  changedAt?: Maybe<Scalars['DateTime']>;
+  edges?: Maybe<Scalars['Int']>;
+  nodes?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['Boolean']>;
 };
 
 export type Tower = {
@@ -538,6 +564,20 @@ export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
 
+export type StartSubGraphMutationVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type StartSubGraphMutation = { __typename?: 'RootMutationType', startSubGraph: { __typename?: 'SubGraphStatus', status?: boolean | null } };
+
+export type StopSubGraphMutationVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type StopSubGraphMutation = { __typename?: 'RootMutationType', stopSubGraph: { __typename?: 'SubGraphStatus', status?: boolean | null } };
+
 export type UpdateEdgeMutationVariables = Exact<{
   edgeId: Scalars['ID'];
   edge: InputEdge;
@@ -656,6 +696,13 @@ export type SubGraphFilterQueryVariables = Exact<{
 
 
 export type SubGraphFilterQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, name: string, uid: string, nodeFilter?: string | null, edgeFilter?: string | null, division: { __typename?: 'Division', id: string, name: string }, tower: { __typename?: 'Tower', id: string, name: string }, project: { __typename?: 'Project', id: string, name: string, default: boolean } } | null };
+
+export type SubGraphStatusQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'SubGraphStatus', status?: boolean | null, nodes?: number | null, edges?: number | null, changedAt?: string | null } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -808,6 +855,28 @@ export const SigninUserDocument = gql`
 
 export function useSigninUserMutation() {
   return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
+};
+export const StartSubGraphDocument = gql`
+    mutation StartSubGraph($subGraphFilterId: ID!) {
+  startSubGraph(subGraphFilterId: $subGraphFilterId) {
+    status
+  }
+}
+    `;
+
+export function useStartSubGraphMutation() {
+  return Urql.useMutation<StartSubGraphMutation, StartSubGraphMutationVariables>(StartSubGraphDocument);
+};
+export const StopSubGraphDocument = gql`
+    mutation StopSubGraph($subGraphFilterId: ID!) {
+  stopSubGraph(subGraphFilterId: $subGraphFilterId) {
+    status
+  }
+}
+    `;
+
+export function useStopSubGraphMutation() {
+  return Urql.useMutation<StopSubGraphMutation, StopSubGraphMutationVariables>(StopSubGraphDocument);
 };
 export const UpdateEdgeDocument = gql`
     mutation UpdateEdge($edgeId: ID!, $edge: InputEdge!) {
@@ -1130,6 +1199,20 @@ export const SubGraphFilterDocument = gql`
 
 export function useSubGraphFilterQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphFilterQuery>({ query: SubGraphFilterDocument, ...options });
+};
+export const SubGraphStatusDocument = gql`
+    query SubGraphStatus($subGraphFilterId: ID!) {
+  subGraphStatus(subGraphFilterId: $subGraphFilterId) {
+    status
+    nodes
+    edges
+    changedAt
+  }
+}
+    `;
+
+export function useSubGraphStatusQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphStatusQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<SubGraphStatusQuery>({ query: SubGraphStatusDocument, ...options });
 };
 export const TowerDivisionsDocument = gql`
     query TowerDivisions($towerId: ID!, $offset: Int, $limit: Int) {

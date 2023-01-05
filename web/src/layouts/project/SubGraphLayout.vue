@@ -147,6 +147,20 @@
                 Search
               </router-link>
             </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'status',
+                  params: { subGraphFilterId },
+                }"
+                @click="() => close()"
+              >
+                Status
+              </router-link>
+            </li>
           </ul>
           <ul>
             <li

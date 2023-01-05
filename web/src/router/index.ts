@@ -180,6 +180,14 @@ const routes: RouteRecordRaw[] = [
               await import(
                 /* webpackChunkName: "search" */ '@/views/project/sub_graph/SearchView.vue'
               )
+          },
+          {
+            path: 'status',
+            name: 'status',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "status" */ '@/views/project/sub_graph/StatusView.vue'
+              )
           }
         ]
       }
