@@ -30,6 +30,10 @@
           >
             <div class="flex justify-content-between align-items-center">
               <strong>{{ project.name }}</strong>
+              <span>
+                <i class="pi pi-key" />
+                <strong class="ml-2">{{ project.projectKey }}</strong>
+              </span>
               <div style="cursor: pointer">
                 <i
                   class="pi pi-sign-in"

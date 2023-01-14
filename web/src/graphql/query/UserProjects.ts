@@ -5,6 +5,7 @@ const QUERY = /* GraphQL */ `
       projects {
         id
         name
+        projectKey
         default
       }
     }
