@@ -92,6 +92,17 @@
               style="border: none"
             >
               <router-link
+                :to="{ name: 'upload_csv', params: { divisionId: data.subGraphFilter.division.id } }"
+                @click="() => close()"
+              >
+                Upload CSV
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
                 :to="{
                   name: 'nodes',
                   params: { divisionId: data.subGraphFilter.division.id },
