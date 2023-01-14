@@ -9,6 +9,7 @@ defmodule Schemas.Account.Project do
   schema "projects" do
     field :default, :boolean
     field :name, :string
+    field :project_key, :string
 
     timestamps()
     soft_delete_schema()
