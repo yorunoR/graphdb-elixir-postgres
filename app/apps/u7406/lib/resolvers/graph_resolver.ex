@@ -3,7 +3,6 @@ defmodule Resolvers.GraphResolver do
   alias Actions.Graph.Mutation
   alias Actions.Graph.Query
   alias Schemas.Account.Project
-  alias Schemas.Account.User
   alias U7406.Repo
 
   def call(action, parent, args, %{context: context}) do
@@ -14,13 +13,12 @@ defmodule Resolvers.GraphResolver do
         end)
 
       _ ->
-        with %User{} <- Map.get(context, :current_user),
-             %Project{} = project <- Map.get(context, :current_project) do
+        with %Project{} = project <- Map.get(context, :current_project) do
           Repo.as_user(project.id, fn ->
             run(action, parent, args, context)
           end)
         else
-          _ -> {:error, "No current user or current project"}
+          _ -> {:error, "No current project"}
         end
     end
   end

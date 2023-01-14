@@ -18,13 +18,25 @@ defmodule Server.Router do
   end
 
   pipeline :api do
-    plug CORSPlug, headers: ["cid" | CORSPlug.defaults()[:headers]]
+    plug CORSPlug,
+      headers: [
+        "X-Mildeaw-Project-Key",
+        "X-Mildeaw-Api-Key",
+        "cid" | CORSPlug.defaults()[:headers]
+      ]
+
     plug :accepts, ["json"]
     plug Server.AuthPlug
   end
 
   pipeline :graphql_api do
-    plug CORSPlug, headers: ["cid" | CORSPlug.defaults()[:headers]]
+    plug CORSPlug,
+      headers: [
+        "X-Mildeaw-Project-Key",
+        "X-Mildeaw-Api-Key",
+        "cid" | CORSPlug.defaults()[:headers]
+      ]
+
     plug :accepts, ["json"]
     plug Server.AbsintheAuthPlug
   end
