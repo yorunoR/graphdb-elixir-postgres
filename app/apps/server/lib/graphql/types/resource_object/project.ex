@@ -12,5 +12,9 @@ defmodule Graphql.Types.ResourceObject.Project do
     field(:towers, non_null(list_of(non_null(:tower)))) do
       resolve(dataloader(:db))
     end
+
+    field(:api_keys, non_null(list_of(non_null(:api_key)))) do
+      resolve(dataloader(:db))
+    end
   end
 end

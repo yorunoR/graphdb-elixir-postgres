@@ -1,14 +1,25 @@
 defmodule Resolvers.AccountResolver do
   alias Actions.Account.Mutation
   alias Actions.Account.Query
+  alias Schemas.Account.Project
   alias Schemas.Account.User
+  alias U7406.Repo
 
   def call(action, parent, args, %{context: context}) do
     case action do
       action when action in [:signin_user, :user_and_project] ->
         run(action, parent, args, context)
 
-      _ ->
+      :create_api_key ->
+        with %Project{} = project <- Map.get(context, :current_project) do
+          Repo.as_user(project.id, fn ->
+            run(action, parent, args, context)
+          end)
+        else
+          _ -> {:error, "No current project"}
+        end
+
+      :create_project ->
         with %User{} <- Map.get(context, :current_user) do
           run(action, parent, args, context)
         else
@@ -27,6 +38,9 @@ defmodule Resolvers.AccountResolver do
 
       :create_project ->
         Mutation.CreateProject.run(parent, args, context)
+
+      :create_api_key ->
+        Mutation.CreateApiKey.run(parent, args, context)
 
       _ ->
         {:error, "Not defined in Account context"}

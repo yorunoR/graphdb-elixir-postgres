@@ -26,6 +26,11 @@ defmodule Graphql.Types.AccountType do
       arg(:project, non_null(:input_project))
       resolve(&AccountResolver.call(:create_project, &1, &2, &3))
     end
+
+    field(:create_api_key, :api_key) do
+      arg(:api_key, non_null(:input_api_key))
+      resolve(&AccountResolver.call(:create_api_key, &1, &2, &3))
+    end
   end
 
   object :account_subscriptions do
