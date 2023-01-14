@@ -43,7 +43,8 @@ defmodule U7406.MixProject do
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.3"},
       {:ecto_soft_delete, "~> 2.0"},
-      {:csv, "~> 3.0"}
+      {:csv, "~> 3.0"},
+      {:prefixed_api_key, "~> 0.2.0"}
     ]
   end
 
