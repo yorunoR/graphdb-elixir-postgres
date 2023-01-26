@@ -48,6 +48,11 @@ defmodule Graphql.Types.GraphType do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:sub_graph_status, &1, &2, &3))
     end
+
+    field(:libgraph_status, non_null(:libgraph_status)) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      resolve(&GraphResolver.call(:libgraph_status, &1, &2, &3))
+    end
   end
 
   object :graph_mutations do
@@ -148,6 +153,16 @@ defmodule Graphql.Types.GraphType do
     field(:stop_sub_graph, non_null(:sub_graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:stop_sub_graph, &1, &2, &3))
+    end
+
+    field(:start_libgraph, non_null(:libgraph_status)) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      resolve(&GraphResolver.call(:start_libgraph, &1, &2, &3))
+    end
+
+    field(:stop_libgraph, non_null(:libgraph_status)) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      resolve(&GraphResolver.call(:stop_libgraph, &1, &2, &3))
     end
   end
 end
