@@ -455,9 +455,9 @@ export type SubGraphFilter = {
 
 export type SubGraphStatus = {
   __typename?: 'SubGraphStatus';
-  changedAt?: Maybe<Scalars['DateTime']>;
   edges?: Maybe<Scalars['Int']>;
   nodes?: Maybe<Scalars['Int']>;
+  openedAt?: Maybe<Scalars['DateTime']>;
   status?: Maybe<Scalars['Boolean']>;
 };
 
@@ -735,7 +735,7 @@ export type SubGraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'SubGraphStatus', status?: boolean | null, nodes?: number | null, edges?: number | null, changedAt?: string | null } };
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'SubGraphStatus', status?: boolean | null, nodes?: number | null, edges?: number | null, openedAt?: string | null } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -1267,7 +1267,7 @@ export const SubGraphStatusDocument = gql`
     status
     nodes
     edges
-    changedAt
+    openedAt
   }
 }
     `;
