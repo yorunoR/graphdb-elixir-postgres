@@ -18,7 +18,15 @@ alias U7406.Admin
 alias U7406.Repo
 
 user = Repo.insert!(%User{email: "sss.yoshioka@gmail.com", name: "yux", activated: true})
-project = %Project{name: "Default Project", default: true} |> Repo.insert!()
+
+project =
+  %Project{
+    name: "Default Project",
+    default: true,
+    project_key: "mUUNjAjhrqrGVIrprI1eh07nTo+hyWWK"
+  }
+  |> Repo.insert!()
+
 build_assoc(user, :project_users, %{project: project, privilege: 0}) |> Repo.insert!()
 
 Admin.register_admin_user(%{email: "sss.yoshioka@gmail.com", password: "123456"})

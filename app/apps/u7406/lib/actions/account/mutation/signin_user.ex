@@ -8,6 +8,8 @@ defmodule Actions.Account.Mutation.SigninUser do
   alias Schemas.Account.User
   alias U7406.Repo
 
+  @rand_size 32
+
   def run(_parent, _args, context) do
     %{email: email, uid: uid, name: name} = context
 
@@ -53,7 +55,15 @@ defmodule Actions.Account.Mutation.SigninUser do
         {:ok, default_project}
 
       _ ->
-        project = %Project{default: true, name: "Default Project"} |> repo.insert!
+        project_key =
+          :crypto.strong_rand_bytes(@rand_size) |> Base.encode64() |> binary_part(0, @rand_size)
+
+        project =
+          %Project{default: true, name: "Default Project"}
+          |> put_change(:project_key, project_key)
+          |> unique_constraint(:project_key)
+          |> repo.insert!
+
         build_assoc(user, :project_users, %{project: project, privilege: 0}) |> repo.insert!
         {:ok, project}
     end

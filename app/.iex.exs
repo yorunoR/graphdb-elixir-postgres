@@ -7,6 +7,7 @@ import U7406
 
 IO.puts("* Alias Modules")
 alias U7406.Repo
+alias Schemas.Account.ApiKey
 alias Schemas.Account.User
 alias Schemas.Account.Project
 alias Schemas.Calc.Algorithm
@@ -24,5 +25,6 @@ alias Schemas.Graph.Result
 alias Schemas.Operation.NodesUpload
 alias Schemas.Operation.EdgesUpload
 alias Queries.Account
+alias Actions.Account.Mixin.ApiKeyFuncs.Crypt
 
 IO.puts("====-====-====-====-====")
