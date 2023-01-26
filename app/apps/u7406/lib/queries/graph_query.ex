@@ -1,4 +1,4 @@
-defmodule Queries.Graph do
+defmodule Queries.GraphQuery do
   import Ecto.Query
 
   def paginate(query, offset, limit) do

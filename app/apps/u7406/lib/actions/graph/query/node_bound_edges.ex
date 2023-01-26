@@ -1,7 +1,7 @@
 defmodule Actions.Graph.Query.NodeBoundEdges do
   import U7406
 
-  alias Queries.Graph
+  alias Queries.GraphQuery
   alias Schemas.Graph.Division
   alias U7406.Repo
 
@@ -14,17 +14,17 @@ defmodule Actions.Graph.Query.NodeBoundEdges do
     sub_query =
       Repo.get(Division, id)
       |> assoc(:nodes)
-      |> Graph.join_assocs([:node_type])
-      |> Graph.search(node_parameters)
+      |> GraphQuery.join_assocs([:node_type])
+      |> GraphQuery.search(node_parameters)
 
     query =
       Repo.get(Division, id)
       |> assoc(:edges)
-      |> Graph.join_assocs([:edge_type])
-      |> Graph.join_bind_assocs([:start_node, :end_node], sub_query)
-      |> Graph.search(parameters)
+      |> GraphQuery.join_assocs([:edge_type])
+      |> GraphQuery.join_bind_assocs([:start_node, :end_node], sub_query)
+      |> GraphQuery.search(parameters)
 
-    edges = query |> Graph.paginate(offset, limit) |> Repo.all()
+    edges = query |> GraphQuery.paginate(offset, limit) |> Repo.all()
     total = query |> Repo.aggregate(:count)
 
     {:ok,

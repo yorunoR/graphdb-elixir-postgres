@@ -1,7 +1,7 @@
 defmodule Actions.Graph.Query.Nodes do
   import U7406
 
-  alias Queries.Graph
+  alias Queries.GraphQuery
   alias Schemas.Graph.Division
   alias U7406.Repo
 
@@ -13,10 +13,10 @@ defmodule Actions.Graph.Query.Nodes do
     query =
       Repo.get(Division, id)
       |> assoc(:nodes)
-      |> Graph.join_assocs([:node_type])
-      |> Graph.search(parameters)
+      |> GraphQuery.join_assocs([:node_type])
+      |> GraphQuery.search(parameters)
 
-    nodes = query |> Graph.paginate(offset, limit) |> Repo.all()
+    nodes = query |> GraphQuery.paginate(offset, limit) |> Repo.all()
     total = query |> Repo.aggregate(:count)
 
     {:ok,

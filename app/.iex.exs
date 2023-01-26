@@ -24,7 +24,8 @@ alias Schemas.Graph.SubGraphFilter
 alias Schemas.Graph.Result
 alias Schemas.Operation.NodesUpload
 alias Schemas.Operation.EdgesUpload
-alias Queries.Account
+alias Queries.AccountQuery
+alias Queries.GraphQuery
 alias Actions.Account.Mixin.ApiKeyFuncs.Crypt
 
 IO.puts("====-====-====-====-====")

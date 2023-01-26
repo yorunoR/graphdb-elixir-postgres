@@ -3,7 +3,7 @@ defmodule Actions.Account.Mutation.SigninUser do
   import U7406
 
   alias Ecto.Multi
-  alias Queries.Account
+  alias Queries.AccountQuery
   alias Schemas.Account.Project
   alias Schemas.Account.User
   alias U7406.Repo
@@ -48,7 +48,7 @@ defmodule Actions.Account.Mutation.SigninUser do
   end
 
   def create_default_project(repo, _run, user) do
-    default_project = assoc(user, :projects) |> Account.default_projects() |> repo.one
+    default_project = assoc(user, :projects) |> AccountQuery.default_projects() |> repo.one
 
     case default_project do
       %Project{} ->

@@ -5,7 +5,7 @@ defmodule Agents.Graph.SubGraphAgent do
   import U7406
 
   alias __MODULE__
-  alias Queries.Graph
+  alias Queries.GraphQuery
   alias Schemas.Graph.Division
   alias U7406.Repo
 
@@ -21,17 +21,17 @@ defmodule Agents.Graph.SubGraphAgent do
             nodes_query =
               Repo.get(Division, sub_graph_filter.division_id)
               |> assoc(:nodes)
-              |> Graph.join_assocs([:node_type])
-              |> Graph.search(node_parameters)
+              |> GraphQuery.join_assocs([:node_type])
+              |> GraphQuery.search(node_parameters)
 
             nodes = nodes_query |> Repo.all()
 
             edges_query =
               Repo.get(Division, sub_graph_filter.division_id)
               |> assoc(:edges)
-              |> Graph.join_assocs([:edge_type])
-              |> Graph.join_bind_assocs([:start_node, :end_node], nodes_query)
-              |> Graph.search(edge_parameters)
+              |> GraphQuery.join_assocs([:edge_type])
+              |> GraphQuery.join_bind_assocs([:start_node, :end_node], nodes_query)
+              |> GraphQuery.search(edge_parameters)
 
             edges = edges_query |> Repo.all()
 
