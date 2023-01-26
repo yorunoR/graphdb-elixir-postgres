@@ -44,7 +44,8 @@ defmodule U7406.MixProject do
       {:swoosh, "~> 1.3"},
       {:ecto_soft_delete, "~> 2.0"},
       {:csv, "~> 3.0"},
-      {:prefixed_api_key, "~> 0.2.0"}
+      {:prefixed_api_key, "~> 0.2.0"},
+      {:libgraph, "~> 0.14"}
     ]
   end
 
