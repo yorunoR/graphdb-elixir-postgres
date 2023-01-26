@@ -4,7 +4,7 @@ const QUERY = /* GraphQL */ `
       status
       nodes
       edges
-      changedAt
+      openedAt
     }
   }
 `
