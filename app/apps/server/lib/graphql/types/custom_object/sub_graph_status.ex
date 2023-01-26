@@ -5,6 +5,6 @@ defmodule Graphql.Types.CustomObject.SubGraphStatus do
     field(:status, :boolean)
     field(:nodes, :integer)
     field(:edges, :integer)
-    field(:changed_at, :datetime)
+    field(:opened_at, :datetime)
   end
 end
