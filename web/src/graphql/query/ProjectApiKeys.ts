@@ -1,12 +1,12 @@
 const QUERY = /* GraphQL */ `
-  query UserProjects {
-    currentUser {
+  query ProjectApiKeys {
+    currentProject {
       id
-      projects {
+      name
+      apiKeys {
         id
         name
-        projectKey
-        default
+        shortToken
       }
     }
   }

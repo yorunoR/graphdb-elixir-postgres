@@ -73,6 +73,14 @@ const routes: RouteRecordRaw[] = [
               )
           },
           {
+            path: 'keys',
+            name: 'keys',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "keys" */ '@/views/project/area/ApiKeysView.vue'
+              )
+          },
+          {
             path: 'info',
             name: 'info',
             component: async () =>

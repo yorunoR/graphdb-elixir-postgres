@@ -84,6 +84,17 @@
                   style="border: none"
                 >
                   <router-link
+                    :to="{ name: 'upload_csv', params: { divisionId } }"
+                    @click="() => close()"
+                  >
+                    Upload CSV
+                  </router-link>
+                </li>
+                <li
+                  class="list"
+                  style="border: none"
+                >
+                  <router-link
                     :to="{ name: 'nodes', params: { divisionId } }"
                     @click="() => close()"
                   >
@@ -110,17 +121,6 @@
                     @click="() => close()"
                   >
                     SubGraphFilters
-                  </router-link>
-                </li>
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'upload_csv', params: { divisionId } }"
-                    @click="() => close()"
-                  >
-                    Upload CSV
                   </router-link>
                 </li>
               </ul>

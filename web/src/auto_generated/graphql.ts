@@ -16,6 +16,15 @@ export type Scalars = {
   DateTime: string;
 };
 
+export type ApiKey = {
+  __typename?: 'ApiKey';
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  shortToken: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type Division = {
   __typename?: 'Division';
   changedAt?: Maybe<Scalars['DateTime']>;
@@ -85,6 +94,10 @@ export type EdgeType = {
   rules: Array<Rule>;
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type InputApiKey = {
+  name: Scalars['String'];
 };
 
 export type InputDivision = {
@@ -203,16 +216,19 @@ export type NodeType = {
 
 export type Project = {
   __typename?: 'Project';
+  apiKeys: Array<ApiKey>;
   default: Scalars['Boolean'];
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
+  projectKey: Scalars['String'];
   towers: Array<Tower>;
   updatedAt: Scalars['DateTime'];
 };
 
 export type RootMutationType = {
   __typename?: 'RootMutationType';
+  createApiKey?: Maybe<ApiKey>;
   createDivision?: Maybe<Division>;
   createEdge?: Maybe<Edge>;
   createEdgeField?: Maybe<EdgeField>;
@@ -232,6 +248,11 @@ export type RootMutationType = {
   updateNode?: Maybe<Node>;
   updateNodeType?: Maybe<NodeType>;
   updateSubGraphFilter?: Maybe<SubGraphFilter>;
+};
+
+
+export type RootMutationTypeCreateApiKeyArgs = {
+  apiKey: InputApiKey;
 };
 
 
@@ -475,6 +496,13 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type CreateApiKeyMutationVariables = Exact<{
+  apiKey: InputApiKey;
+}>;
+
+
+export type CreateApiKeyMutation = { __typename?: 'RootMutationType', createApiKey?: { __typename?: 'ApiKey', id: string } | null };
+
 export type CreateDivisionMutationVariables = Exact<{
   towerId: Scalars['ID'];
   division: InputDivision;
@@ -685,6 +713,11 @@ export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PingQuery = { __typename?: 'RootQueryType', ping: { __typename?: 'Status', status?: boolean | null } };
 
+export type ProjectApiKeysQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProjectApiKeysQuery = { __typename?: 'RootQueryType', currentProject?: { __typename?: 'Project', id: string, name: string, apiKeys: Array<{ __typename?: 'ApiKey', id: string, name: string, shortToken: string }> } | null };
+
 export type ProjectTowersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -716,7 +749,7 @@ export type TowerDivisionsQuery = { __typename?: 'RootQueryType', tower?: { __ty
 export type UserProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserProjectsQuery = { __typename?: 'RootQueryType', currentUser: { __typename?: 'User', id: string, projects: Array<{ __typename?: 'Project', id: string, name: string, default: boolean }> } };
+export type UserProjectsQuery = { __typename?: 'RootQueryType', currentUser: { __typename?: 'User', id: string, projects: Array<{ __typename?: 'Project', id: string, name: string, projectKey: string, default: boolean }> } };
 
 export type NewUserSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -724,6 +757,17 @@ export type NewUserSubscriptionVariables = Exact<{ [key: string]: never; }>;
 export type NewUserSubscription = { __typename?: 'RootSubscriptionType', newUser: { __typename?: 'User', id: string, name: string } };
 
 
+export const CreateApiKeyDocument = gql`
+    mutation CreateApiKey($apiKey: InputApiKey!) {
+  createApiKey(apiKey: $apiKey) {
+    id
+  }
+}
+    `;
+
+export function useCreateApiKeyMutation() {
+  return Urql.useMutation<CreateApiKeyMutation, CreateApiKeyMutationVariables>(CreateApiKeyDocument);
+};
 export const CreateDivisionDocument = gql`
     mutation CreateDivision($towerId: ID!, $division: InputDivision!) {
   createDivision(towerId: $towerId, division: $division) {
@@ -1156,6 +1200,23 @@ export const PingDocument = gql`
 export function usePingQuery(options: Omit<Urql.UseQueryArgs<never, PingQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PingQuery>({ query: PingDocument, ...options });
 };
+export const ProjectApiKeysDocument = gql`
+    query ProjectApiKeys {
+  currentProject {
+    id
+    name
+    apiKeys {
+      id
+      name
+      shortToken
+    }
+  }
+}
+    `;
+
+export function useProjectApiKeysQuery(options: Omit<Urql.UseQueryArgs<never, ProjectApiKeysQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ProjectApiKeysQuery>({ query: ProjectApiKeysDocument, ...options });
+};
 export const ProjectTowersDocument = gql`
     query ProjectTowers {
   currentProject {
@@ -1248,6 +1309,7 @@ export const UserProjectsDocument = gql`
     projects {
       id
       name
+      projectKey
       default
     }
   }

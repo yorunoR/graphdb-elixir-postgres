@@ -21,6 +21,14 @@
             class="list"
             style="border: none"
           >
+            <router-link :to="{ name: 'keys' }">
+              Api Keys
+            </router-link>
+          </li>
+          <li
+            class="list"
+            style="border: none"
+          >
             <router-link :to="{ name: 'info' }">
               Information
             </router-link>
