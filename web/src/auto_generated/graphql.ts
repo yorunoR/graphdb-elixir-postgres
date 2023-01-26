@@ -96,6 +96,13 @@ export type EdgeType = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type GraphStatus = {
+  __typename?: 'GraphStatus';
+  commands: Array<Scalars['String']>;
+  openedAt?: Maybe<Scalars['DateTime']>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
 export type InputApiKey = {
   name: Scalars['String'];
 };
@@ -226,6 +233,16 @@ export type Project = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type Result = {
+  __typename?: 'Result';
+  id?: Maybe<Scalars['ID']>;
+  insertedAt?: Maybe<Scalars['DateTime']>;
+  name?: Maybe<Scalars['String']>;
+  props: Array<Item>;
+  subGraphFilter: SubGraphFilter;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type RootMutationType = {
   __typename?: 'RootMutationType';
   createApiKey?: Maybe<ApiKey>;
@@ -241,8 +258,10 @@ export type RootMutationType = {
   createSubGraphFilter?: Maybe<SubGraphFilter>;
   createTower?: Maybe<Tower>;
   signinUser?: Maybe<User>;
-  startSubGraph: SubGraphStatus;
-  stopSubGraph: SubGraphStatus;
+  startLibgraph: GraphStatus;
+  startSubGraph: GraphStatus;
+  stopLibgraph: GraphStatus;
+  stopSubGraph: GraphStatus;
   updateEdge?: Maybe<Edge>;
   updateEdgeType?: Maybe<EdgeType>;
   updateNode?: Maybe<Node>;
@@ -318,7 +337,17 @@ export type RootMutationTypeCreateTowerArgs = {
 };
 
 
+export type RootMutationTypeStartLibgraphArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
 export type RootMutationTypeStartSubGraphArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeStopLibgraphArgs = {
   subGraphFilterId: Scalars['ID'];
 };
 
@@ -365,11 +394,14 @@ export type RootQueryType = {
   currentUser: User;
   division?: Maybe<Division>;
   edges: EdgeList;
+  libgraphCommand: Result;
+  libgraphStatus: GraphStatus;
   nodeBoundEdges: EdgeList;
   nodes: NodeList;
   ping: Status;
+  subGraphCommand: Result;
   subGraphFilter?: Maybe<SubGraphFilter>;
-  subGraphStatus: SubGraphStatus;
+  subGraphStatus: GraphStatus;
   tower?: Maybe<Tower>;
 };
 
@@ -387,6 +419,18 @@ export type RootQueryTypeEdgesArgs = {
 };
 
 
+export type RootQueryTypeLibgraphCommandArgs = {
+  command: Scalars['String'];
+  opts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  subGraphFilterId: Scalars['ID'];
+};
+
+
+export type RootQueryTypeLibgraphStatusArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
 export type RootQueryTypeNodeBoundEdgesArgs = {
   divisionId: Scalars['ID'];
   limit?: InputMaybe<Scalars['Int']>;
@@ -401,6 +445,13 @@ export type RootQueryTypeNodesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   q?: InputMaybe<Scalars['String']>;
+};
+
+
+export type RootQueryTypeSubGraphCommandArgs = {
+  command: Scalars['String'];
+  opts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  subGraphFilterId: Scalars['ID'];
 };
 
 
@@ -451,14 +502,6 @@ export type SubGraphFilter = {
   tower: Tower;
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-};
-
-export type SubGraphStatus = {
-  __typename?: 'SubGraphStatus';
-  edges?: Maybe<Scalars['Int']>;
-  nodes?: Maybe<Scalars['Int']>;
-  openedAt?: Maybe<Scalars['DateTime']>;
-  status?: Maybe<Scalars['Boolean']>;
 };
 
 export type Tower = {
@@ -592,19 +635,33 @@ export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type SigninUserMutation = { __typename?: 'RootMutationType', signinUser?: { __typename?: 'User', uid?: string | null } | null };
 
+export type StartLibgraphMutationVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type StartLibgraphMutation = { __typename?: 'RootMutationType', startLibgraph: { __typename?: 'GraphStatus', status?: boolean | null } };
+
 export type StartSubGraphMutationVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
 }>;
 
 
-export type StartSubGraphMutation = { __typename?: 'RootMutationType', startSubGraph: { __typename?: 'SubGraphStatus', status?: boolean | null } };
+export type StartSubGraphMutation = { __typename?: 'RootMutationType', startSubGraph: { __typename?: 'GraphStatus', status?: boolean | null } };
+
+export type StopLibgraphMutationVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type StopLibgraphMutation = { __typename?: 'RootMutationType', stopLibgraph: { __typename?: 'GraphStatus', status?: boolean | null } };
 
 export type StopSubGraphMutationVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
 }>;
 
 
-export type StopSubGraphMutation = { __typename?: 'RootMutationType', stopSubGraph: { __typename?: 'SubGraphStatus', status?: boolean | null } };
+export type StopSubGraphMutation = { __typename?: 'RootMutationType', stopSubGraph: { __typename?: 'GraphStatus', status?: boolean | null } };
 
 export type UpdateEdgeMutationVariables = Exact<{
   edgeId: Scalars['ID'];
@@ -687,6 +744,22 @@ export type EdgesQueryVariables = Exact<{
 
 export type EdgesQuery = { __typename?: 'RootQueryType', edges: { __typename?: 'EdgeList', limit: number, offset: number, total: number, entries: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', id: string, name: string, uid: string }, startNode: { __typename?: 'Node', id: string, name: string, uid: string }, endNode: { __typename?: 'Node', id: string, name: string, uid: string } }> } };
 
+export type LibgraphCommandQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+  command: Scalars['String'];
+  opts?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+
+export type LibgraphCommandQuery = { __typename?: 'RootQueryType', libgraphCommand: { __typename?: 'Result', props: Array<{ __typename?: 'Item', key: string, val: string }> } };
+
+export type LibgraphStatusQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null } };
+
 export type NodeBoundEdgesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
   q?: InputMaybe<Scalars['String']>;
@@ -723,6 +796,15 @@ export type ProjectTowersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProjectTowersQuery = { __typename?: 'RootQueryType', currentProject?: { __typename?: 'Project', id: string, name: string, towers: Array<{ __typename?: 'Tower', id: string, name: string }> } | null };
 
+export type SubGraphCommandQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+  command: Scalars['String'];
+  opts?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+
+export type SubGraphCommandQuery = { __typename?: 'RootQueryType', subGraphCommand: { __typename?: 'Result', props: Array<{ __typename?: 'Item', key: string, val: string }> } };
+
 export type SubGraphFilterQueryVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
 }>;
@@ -735,7 +817,7 @@ export type SubGraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'SubGraphStatus', status?: boolean | null, nodes?: number | null, edges?: number | null, openedAt?: string | null } };
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -900,6 +982,17 @@ export const SigninUserDocument = gql`
 export function useSigninUserMutation() {
   return Urql.useMutation<SigninUserMutation, SigninUserMutationVariables>(SigninUserDocument);
 };
+export const StartLibgraphDocument = gql`
+    mutation StartLibgraph($subGraphFilterId: ID!) {
+  startLibgraph(subGraphFilterId: $subGraphFilterId) {
+    status
+  }
+}
+    `;
+
+export function useStartLibgraphMutation() {
+  return Urql.useMutation<StartLibgraphMutation, StartLibgraphMutationVariables>(StartLibgraphDocument);
+};
 export const StartSubGraphDocument = gql`
     mutation StartSubGraph($subGraphFilterId: ID!) {
   startSubGraph(subGraphFilterId: $subGraphFilterId) {
@@ -910,6 +1003,17 @@ export const StartSubGraphDocument = gql`
 
 export function useStartSubGraphMutation() {
   return Urql.useMutation<StartSubGraphMutation, StartSubGraphMutationVariables>(StartSubGraphDocument);
+};
+export const StopLibgraphDocument = gql`
+    mutation StopLibgraph($subGraphFilterId: ID!) {
+  stopLibgraph(subGraphFilterId: $subGraphFilterId) {
+    status
+  }
+}
+    `;
+
+export function useStopLibgraphMutation() {
+  return Urql.useMutation<StopLibgraphMutation, StopLibgraphMutationVariables>(StopLibgraphDocument);
 };
 export const StopSubGraphDocument = gql`
     mutation StopSubGraph($subGraphFilterId: ID!) {
@@ -1119,6 +1223,36 @@ export const EdgesDocument = gql`
 export function useEdgesQuery(options: Omit<Urql.UseQueryArgs<never, EdgesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<EdgesQuery>({ query: EdgesDocument, ...options });
 };
+export const LibgraphCommandDocument = gql`
+    query LibgraphCommand($subGraphFilterId: ID!, $command: String!, $opts: [String]) {
+  libgraphCommand(
+    subGraphFilterId: $subGraphFilterId
+    command: $command
+    opts: $opts
+  ) {
+    props {
+      key
+      val
+    }
+  }
+}
+    `;
+
+export function useLibgraphCommandQuery(options: Omit<Urql.UseQueryArgs<never, LibgraphCommandQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<LibgraphCommandQuery>({ query: LibgraphCommandDocument, ...options });
+};
+export const LibgraphStatusDocument = gql`
+    query LibgraphStatus($subGraphFilterId: ID!) {
+  libgraphStatus(subGraphFilterId: $subGraphFilterId) {
+    status
+    openedAt
+  }
+}
+    `;
+
+export function useLibgraphStatusQuery(options: Omit<Urql.UseQueryArgs<never, LibgraphStatusQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<LibgraphStatusQuery>({ query: LibgraphStatusDocument, ...options });
+};
 export const NodeBoundEdgesDocument = gql`
     query NodeBoundEdges($divisionId: ID!, $q: String, $qNode: String, $offset: Int, $limit: Int) {
   nodeBoundEdges(
@@ -1233,6 +1367,24 @@ export const ProjectTowersDocument = gql`
 export function useProjectTowersQuery(options: Omit<Urql.UseQueryArgs<never, ProjectTowersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ProjectTowersQuery>({ query: ProjectTowersDocument, ...options });
 };
+export const SubGraphCommandDocument = gql`
+    query SubGraphCommand($subGraphFilterId: ID!, $command: String!, $opts: [String]) {
+  subGraphCommand(
+    subGraphFilterId: $subGraphFilterId
+    command: $command
+    opts: $opts
+  ) {
+    props {
+      key
+      val
+    }
+  }
+}
+    `;
+
+export function useSubGraphCommandQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphCommandQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<SubGraphCommandQuery>({ query: SubGraphCommandDocument, ...options });
+};
 export const SubGraphFilterDocument = gql`
     query SubGraphFilter($subGraphFilterId: ID!) {
   subGraphFilter(subGraphFilterId: $subGraphFilterId) {
@@ -1265,8 +1417,6 @@ export const SubGraphStatusDocument = gql`
     query SubGraphStatus($subGraphFilterId: ID!) {
   subGraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
-    nodes
-    edges
     openedAt
   }
 }
