@@ -44,12 +44,12 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:node_bound_edges, &1, &2, &3))
     end
 
-    field(:sub_graph_status, non_null(:sub_graph_status)) do
+    field(:sub_graph_status, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:sub_graph_status, &1, &2, &3))
     end
 
-    field(:libgraph_status, non_null(:libgraph_status)) do
+    field(:libgraph_status, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:libgraph_status, &1, &2, &3))
     end
@@ -145,22 +145,22 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:update_sub_graph_filter, &1, &2, &3))
     end
 
-    field(:start_sub_graph, non_null(:sub_graph_status)) do
+    field(:start_sub_graph, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:start_sub_graph, &1, &2, &3))
     end
 
-    field(:stop_sub_graph, non_null(:sub_graph_status)) do
+    field(:stop_sub_graph, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:stop_sub_graph, &1, &2, &3))
     end
 
-    field(:start_libgraph, non_null(:libgraph_status)) do
+    field(:start_libgraph, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:start_libgraph, &1, &2, &3))
     end
 
-    field(:stop_libgraph, non_null(:libgraph_status)) do
+    field(:stop_libgraph, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:stop_libgraph, &1, &2, &3))
     end
