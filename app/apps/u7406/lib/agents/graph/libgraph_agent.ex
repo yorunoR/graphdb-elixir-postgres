@@ -116,7 +116,6 @@ defmodule Agents.Graph.LibgraphAgent do
   end
 
   def run("get_shortest_path", opts) do
-    IO.inspect opts
     [first | [second | _]] = opts
 
     fn state -> Graph.get_shortest_path(state.graph, first, second) end
