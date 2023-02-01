@@ -95,11 +95,11 @@ defmodule Agents.Graph.SubGraphAgent do
   end
 
   def run("node_count", _opts) do
-    fn state -> state.nodes |> length end
+    fn state -> %{node_count: state.nodes |> length} end
   end
 
   def run("edge_count", _opts) do
-    fn state -> state.edges |> length end
+    fn state -> %{edge_count: state.edges |> length} end
   end
 
   def run(_command, _opts) do

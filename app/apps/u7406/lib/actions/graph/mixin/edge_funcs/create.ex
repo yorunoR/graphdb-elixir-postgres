@@ -23,6 +23,20 @@ defmodule Actions.Graph.Mixin.EdgeFuncs.Create do
   def create_edge(repo, run, %Node{} = start_node, %Node{} = end_node, name, random, %{} = props) do
     %{check_rule: rule} = run
 
+    edge = do_create_edge(repo, rule, start_node, end_node, name, random, props)
+
+    {:ok, edge}
+  end
+
+  def do_create_edge(
+        repo,
+        rule,
+        %Node{} = start_node,
+        %Node{} = end_node,
+        name,
+        random,
+        %{} = props
+      ) do
     attrs = %{
       start_node_id: start_node.id,
       start_node_type_id: start_node.node_type_id,
@@ -33,19 +47,22 @@ defmodule Actions.Graph.Mixin.EdgeFuncs.Create do
       props: props
     }
 
-    edge =
-      build_assoc(rule, :edges)
-      |> change(attrs)
-      |> unique_constraint([:divieion_id, :uid], name: :edges_uid_uniq_index)
-      |> unique_constraint([:divieion_id, :random], name: :edges_random_uniq_index)
-      |> repo.insert!
-
-    {:ok, edge}
+    build_assoc(rule, :edges)
+    |> change(attrs)
+    |> unique_constraint([:divieion_id, :uid], name: :edges_uid_uniq_index)
+    |> unique_constraint([:divieion_id, :random], name: :edges_random_uniq_index)
+    |> repo.insert!
   end
 
   def connect_edge(repo, run, edge_type, start_node, end_node) do
     %{create_edge: edge} = run
 
+    do_connect_edge(repo, edge, edge_type, start_node, end_node)
+
+    {:ok, edge}
+  end
+
+  def do_connect_edge(repo, edge, edge_type, start_node, end_node) do
     start_edge_ids = Map.get(start_node.start_edge_ids, edge_type.uid, [])
     start_edge_ids = Map.put(start_node.start_edge_ids, edge_type.uid, [edge.id | start_edge_ids])
 
@@ -55,7 +72,5 @@ defmodule Actions.Graph.Mixin.EdgeFuncs.Create do
     end_edge_ids = Map.put(end_node.end_edge_ids, edge_type.uid, [edge.id | end_edge_ids])
 
     end_node |> change(%{end_edge_ids: end_edge_ids}) |> repo.update!()
-
-    {:ok, edge}
   end
 end
