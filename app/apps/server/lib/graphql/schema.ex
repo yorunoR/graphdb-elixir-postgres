@@ -35,7 +35,7 @@ defmodule Graphql.Schema do
   import_types(CustomObject.EdgeList)
   import_types(CustomObject.NodeList)
   import_types(CustomObject.Pagination)
-  import_types(CustomObject.SubGraphStatus)
+  import_types(CustomObject.GraphStatus)
   import_types(ResourceObject.ApiKey)
   import_types(ResourceObject.Project)
   import_types(ResourceObject.Tower)
@@ -48,6 +48,7 @@ defmodule Graphql.Schema do
   import_types(ResourceObject.EdgeField)
   import_types(ResourceObject.Rule)
   import_types(ResourceObject.SubGraphFilter)
+  import_types(ResourceObject.Result)
   import_types(ResourceObject.User)
 
   query do

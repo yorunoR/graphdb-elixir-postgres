@@ -1,7 +1,7 @@
 defmodule Actions.Graph.Query.Edges do
   import U7406
 
-  alias Queries.Graph
+  alias Queries.GraphQuery
   alias Schemas.Graph.Division
   alias U7406.Repo
 
@@ -13,10 +13,10 @@ defmodule Actions.Graph.Query.Edges do
     query =
       Repo.get(Division, id)
       |> assoc(:edges)
-      |> Graph.join_assocs([:edge_type, :start_node, :end_node])
-      |> Graph.search(parameters)
+      |> GraphQuery.join_assocs([:edge_type, :start_node, :end_node])
+      |> GraphQuery.search(parameters)
 
-    edges = query |> Graph.paginate(offset, limit) |> Repo.all()
+    edges = query |> GraphQuery.paginate(offset, limit) |> Repo.all()
     total = query |> Repo.aggregate(:count)
 
     {:ok,

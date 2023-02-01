@@ -1,4 +1,4 @@
-defmodule Queries.Account do
+defmodule Queries.AccountQuery do
   import Ecto.Query
 
   def default_projects(projects_query) do

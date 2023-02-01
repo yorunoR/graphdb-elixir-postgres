@@ -1,5 +1,5 @@
-defmodule Agents.Graph.SubGraphAgent do
-  defstruct [:nodes, :edges, :opened_at, :sub_graph_filter_id]
+defmodule Agents.Graph.LibgraphAgent do
+  defstruct [:graph, :opened_at, :sub_graph_filter_id]
 
   use Agent
   import U7406
@@ -9,8 +9,8 @@ defmodule Agents.Graph.SubGraphAgent do
   alias Schemas.Graph.Division
   alias U7406.Repo
 
-  def start_sub_graph(sub_graph_filter) do
-    name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
+  def start_libgraph(sub_graph_filter) do
+    name = String.to_atom("Libgraph:" <> Integer.to_string(sub_graph_filter.id))
     node_parameters = Map.get(sub_graph_filter.node_filter, "q", [])
     edge_parameters = Map.get(sub_graph_filter.edge_filter, "q", [])
 
@@ -24,7 +24,14 @@ defmodule Agents.Graph.SubGraphAgent do
               |> GraphQuery.join_assocs([:node_type])
               |> GraphQuery.search(node_parameters)
 
-            nodes = nodes_query |> Repo.all()
+            g = Graph.new()
+
+            g =
+              nodes_query
+              |> Repo.stream()
+              |> Enum.reduce(g, fn node, g ->
+                Graph.add_vertex(g, node.uid)
+              end)
 
             edges_query =
               Repo.get(Division, sub_graph_filter.division_id)
@@ -33,11 +40,19 @@ defmodule Agents.Graph.SubGraphAgent do
               |> GraphQuery.join_bind_assocs([:start_node, :end_node], nodes_query)
               |> GraphQuery.search(edge_parameters)
 
-            edges = edges_query |> Repo.all()
+            g =
+              edges_query
+              |> Repo.stream()
+              |> Enum.reduce(g, fn edge, g ->
+                edge = edge |> Repo.preload([:start_node, :end_node, :edge_type])
 
-            %SubGraphAgent{
-              nodes: nodes,
-              edges: edges,
+                Graph.add_edge(g, edge.start_node.uid, edge.end_node.uid,
+                  label: edge.edge_type.uid
+                )
+              end)
+
+            %LibgraphAgent{
+              graph: g,
               opened_at: DateTime.utc_now(),
               sub_graph_filter_id: sub_graph_filter.id
             }
@@ -52,8 +67,8 @@ defmodule Agents.Graph.SubGraphAgent do
     end
   end
 
-  def stop_sub_graph(sub_graph_filter) do
-    name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
+  def stop_libgraph(sub_graph_filter) do
+    name = String.to_atom("Libgraph:" <> Integer.to_string(sub_graph_filter.id))
 
     case Process.whereis(name) do
       nil ->
@@ -65,12 +80,12 @@ defmodule Agents.Graph.SubGraphAgent do
     end
   end
 
-  def sub_graph_status(sub_graph_filter) do
-    name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
+  def libgraph_status(sub_graph_filter) do
+    name = String.to_atom("Libgraph:" <> Integer.to_string(sub_graph_filter.id))
 
     case Process.whereis(name) do
       nil ->
-        {:ok, %{status: false, nodes: nil, edges: nil, opened_at: nil}}
+        {:ok, %{status: false, opened_at: nil}}
 
       _ ->
         status = Agent.get(name, & &1)
@@ -78,15 +93,13 @@ defmodule Agents.Graph.SubGraphAgent do
         {:ok,
          %{
            status: true,
-           nodes: status.nodes |> length,
-           edges: status.edges |> length,
            opened_at: status.opened_at
          }}
     end
   end
 
-  def sub_graph_command(sub_graph_filter, command, opts \\ []) do
-    name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
+  def libgraph_command(sub_graph_filter, command, opts \\ []) do
+    name = String.to_atom("Libgraph:" <> Integer.to_string(sub_graph_filter.id))
 
     case Process.whereis(name) do
       nil -> {:error, "Process stopped"}
@@ -94,12 +107,19 @@ defmodule Agents.Graph.SubGraphAgent do
     end
   end
 
-  def run("node_count", _opts) do
-    fn state -> state.nodes |> length end
+  def run("info", _opts) do
+    fn state -> Graph.info(state.graph) end
   end
 
-  def run("edge_count", _opts) do
-    fn state -> state.edges |> length end
+  def run("vertices", _opts) do
+    fn state -> Graph.vertices(state.graph) end
+  end
+
+  def run("get_shortest_path", opts) do
+    IO.inspect opts
+    [first | [second | _]] = opts
+
+    fn state -> Graph.get_shortest_path(state.graph, first, second) end
   end
 
   def run(_command, _opts) do

@@ -9,6 +9,7 @@ defmodule U7406.Repo.Migrations.CreateResults do
       add :tower_id, references(:towers, on_delete: :nothing), null: false
       add :division_id, references(:divisions, on_delete: :nothing), null: false
       add :sub_graph_filter_id, references(:sub_graph_filters, on_delete: :nothing), null: false
+      add :agency_id, references(:agencies, on_delete: :nothing), null: false
       add :algorithm_id, references(:algorithms, on_delete: :nothing), null: false
 
       add :name, :string, null: false
@@ -24,6 +25,7 @@ defmodule U7406.Repo.Migrations.CreateResults do
     create index(:results, [:tower_id])
     create index(:results, [:division_id])
     create index(:results, [:sub_graph_filter_id])
+    create index(:results, [:agency_id])
     create index(:results, [:algorithm_id])
 
     add_policies(:results, [

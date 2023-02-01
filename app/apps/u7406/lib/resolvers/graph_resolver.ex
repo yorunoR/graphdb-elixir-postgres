@@ -60,6 +60,15 @@ defmodule Resolvers.GraphResolver do
       :sub_graph_status ->
         Query.SubGraphStatus.run(parent, args, context)
 
+      :libgraph_status ->
+        Query.LibgraphStatus.run(parent, args, context)
+
+      :sub_graph_command ->
+        Query.SubGraphCommand.run(parent, args, context)
+
+      :libgraph_command ->
+        Query.LibgraphCommand.run(parent, args, context)
+
       # Mutation
       :create_tower ->
         Mutation.CreateTower.run(parent, args, context)
@@ -111,6 +120,12 @@ defmodule Resolvers.GraphResolver do
 
       :stop_sub_graph ->
         Mutation.StopSubGraph.run(parent, args, context)
+
+      :start_libgraph ->
+        Mutation.StartLibgraph.run(parent, args, context)
+
+      :stop_libgraph ->
+        Mutation.StopLibgraph.run(parent, args, context)
 
       _ ->
         {:error, "Not defined in Graph context"}
