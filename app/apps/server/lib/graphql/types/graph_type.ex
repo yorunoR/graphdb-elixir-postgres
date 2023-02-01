@@ -54,6 +54,13 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:libgraph_status, &1, &2, &3))
     end
 
+    field(:sub_graph_command, non_null(:result)) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      arg(:command, non_null(:string))
+      arg(:opts, list_of(:string))
+      resolve(&GraphResolver.call(:sub_graph_command, &1, &2, &3))
+    end
+
     field(:libgraph_command, non_null(:result)) do
       arg(:sub_graph_filter_id, non_null(:id))
       arg(:command, non_null(:string))
