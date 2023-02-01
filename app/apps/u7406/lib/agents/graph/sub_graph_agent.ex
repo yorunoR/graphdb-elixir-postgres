@@ -85,38 +85,24 @@ defmodule Agents.Graph.SubGraphAgent do
     end
   end
 
-  # def calc_depth_first_search(agent_name, node) do
-  #   algorithm = Calc.get_algorithm_by_name!("DepthFirstSearch")
+  def sub_graph_command(sub_graph_filter, command, opts \\ []) do
+    name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
 
-  #   %{sub_graph_filter_id: sub_graph_filter_id, opened_at: opened_at} =
-  #     get_sub_graph_filter_id_and_opened_at(agent_name)
+    case Process.whereis(name) do
+      nil -> {:error, "Process stopped"}
+      _ -> Agent.get(name, run(command, opts))
+    end
+  end
 
-  #   sub_graph_filter = Api.SubGraphFilter.get_sub_graph_filter!(sub_graph_filter_id)
+  def run("node_count", _opts) do
+    fn state -> state.nodes |> length end
+  end
 
-  #   Agent.update(
-  #     agent_name,
-  #     fn %{sub_graph: sub_graph} = status ->
-  #       Repo.as_admin(fn ->
-  #         depth_first_search = Calc.DepthFirstSearch.calc(sub_graph, node)
+  def run("edge_count", _opts) do
+    fn state -> state.edges |> length end
+  end
 
-  #         Api.Result.create_result(sub_graph_filter, %{
-  #           opened_at: opened_at,
-  #           props: %{
-  #             color: depth_first_search.color,
-  #             pred: depth_first_search.pred,
-  #             start_uid: depth_first_search.start_uid
-  #           },
-  #           algorithm_id: algorithm.id
-  #         })
-
-  #         Map.merge(status, %{depth_first_search: depth_first_search})
-  #       end)
-  #     end,
-  #     :infinity
-  #   )
-  # end
-
-  # defp get_sub_graph_filter_id_and_opened_at(agent_name) do
-  #   Agent.get(agent_name, &%{sub_graph_filter_id: &1.sub_graph_filter_id, opened_at: &1.opened_at})
-  # end
+  def run(_command, _opts) do
+    fn _state -> {:error, "Command not Found"} end
+  end
 end

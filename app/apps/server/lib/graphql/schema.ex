@@ -48,6 +48,7 @@ defmodule Graphql.Schema do
   import_types(ResourceObject.EdgeField)
   import_types(ResourceObject.Rule)
   import_types(ResourceObject.SubGraphFilter)
+  import_types(ResourceObject.Result)
   import_types(ResourceObject.User)
 
   query do

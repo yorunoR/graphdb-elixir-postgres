@@ -11,6 +11,12 @@ defmodule Utils do
     end)
   end
 
+  def map_to_list(list) when is_list(list) do
+    Enum.with_index(list, fn value, index ->
+      %{key: index, val: value}
+    end)
+  end
+
   def map_to_list(_) do
     []
   end

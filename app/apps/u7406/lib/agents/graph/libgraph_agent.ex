@@ -97,4 +97,32 @@ defmodule Agents.Graph.LibgraphAgent do
          }}
     end
   end
+
+  def libgraph_command(sub_graph_filter, command, opts \\ []) do
+    name = String.to_atom("Libgraph:" <> Integer.to_string(sub_graph_filter.id))
+
+    case Process.whereis(name) do
+      nil -> {:error, "Process stopped"}
+      _ -> Agent.get(name, run(command, opts))
+    end
+  end
+
+  def run("info", _opts) do
+    fn state -> Graph.info(state.graph) end
+  end
+
+  def run("vertices", _opts) do
+    fn state -> Graph.vertices(state.graph) end
+  end
+
+  def run("get_shortest_path", opts) do
+    IO.inspect opts
+    [first | [second | _]] = opts
+
+    fn state -> Graph.get_shortest_path(state.graph, first, second) end
+  end
+
+  def run(_command, _opts) do
+    fn _state -> {:error, "Command not Found"} end
+  end
 end

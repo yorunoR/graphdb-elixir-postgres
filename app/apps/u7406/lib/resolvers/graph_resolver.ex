@@ -63,6 +63,12 @@ defmodule Resolvers.GraphResolver do
       :libgraph_status ->
         Query.LibgraphStatus.run(parent, args, context)
 
+      :sub_graph_command ->
+        Query.SubGraphCommand.run(parent, args, context)
+
+      :libgraph_command ->
+        Query.LibgraphCommand.run(parent, args, context)
+
       # Mutation
       :create_tower ->
         Mutation.CreateTower.run(parent, args, context)
