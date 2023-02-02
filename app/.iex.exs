@@ -10,6 +10,7 @@ alias U7406.Repo
 alias Schemas.Account.ApiKey
 alias Schemas.Account.User
 alias Schemas.Account.Project
+alias Schemas.Calc.Agency
 alias Schemas.Calc.Algorithm
 alias Schemas.Graph.Tower
 alias Schemas.Graph.Division
