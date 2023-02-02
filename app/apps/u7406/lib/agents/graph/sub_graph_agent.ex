@@ -6,6 +6,7 @@ defmodule Agents.Graph.SubGraphAgent do
 
   alias __MODULE__
   alias Queries.GraphQuery
+  alias Schemas.Calc.Agency
   alias Schemas.Graph.Division
   alias U7406.Repo
 
@@ -67,10 +68,11 @@ defmodule Agents.Graph.SubGraphAgent do
 
   def sub_graph_status(sub_graph_filter) do
     name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
+    commands = Repo.get_by!(Agency, name: "SubGraph") |> assoc(:algorithms) |> Repo.all()
 
     case Process.whereis(name) do
       nil ->
-        {:ok, %{status: false, nodes: nil, edges: nil, opened_at: nil}}
+        {:ok, %{status: false, opened_at: nil, commands: commands}}
 
       _ ->
         status = Agent.get(name, & &1)
@@ -78,9 +80,8 @@ defmodule Agents.Graph.SubGraphAgent do
         {:ok,
          %{
            status: true,
-           nodes: status.nodes |> length,
-           edges: status.edges |> length,
-           opened_at: status.opened_at
+           opened_at: status.opened_at,
+           commands: commands
          }}
     end
   end

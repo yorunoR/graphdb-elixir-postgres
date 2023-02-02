@@ -39,4 +39,23 @@ Admin.register_admin_user(%{email: "sss.yoshioka@gmail.com", password: "123456"}
 libgraph_params = %{name: "Libgraph"}
 libgraph = struct(Agency, libgraph_params) |> Repo.insert!(on_conflict: :nothing)
 libgraph = if libgraph.id == nil, do: Repo.get_by!(Agency, libgraph_params), else: libgraph
-build_assoc(libgraph, :algorithms, %{name: "info"}) |> Repo.insert!(on_conflict: :nothing)
+
+build_assoc(libgraph, :algorithms, %{name: "info", arity: 0, description: "概要取得"})
+|> Repo.insert!(on_conflict: :nothing)
+
+build_assoc(libgraph, :algorithms, %{
+  name: "get_shortest_path",
+  arity: 2,
+  description: "第一引数：始点のUID\n第二引数：終点のUID"
+})
+|> Repo.insert!(on_conflict: :nothing)
+
+sub_graph_params = %{name: "SubGraph"}
+sub_graph = struct(Agency, sub_graph_params) |> Repo.insert!(on_conflict: :nothing)
+sub_graph = if sub_graph.id == nil, do: Repo.get_by!(Agency, sub_graph_params), else: sub_graph
+
+build_assoc(sub_graph, :algorithms, %{name: "node_count", arity: 0, description: "ノード数"})
+|> Repo.insert!(on_conflict: :nothing)
+
+build_assoc(sub_graph, :algorithms, %{name: "edge_count", arity: 0, description: "エッジ数"})
+|> Repo.insert!(on_conflict: :nothing)

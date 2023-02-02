@@ -7,6 +7,7 @@ defmodule U7406.Repo.Migrations.CreateAlgorithms do
       add :agency_id, references(:agencies, on_delete: :nothing), null: false
       add :name, :string, null: false
       add :arity, :integer, null: false, default: 0
+      add :description, :text
 
       timestamps()
       soft_delete_columns()
