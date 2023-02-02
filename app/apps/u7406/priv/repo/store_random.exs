@@ -19,7 +19,6 @@ alias Actions.Graph.Mixin.DivisionFuncs
 alias Schemas.Account.Project
 alias Schemas.Graph.EdgeType
 alias Schemas.Graph.NodeType
-alias Schemas.Graph.Edge
 alias Schemas.Graph.Node
 alias Schemas.Graph.Rule
 alias Schemas.Graph.Tower

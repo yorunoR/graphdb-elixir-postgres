@@ -9,6 +9,7 @@ defmodule Schemas.Calc.Algorithm do
 
     field :name, :string
     field :arity, :integer
+    field :description, :string
 
     timestamps()
     soft_delete_schema()

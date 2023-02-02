@@ -50,6 +50,7 @@ defmodule Graphql.Schema do
   import_types(ResourceObject.SubGraphFilter)
   import_types(ResourceObject.Result)
   import_types(ResourceObject.User)
+  import_types(ResourceObject.Algorithm)
 
   query do
     import_fields(:common_queries)

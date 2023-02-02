@@ -6,6 +6,7 @@ defmodule Agents.Graph.LibgraphAgent do
 
   alias __MODULE__
   alias Queries.GraphQuery
+  alias Schemas.Calc.Agency
   alias Schemas.Graph.Division
   alias U7406.Repo
 
@@ -82,10 +83,11 @@ defmodule Agents.Graph.LibgraphAgent do
 
   def libgraph_status(sub_graph_filter) do
     name = String.to_atom("Libgraph:" <> Integer.to_string(sub_graph_filter.id))
+    commands = Repo.get_by!(Agency, name: "Libgraph") |> assoc(:algorithms) |> Repo.all()
 
     case Process.whereis(name) do
       nil ->
-        {:ok, %{status: false, opened_at: nil}}
+        {:ok, %{status: false, opened_at: nil, commands: commands}}
 
       _ ->
         status = Agent.get(name, & &1)
@@ -93,7 +95,8 @@ defmodule Agents.Graph.LibgraphAgent do
         {:ok,
          %{
            status: true,
-           opened_at: status.opened_at
+           opened_at: status.opened_at,
+           commands: commands
          }}
     end
   end
