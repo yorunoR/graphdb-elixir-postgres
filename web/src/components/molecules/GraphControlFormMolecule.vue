@@ -1,7 +1,7 @@
 <template>
   <div>
     <DataTable
-      :value="mapToList(graphStatus)"
+      :value="mapToList(omitCommands(graphStatus))"
       responsive-layout="scroll"
     >
       <Column
@@ -25,31 +25,40 @@
       :disabled="!graphStatus.status"
       @click="() => emit('stop')"
     />
-    <InputText
+    <Dropdown
       v-model="command"
       class="w-full mt-4"
-      type="text"
-      placeholder="Command"
       :disabled="!graphStatus.status"
+      :options="graphStatus.commands"
+      optionLabel="name"
+      optionValue="name"
+      placeholder="Command"
     />
+    <div
+      v-if="selectedCommand"
+      class="mt-2 p-2 text-left text-sm surface-200 border-round-xs"
+      style="white-space: pre-wrap"
+    >
+      <span>{{ selectedCommand.description }}</span>
+    </div>
     <InputText
       v-model="first"
       class="w-full mt-2"
       type="text"
       placeholder="First argument"
-      :disabled="!graphStatus.status"
+      :disabled="!graphStatus.status || !command || selectedCommand.arity === 0"
     />
     <InputText
       v-model="second"
       class="w-full mt-2"
       type="text"
       placeholder="Second argument"
-      :disabled="!graphStatus.status"
+      :disabled="!graphStatus.status || !command || selectedCommand.arity < 2"
     />
     <Button
       label="Submit"
       class="w-full mt-2"
-      :disabled="!graphStatus.status"
+      :disabled="!graphStatus.status || !meta.valid"
       @click="() => clickCommand()"
     />
   </div>
@@ -94,7 +103,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import isEqual from 'lodash/isEqual'
 import { useField, useForm } from 'vee-validate'
-import { ref, toRefs, watch } from 'vue'
+import { computed, ref, toRefs, watch } from 'vue'
 
 import type { GraphStatus, Result } from '@/auto_generated/graphql'
 import { mapToList } from '@/services/utils'
@@ -145,5 +154,17 @@ watch([meta], () => {
 
 watch([fetching], () => {
   visible.value = !fetching.value
+})
+
+const omitCommands = (map) => {
+  const clone = cloneDeep(map)
+  delete clone.commands
+  return clone
+}
+
+const selectedCommand = computed(() => {
+  if (!command.value) { return }
+
+  return props.graphStatus.commands.find(algorithm => algorithm.name === command.value)
 })
 </script>

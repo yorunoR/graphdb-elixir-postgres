@@ -16,6 +16,16 @@ export type Scalars = {
   DateTime: string;
 };
 
+export type Algorithm = {
+  __typename?: 'Algorithm';
+  arity: Scalars['Int'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type ApiKey = {
   __typename?: 'ApiKey';
   id: Scalars['ID'];
@@ -98,7 +108,7 @@ export type EdgeType = {
 
 export type GraphStatus = {
   __typename?: 'GraphStatus';
-  commands: Array<Scalars['String']>;
+  commands: Array<Algorithm>;
   openedAt?: Maybe<Scalars['DateTime']>;
   status?: Maybe<Scalars['Boolean']>;
 };
@@ -758,7 +768,7 @@ export type LibgraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null } };
+export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
 
 export type NodeBoundEdgesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -817,7 +827,7 @@ export type SubGraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null } };
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -1246,6 +1256,11 @@ export const LibgraphStatusDocument = gql`
   libgraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
+    commands {
+      name
+      arity
+      description
+    }
   }
 }
     `;
@@ -1418,6 +1433,11 @@ export const SubGraphStatusDocument = gql`
   subGraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
+    commands {
+      name
+      arity
+      description
+    }
   }
 }
     `;
