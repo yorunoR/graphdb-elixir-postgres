@@ -8,6 +8,8 @@ import Button from 'primevue/button'
 import Chip from 'primevue/chip'
 import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
+import Dialog from 'primevue/dialog'
+import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
 import Paginator from 'primevue/paginator'
 import Panel from 'primevue/panel'
@@ -35,6 +37,8 @@ createApp(App)
   .component('Chip', Chip)
   .component('Column', Column)
   .component('DataTable', DataTable)
+  .component('Dialog', Dialog)
+  .component('Dropdown', Dropdown)
   .component('InputText', InputText)
   .component('Paginator', Paginator)
   .component('Panel', Panel)
