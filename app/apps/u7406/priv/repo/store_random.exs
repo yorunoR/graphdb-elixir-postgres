@@ -120,7 +120,7 @@ Repo.as_admin(fn ->
       end)
 
       for(n <- 1..limit, m <- (n + 1)..limit) do
-        if Enum.random([1, 2, 3]) == 1, do: [n, m], else: nil
+        if Enum.random([1, 2, 3, 4, 5, 6, 7, 8]) == 1, do: [n, m], else: nil
       end
       |> Enum.reject(&is_nil/1)
       |> Enum.each(fn [n, m] ->
