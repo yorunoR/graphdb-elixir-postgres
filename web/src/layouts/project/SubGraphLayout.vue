@@ -172,6 +172,20 @@
                 Status
               </router-link>
             </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
+                  name: 'diagram',
+                  params: { subGraphFilterId },
+                }"
+                @click="() => close()"
+              >
+                Diagram
+              </router-link>
+            </li>
           </ul>
           <ul>
             <li

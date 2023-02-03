@@ -69,11 +69,13 @@ export type Edge = {
   edgeType: EdgeType;
   edgeTypeId: Scalars['ID'];
   endNode: Node;
+  endNodeId: Scalars['ID'];
   id: Scalars['ID'];
   insertedAt: Scalars['DateTime'];
   name: Scalars['String'];
   props: Array<Item>;
   startNode: Node;
+  startNodeId: Scalars['ID'];
   updatedAt: Scalars['DateTime'];
 };
 
@@ -111,6 +113,7 @@ export type GraphStatus = {
   commands: Array<Algorithm>;
   openedAt?: Maybe<Scalars['DateTime']>;
   status?: Maybe<Scalars['Boolean']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type InputApiKey = {
@@ -410,6 +413,7 @@ export type RootQueryType = {
   nodes: NodeList;
   ping: Status;
   subGraphCommand: Result;
+  subGraphData: SubGraphData;
   subGraphFilter?: Maybe<SubGraphFilter>;
   subGraphStatus: GraphStatus;
   tower?: Maybe<Tower>;
@@ -465,6 +469,11 @@ export type RootQueryTypeSubGraphCommandArgs = {
 };
 
 
+export type RootQueryTypeSubGraphDataArgs = {
+  subGraphFilterId: Scalars['ID'];
+};
+
+
 export type RootQueryTypeSubGraphFilterArgs = {
   subGraphFilterId: Scalars['ID'];
 };
@@ -498,6 +507,12 @@ export type Rule = {
 export type Status = {
   __typename?: 'Status';
   status?: Maybe<Scalars['Boolean']>;
+};
+
+export type SubGraphData = {
+  __typename?: 'SubGraphData';
+  edges: Array<Edge>;
+  nodes: Array<Node>;
 };
 
 export type SubGraphFilter = {
@@ -768,7 +783,7 @@ export type LibgraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
+export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, updatedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
 
 export type NodeBoundEdgesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -815,6 +830,13 @@ export type SubGraphCommandQueryVariables = Exact<{
 
 export type SubGraphCommandQuery = { __typename?: 'RootQueryType', subGraphCommand: { __typename?: 'Result', props: Array<{ __typename?: 'Item', key: string, val: string }> } };
 
+export type SubGraphDataQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type SubGraphDataQuery = { __typename?: 'RootQueryType', subGraphData: { __typename?: 'SubGraphData', nodes: Array<{ __typename?: 'Node', id: string, uid: string, name: string, nodeTypeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, nodeType: { __typename?: 'NodeType', name: string } }>, edges: Array<{ __typename?: 'Edge', id: string, name: string, edgeTypeId: string, endNodeId: string, startNodeId: string, props: Array<{ __typename?: 'Item', key: string, val: string }>, edgeType: { __typename?: 'EdgeType', name: string }, endNode: { __typename?: 'Node', name: string }, startNode: { __typename?: 'Node', name: string } }> } };
+
 export type SubGraphFilterQueryVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
 }>;
@@ -827,7 +849,7 @@ export type SubGraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, updatedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -1256,6 +1278,7 @@ export const LibgraphStatusDocument = gql`
   libgraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
+    updatedAt
     commands {
       name
       arity
@@ -1400,6 +1423,49 @@ export const SubGraphCommandDocument = gql`
 export function useSubGraphCommandQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphCommandQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphCommandQuery>({ query: SubGraphCommandDocument, ...options });
 };
+export const SubGraphDataDocument = gql`
+    query SubGraphData($subGraphFilterId: ID!) {
+  subGraphData(subGraphFilterId: $subGraphFilterId) {
+    nodes {
+      id
+      uid
+      name
+      props {
+        key
+        val
+      }
+      nodeTypeId
+      nodeType {
+        name
+      }
+    }
+    edges {
+      id
+      name
+      props {
+        key
+        val
+      }
+      edgeTypeId
+      edgeType {
+        name
+      }
+      endNodeId
+      endNode {
+        name
+      }
+      startNodeId
+      startNode {
+        name
+      }
+    }
+  }
+}
+    `;
+
+export function useSubGraphDataQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphDataQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<SubGraphDataQuery>({ query: SubGraphDataDocument, ...options });
+};
 export const SubGraphFilterDocument = gql`
     query SubGraphFilter($subGraphFilterId: ID!) {
   subGraphFilter(subGraphFilterId: $subGraphFilterId) {
@@ -1433,6 +1499,7 @@ export const SubGraphStatusDocument = gql`
   subGraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
+    updatedAt
     commands {
       name
       arity

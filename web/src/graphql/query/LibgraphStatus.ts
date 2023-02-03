@@ -3,6 +3,7 @@ const QUERY = /* GraphQL */ `
     libgraphStatus(subGraphFilterId: $subGraphFilterId) {
       status
       openedAt
+      updatedAt
       commands {
         name
         arity
