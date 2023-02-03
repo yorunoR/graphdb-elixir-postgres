@@ -19,9 +19,13 @@ defmodule Graphql.Types.ResourceObject.Edge do
       resolve(dataloader(:db))
     end
 
+    field(:start_node_id, non_null(:id))
+
     field(:start_node, non_null(:node)) do
       resolve(dataloader(:db))
     end
+
+    field(:end_node_id, non_null(:id))
 
     field(:end_node, non_null(:node)) do
       resolve(dataloader(:db))

@@ -36,6 +36,7 @@ defmodule Graphql.Schema do
   import_types(CustomObject.NodeList)
   import_types(CustomObject.Pagination)
   import_types(CustomObject.GraphStatus)
+  import_types(CustomObject.SubGraphData)
   import_types(ResourceObject.ApiKey)
   import_types(ResourceObject.Project)
   import_types(ResourceObject.Tower)

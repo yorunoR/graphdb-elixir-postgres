@@ -31,9 +31,6 @@ defmodule Actions.Account.Mutation.CreateApiKey do
     {:ok, key} = PrefixedApiKey.generate("mildeaw")
     value = key.api_key |> Crypt.encrypt(user_salt)
 
-    IO.inspect(user_salt)
-    IO.inspect(changeset)
-
     changeset
     |> put_change(:short_token, key.short_token)
     |> put_change(:hash, key.hash)
