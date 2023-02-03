@@ -113,6 +113,7 @@ export type GraphStatus = {
   commands: Array<Algorithm>;
   openedAt?: Maybe<Scalars['DateTime']>;
   status?: Maybe<Scalars['Boolean']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type InputApiKey = {
@@ -782,7 +783,7 @@ export type LibgraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
+export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, updatedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
 
 export type NodeBoundEdgesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -848,7 +849,7 @@ export type SubGraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, updatedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -1277,6 +1278,7 @@ export const LibgraphStatusDocument = gql`
   libgraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
+    updatedAt
     commands {
       name
       arity
@@ -1497,6 +1499,7 @@ export const SubGraphStatusDocument = gql`
   subGraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
+    updatedAt
     commands {
       name
       arity

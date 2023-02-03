@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    class="p-1 border-red-200"
+    :class="{'border-double': old}"
+  >
     <DataTable
       :value="mapToList(omitCommands(graphStatus))"
       responsive-layout="scroll"
@@ -166,5 +169,11 @@ const selectedCommand = computed(() => {
   if (!command.value) { return }
 
   return props.graphStatus.commands.find(algorithm => algorithm.name === command.value)
+})
+
+const old = computed(() => {
+  if (!props.graphStatus) { return false }
+
+  return props.graphStatus.updatedAt > props.graphStatus.openedAt
 })
 </script>
