@@ -96,6 +96,7 @@ defmodule Agents.Graph.LibgraphAgent do
          %{
            status: true,
            opened_at: status.opened_at,
+           updated_at: sub_graph_filter.updated_at,
            commands: commands
          }}
     end
