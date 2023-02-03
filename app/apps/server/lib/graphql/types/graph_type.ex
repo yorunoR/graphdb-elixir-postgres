@@ -44,6 +44,11 @@ defmodule Graphql.Types.GraphType do
       resolve(&GraphResolver.call(:node_bound_edges, &1, &2, &3))
     end
 
+    field(:sub_graph_data, non_null(:sub_graph_data)) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      resolve(&GraphResolver.call(:sub_graph_data, &1, &2, &3))
+    end
+
     field(:sub_graph_status, non_null(:graph_status)) do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:sub_graph_status, &1, &2, &3))

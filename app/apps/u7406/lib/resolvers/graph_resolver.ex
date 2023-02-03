@@ -57,6 +57,9 @@ defmodule Resolvers.GraphResolver do
       :node_bound_edges ->
         Query.NodeBoundEdges.run(parent, args, context)
 
+      :sub_graph_data ->
+        Query.SubGraphData.run(parent, args, context)
+
       :sub_graph_status ->
         Query.SubGraphStatus.run(parent, args, context)
 

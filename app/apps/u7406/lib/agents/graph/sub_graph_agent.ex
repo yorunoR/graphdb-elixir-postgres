@@ -86,6 +86,12 @@ defmodule Agents.Graph.SubGraphAgent do
     end
   end
 
+  def sub_graph_data(sub_graph_filter) do
+    name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
+
+    Agent.get(name, fn state -> %{nodes: state.nodes, edges: state.edges} end)
+  end
+
   def sub_graph_command(sub_graph_filter, command, opts \\ []) do
     name = String.to_atom("SubGraph:" <> Integer.to_string(sub_graph_filter.id))
 
