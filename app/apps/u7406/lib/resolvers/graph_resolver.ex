@@ -130,6 +130,9 @@ defmodule Resolvers.GraphResolver do
       :stop_libgraph ->
         Mutation.StopLibgraph.run(parent, args, context)
 
+      :create_result ->
+        Mutation.CreateResult.run(parent, args, context)
+
       _ ->
         {:error, "Not defined in Graph context"}
     end

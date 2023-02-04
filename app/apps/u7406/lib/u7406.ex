@@ -4,6 +4,7 @@ defmodule U7406 do
   alias Schemas.Graph.EdgeType
   alias Schemas.Graph.NodeType
   alias Schemas.Graph.Rule
+  alias Schemas.Graph.SubGraphFilter
 
   def build_assoc(%Tower{} = tower, :divisions) do
     attrs = %{project_id: tower.project_id}
@@ -106,6 +107,16 @@ defmodule U7406 do
     }
 
     Ecto.build_assoc(edge_type, :edges_uploads, attrs)
+  end
+
+  def build_assoc(%SubGraphFilter{} = sub_graph_filter, :results) do
+    attrs = %{
+      project_id: sub_graph_filter.project_id,
+      tower_id: sub_graph_filter.tower_id,
+      division_id: sub_graph_filter.division_id
+    }
+
+    Ecto.build_assoc(sub_graph_filter, :results, attrs)
   end
 
   def build_assoc(struct, assoc, attrs \\ %{}) do
