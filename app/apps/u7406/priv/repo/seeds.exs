@@ -46,7 +46,8 @@ build_assoc(libgraph, :algorithms, %{name: "info", arity: 0, description: "概�
 build_assoc(libgraph, :algorithms, %{
   name: "get_shortest_path",
   arity: 2,
-  description: "第一引数：始点のUID\n第二引数：終点のUID"
+  description: "第一引数：始点のUID\n第二引数：終点のUID",
+  drawable: true
 })
 |> Repo.insert!(on_conflict: :nothing)
 

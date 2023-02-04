@@ -8,6 +8,7 @@ defmodule U7406.Repo.Migrations.CreateAlgorithms do
       add :name, :string, null: false
       add :arity, :integer, null: false, default: 0
       add :description, :text
+      add :drawable, :boolean, default: false
 
       timestamps()
       soft_delete_columns()
