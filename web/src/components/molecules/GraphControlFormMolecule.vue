@@ -3,19 +3,23 @@
     class="p-1 border-red-200"
     :class="{'border-double': old}"
   >
-    <DataTable
-      :value="mapToList(omitCommands(graphStatus))"
-      responsive-layout="scroll"
+    <div class="p-2 text-left surface-100">
+      <b>Status</b>
+    </div>
+    <div class="p-2 text-right">
+      {{ graphStatus.status }}
+    </div>
+    <div
+      v-for="record in mapToList(omitCommands(graphStatus))"
+      :key="record.key"
     >
-      <Column
-        field="key"
-        header="key"
-      />
-      <Column
-        field="val"
-        header="val"
-      />
-    </DataTable>
+      <div class="p-2 text-left surface-100">
+        {{ record.key }}:
+      </div>
+      <div class="p-2 text-right">
+        {{ record.val }}
+      </div>
+    </div>
     <Button
       label="Start"
       class="w-full mt-4"
@@ -162,6 +166,8 @@ watch([fetching], () => {
 const omitCommands = (map) => {
   const clone = cloneDeep(map)
   delete clone.commands
+  delete clone.__typename
+  delete clone.status
   return clone
 }
 
@@ -174,6 +180,6 @@ const selectedCommand = computed(() => {
 const old = computed(() => {
   if (!props.graphStatus) { return false }
 
-  return props.graphStatus.updatedAt > props.graphStatus.openedAt
+  return props.graphStatus.currentDivisionChangedAt > props.graphStatus.openedAt || props.graphStatus.currentSubGraphFilterChangedAt > props.graphStatus.openedAt
 })
 </script>
