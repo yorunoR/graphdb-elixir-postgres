@@ -5,6 +5,10 @@ defmodule Graphql.Types.ResourceObject.Result do
   object :result do
     field(:id, :id)
     field(:name, :string)
+    field(:args, list_of(:string))
+    field(:opened_at, :datetime)
+    field(:division_changed_at, :datetime)
+    field(:sub_graph_filter_changed_at, :datetime)
     field(:inserted_at, :datetime)
     field(:updated_at, :datetime)
 
