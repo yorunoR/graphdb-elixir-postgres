@@ -21,5 +21,9 @@ defmodule Graphql.Types.ResourceObject.Result do
     field(:sub_graph_filter, non_null(:sub_graph_filter)) do
       resolve(dataloader(:db))
     end
+
+    field(:algorithm, non_null(:algorithm)) do
+      resolve(dataloader(:db))
+    end
   end
 end
