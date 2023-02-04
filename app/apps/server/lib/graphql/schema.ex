@@ -29,6 +29,7 @@ defmodule Graphql.Schema do
   import_types(InputObject.InputEdgeField)
   import_types(InputObject.InputRule)
   import_types(InputObject.InputSubGraphFilter)
+  import_types(InputObject.InputResult)
   import_types(CustomObject.Item)
   import_types(CustomObject.Status)
   import_types(CustomObject.DivisionList)

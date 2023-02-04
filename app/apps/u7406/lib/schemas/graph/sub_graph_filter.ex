@@ -5,6 +5,7 @@ defmodule Schemas.Graph.SubGraphFilter do
   alias Schemas.Account.Project
   alias Schemas.Graph.Tower
   alias Schemas.Graph.Division
+  alias Schemas.Graph.Result
 
   schema "sub_graph_filters" do
     belongs_to :project, Project
@@ -19,5 +20,7 @@ defmodule Schemas.Graph.SubGraphFilter do
 
     timestamps()
     soft_delete_schema()
+
+    has_many :results, Result, on_delete: :delete_all
   end
 end

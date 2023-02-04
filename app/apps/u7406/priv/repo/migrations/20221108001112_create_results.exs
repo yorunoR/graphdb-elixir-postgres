@@ -13,8 +13,10 @@ defmodule U7406.Repo.Migrations.CreateResults do
       add :algorithm_id, references(:algorithms, on_delete: :nothing), null: false
 
       add :name, :string, null: false
-      add :division_hash, :string, null: false
+      add :args, {:array, :string}
       add :opened_at, :utc_datetime_usec, null: false
+      add :division_changed_at, :utc_datetime_usec, null: false
+      add :sub_graph_filter_changed_at, :utc_datetime_usec, null: false
       add :props, :map, default: "{}"
 
       timestamps()

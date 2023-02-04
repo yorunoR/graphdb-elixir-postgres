@@ -183,5 +183,13 @@ defmodule Graphql.Types.GraphType do
       arg(:sub_graph_filter_id, non_null(:id))
       resolve(&GraphResolver.call(:stop_libgraph, &1, &2, &3))
     end
+
+    field(:create_result, :result) do
+      arg(:sub_graph_filter_id, non_null(:id))
+      arg(:agency, non_null(:string))
+      arg(:command, non_null(:string))
+      arg(:result, non_null(:input_result))
+      resolve(&GraphResolver.call(:create_result, &1, &2, &3))
+    end
   end
 end

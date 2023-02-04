@@ -32,5 +32,9 @@ defmodule Graphql.Types.ResourceObject.SubGraphFilter do
     field(:division, non_null(:division)) do
       resolve(dataloader(:db))
     end
+
+    field(:results, non_null(list_of(non_null(:result)))) do
+      resolve(dataloader(:db))
+    end
   end
 end
