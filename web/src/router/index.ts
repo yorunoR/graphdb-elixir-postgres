@@ -204,6 +204,14 @@ const routes: RouteRecordRaw[] = [
               await import(
                 /* webpackChunkName: "diagram" */ '@/views/project/sub_graph/DiagramView.vue'
               )
+          },
+          {
+            path: 'results',
+            name: 'results',
+            component: async () =>
+              await import(
+                /* webpackChunkName: "results" */ '@/views/project/sub_graph/ResultsView.vue'
+              )
           }
         ]
       }

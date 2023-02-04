@@ -260,6 +260,7 @@ export type Project = {
 
 export type Result = {
   __typename?: 'Result';
+  algorithm: Algorithm;
   args?: Maybe<Array<Maybe<Scalars['String']>>>;
   divisionChangedAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
@@ -549,6 +550,7 @@ export type SubGraphFilter = {
   name: Scalars['String'];
   nodeFilter?: Maybe<Scalars['String']>;
   project: Project;
+  results: Array<Result>;
   tower: Tower;
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -878,6 +880,13 @@ export type SubGraphFilterQueryVariables = Exact<{
 
 
 export type SubGraphFilterQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, name: string, uid: string, nodeFilter?: string | null, edgeFilter?: string | null, division: { __typename?: 'Division', id: string, name: string }, tower: { __typename?: 'Tower', id: string, name: string }, project: { __typename?: 'Project', id: string, name: string, default: boolean } } | null };
+
+export type SubGraphFilterResultsQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type SubGraphFilterResultsQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, results: Array<{ __typename?: 'Result', id?: string | null, name?: string | null, args?: Array<string | null> | null, openedAt?: string | null, divisionChangedAt?: string | null, subGraphFilterChangedAt?: string | null, props: Array<{ __typename?: 'Item', key: string, val: string }>, algorithm: { __typename?: 'Algorithm', name: string } }> } | null };
 
 export type SubGraphStatusQueryVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
@@ -1548,6 +1557,32 @@ export const SubGraphFilterDocument = gql`
 
 export function useSubGraphFilterQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphFilterQuery>({ query: SubGraphFilterDocument, ...options });
+};
+export const SubGraphFilterResultsDocument = gql`
+    query SubGraphFilterResults($subGraphFilterId: ID!) {
+  subGraphFilter(subGraphFilterId: $subGraphFilterId) {
+    id
+    results {
+      id
+      name
+      args
+      openedAt
+      divisionChangedAt
+      subGraphFilterChangedAt
+      props {
+        key
+        val
+      }
+      algorithm {
+        name
+      }
+    }
+  }
+}
+    `;
+
+export function useSubGraphFilterResultsQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterResultsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<SubGraphFilterResultsQuery>({ query: SubGraphFilterResultsDocument, ...options });
 };
 export const SubGraphStatusDocument = gql`
     query SubGraphStatus($subGraphFilterId: ID!) {
