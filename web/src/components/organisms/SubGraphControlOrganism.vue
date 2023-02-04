@@ -10,6 +10,7 @@
       @start="() => clickStart()"
       @stop="() => clickStop()"
       @command="(newVariables) => clickCommand(newVariables)"
+      @save="(saveData) => clickSave(saveData)"
     />
   </section>
 </template>
@@ -21,7 +22,8 @@ import {
   useSubGraphStatusQuery,
   useStartSubGraphMutation,
   useStopSubGraphMutation,
-  useSubGraphCommandQuery
+  useSubGraphCommandQuery,
+  useCreateResultMutation
 } from '@/auto_generated/graphql'
 import GraphControlFormMolecule from '@/components/molecules/GraphControlFormMolecule.vue'
 
@@ -39,6 +41,7 @@ const { data } = useSubGraphStatusQuery({
 
 const { executeMutation: start } = useStartSubGraphMutation()
 const { executeMutation: stop } = useStopSubGraphMutation()
+const { executeMutation: createResult } = useCreateResultMutation()
 
 const clickStart = () => {
   start({ subGraphFilterId: props.subGraphFilterId })
@@ -57,5 +60,26 @@ const { data: commandData, fetching } = useSubGraphCommandQuery({
 const clickCommand = (newVariables) => {
   variables.value = newVariables
   pause.value = false
+}
+
+const clickSave = (saveData) => {
+  const { openedAt, divisionChangedAt, subGraphFilterChangedAt } = data.value.subGraphStatus
+  const { command, opts } = saveData
+  const resultProps = commandData.value.subGraphCommand.props.map(item => {
+    return { key: item.key, val: item.val }
+  })
+  createResult({
+    subGraphFilterId: props.subGraphFilterId,
+    agency: 'SubGraph',
+    command,
+    result: {
+      name: 'SubGraph:' + command,
+      args: opts,
+      openedAt,
+      divisionChangedAt,
+      subGraphFilterChangedAt,
+      props: resultProps
+    }
+  })
 }
 </script>

@@ -100,7 +100,7 @@
         label="Save"
         icon="pi pi-check"
         autofocus
-        @click="visible = false"
+        @click="() => clickSave()"
       />
     </template>
   </Dialog>
@@ -126,6 +126,7 @@ const emit = defineEmits<{
   (e: 'start'): void;
   (e: 'stop'): void;
   (e: 'command', value: { subGraphFilterId: string, command: string, opts: [string] }): void;
+  (e: 'save', value: { command: string, opts: [string] }): void;
 }>()
 
 const unchanged = ref(true)
@@ -182,4 +183,12 @@ const old = computed(() => {
 
   return props.graphStatus.currentDivisionChangedAt > props.graphStatus.openedAt || props.graphStatus.currentSubGraphFilterChangedAt > props.graphStatus.openedAt
 })
+
+const clickSave = () => {
+  emit('save', {
+    command: command.value,
+    opts: [first.value, second.value]
+  })
+  visible.value = false
+}
 </script>
