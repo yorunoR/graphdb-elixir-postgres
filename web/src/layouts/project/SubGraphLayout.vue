@@ -178,6 +178,20 @@
             >
               <router-link
                 :to="{
+                  name: 'results',
+                  params: { subGraphFilterId },
+                }"
+                @click="() => close()"
+              >
+                Results
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link
+                :to="{
                   name: 'diagram',
                   params: { subGraphFilterId },
                 }"

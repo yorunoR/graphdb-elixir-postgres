@@ -111,9 +111,12 @@ export type EdgeType = {
 export type GraphStatus = {
   __typename?: 'GraphStatus';
   commands: Array<Algorithm>;
+  currentDivisionChangedAt?: Maybe<Scalars['DateTime']>;
+  currentSubGraphFilterChangedAt?: Maybe<Scalars['DateTime']>;
+  divisionChangedAt?: Maybe<Scalars['DateTime']>;
   openedAt?: Maybe<Scalars['DateTime']>;
   status?: Maybe<Scalars['Boolean']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  subGraphFilterChangedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type InputApiKey = {
@@ -168,6 +171,15 @@ export type InputNodeType = {
 
 export type InputProject = {
   name: Scalars['String'];
+};
+
+export type InputResult = {
+  args?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  divisionChangedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  openedAt: Scalars['DateTime'];
+  props?: InputMaybe<Array<InputMaybe<InputItem>>>;
+  subGraphFilterChangedAt: Scalars['DateTime'];
 };
 
 export type InputRule = {
@@ -248,11 +260,16 @@ export type Project = {
 
 export type Result = {
   __typename?: 'Result';
+  algorithm: Algorithm;
+  args?: Maybe<Array<Maybe<Scalars['String']>>>;
+  divisionChangedAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   insertedAt?: Maybe<Scalars['DateTime']>;
   name?: Maybe<Scalars['String']>;
+  openedAt?: Maybe<Scalars['DateTime']>;
   props: Array<Item>;
   subGraphFilter: SubGraphFilter;
+  subGraphFilterChangedAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -267,6 +284,7 @@ export type RootMutationType = {
   createNodeField?: Maybe<NodeField>;
   createNodeType?: Maybe<NodeType>;
   createProject?: Maybe<Project>;
+  createResult?: Maybe<Result>;
   createRule?: Maybe<Rule>;
   createSubGraphFilter?: Maybe<SubGraphFilter>;
   createTower?: Maybe<Tower>;
@@ -330,6 +348,14 @@ export type RootMutationTypeCreateNodeTypeArgs = {
 
 export type RootMutationTypeCreateProjectArgs = {
   project: InputProject;
+};
+
+
+export type RootMutationTypeCreateResultArgs = {
+  agency: Scalars['String'];
+  command: Scalars['String'];
+  result: InputResult;
+  subGraphFilterId: Scalars['ID'];
 };
 
 
@@ -524,6 +550,7 @@ export type SubGraphFilter = {
   name: Scalars['String'];
   nodeFilter?: Maybe<Scalars['String']>;
   project: Project;
+  results: Array<Result>;
   tower: Tower;
   uid: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -631,6 +658,16 @@ export type CreateProjectMutationVariables = Exact<{
 
 
 export type CreateProjectMutation = { __typename?: 'RootMutationType', createProject?: { __typename?: 'Project', id: string } | null };
+
+export type CreateResultMutationVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+  agency: Scalars['String'];
+  command: Scalars['String'];
+  result: InputResult;
+}>;
+
+
+export type CreateResultMutation = { __typename?: 'RootMutationType', createResult?: { __typename?: 'Result', id?: string | null } | null };
 
 export type CreateRuleMutationVariables = Exact<{
   edgeTypeId: Scalars['ID'];
@@ -783,7 +820,7 @@ export type LibgraphStatusQueryVariables = Exact<{
 }>;
 
 
-export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, updatedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
+export type LibgraphStatusQuery = { __typename?: 'RootQueryType', libgraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, divisionChangedAt?: string | null, subGraphFilterChangedAt?: string | null, currentDivisionChangedAt?: string | null, currentSubGraphFilterChangedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', id: string, name: string, arity: number, description?: string | null }> } };
 
 export type NodeBoundEdgesQueryVariables = Exact<{
   divisionId: Scalars['ID'];
@@ -844,12 +881,19 @@ export type SubGraphFilterQueryVariables = Exact<{
 
 export type SubGraphFilterQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, name: string, uid: string, nodeFilter?: string | null, edgeFilter?: string | null, division: { __typename?: 'Division', id: string, name: string }, tower: { __typename?: 'Tower', id: string, name: string }, project: { __typename?: 'Project', id: string, name: string, default: boolean } } | null };
 
+export type SubGraphFilterResultsQueryVariables = Exact<{
+  subGraphFilterId: Scalars['ID'];
+}>;
+
+
+export type SubGraphFilterResultsQuery = { __typename?: 'RootQueryType', subGraphFilter?: { __typename?: 'SubGraphFilter', id: string, results: Array<{ __typename?: 'Result', id?: string | null, name?: string | null, args?: Array<string | null> | null, openedAt?: string | null, divisionChangedAt?: string | null, subGraphFilterChangedAt?: string | null, props: Array<{ __typename?: 'Item', key: string, val: string }>, algorithm: { __typename?: 'Algorithm', name: string } }> } | null };
+
 export type SubGraphStatusQueryVariables = Exact<{
   subGraphFilterId: Scalars['ID'];
 }>;
 
 
-export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, updatedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', name: string, arity: number, description?: string | null }> } };
+export type SubGraphStatusQuery = { __typename?: 'RootQueryType', subGraphStatus: { __typename?: 'GraphStatus', status?: boolean | null, openedAt?: string | null, divisionChangedAt?: string | null, subGraphFilterChangedAt?: string | null, currentDivisionChangedAt?: string | null, currentSubGraphFilterChangedAt?: string | null, commands: Array<{ __typename?: 'Algorithm', id: string, name: string, arity: number, description?: string | null }> } };
 
 export type TowerDivisionsQueryVariables = Exact<{
   towerId: Scalars['ID'];
@@ -969,6 +1013,22 @@ export const CreateProjectDocument = gql`
 
 export function useCreateProjectMutation() {
   return Urql.useMutation<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument);
+};
+export const CreateResultDocument = gql`
+    mutation CreateResult($subGraphFilterId: ID!, $agency: String!, $command: String!, $result: InputResult!) {
+  createResult(
+    subGraphFilterId: $subGraphFilterId
+    agency: $agency
+    command: $command
+    result: $result
+  ) {
+    id
+  }
+}
+    `;
+
+export function useCreateResultMutation() {
+  return Urql.useMutation<CreateResultMutation, CreateResultMutationVariables>(CreateResultDocument);
 };
 export const CreateRuleDocument = gql`
     mutation CreateRule($edgeTypeId: ID!, $rule: InputRule!) {
@@ -1278,8 +1338,12 @@ export const LibgraphStatusDocument = gql`
   libgraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
-    updatedAt
+    divisionChangedAt
+    subGraphFilterChangedAt
+    currentDivisionChangedAt
+    currentSubGraphFilterChangedAt
     commands {
+      id
       name
       arity
       description
@@ -1494,13 +1558,43 @@ export const SubGraphFilterDocument = gql`
 export function useSubGraphFilterQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphFilterQuery>({ query: SubGraphFilterDocument, ...options });
 };
+export const SubGraphFilterResultsDocument = gql`
+    query SubGraphFilterResults($subGraphFilterId: ID!) {
+  subGraphFilter(subGraphFilterId: $subGraphFilterId) {
+    id
+    results {
+      id
+      name
+      args
+      openedAt
+      divisionChangedAt
+      subGraphFilterChangedAt
+      props {
+        key
+        val
+      }
+      algorithm {
+        name
+      }
+    }
+  }
+}
+    `;
+
+export function useSubGraphFilterResultsQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterResultsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<SubGraphFilterResultsQuery>({ query: SubGraphFilterResultsDocument, ...options });
+};
 export const SubGraphStatusDocument = gql`
     query SubGraphStatus($subGraphFilterId: ID!) {
   subGraphStatus(subGraphFilterId: $subGraphFilterId) {
     status
     openedAt
-    updatedAt
+    divisionChangedAt
+    subGraphFilterChangedAt
+    currentDivisionChangedAt
+    currentSubGraphFilterChangedAt
     commands {
+      id
       name
       arity
       description

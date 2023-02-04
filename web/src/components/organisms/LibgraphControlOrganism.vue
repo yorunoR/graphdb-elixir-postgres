@@ -10,6 +10,7 @@
       @start="() => clickStart()"
       @stop="() => clickStop()"
       @command="(newVariables) => clickCommand(newVariables)"
+      @save="(saveData) => clickSave(saveData)"
     />
   </section>
 </template>
@@ -21,7 +22,8 @@ import {
   useLibgraphStatusQuery,
   useStartLibgraphMutation,
   useStopLibgraphMutation,
-  useLibgraphCommandQuery
+  useLibgraphCommandQuery,
+  useCreateResultMutation
 } from '@/auto_generated/graphql'
 import GraphControlFormMolecule from '@/components/molecules/GraphControlFormMolecule.vue'
 
@@ -39,6 +41,7 @@ const { data } = useLibgraphStatusQuery({
 
 const { executeMutation: start } = useStartLibgraphMutation()
 const { executeMutation: stop } = useStopLibgraphMutation()
+const { executeMutation: createResult } = useCreateResultMutation()
 
 const clickStart = () => {
   start({ subGraphFilterId: props.subGraphFilterId })
@@ -57,5 +60,26 @@ const { data: commandData, fetching } = useLibgraphCommandQuery({
 const clickCommand = (newVariables) => {
   variables.value = newVariables
   pause.value = false
+}
+
+const clickSave = (saveData) => {
+  const { openedAt, divisionChangedAt, subGraphFilterChangedAt } = data.value.libgraphStatus
+  const { command, opts } = saveData
+  const resultProps = commandData.value.libgraphCommand.props.map(item => {
+    return { key: item.key, val: item.val }
+  })
+  createResult({
+    subGraphFilterId: props.subGraphFilterId,
+    agency: 'Libgraph',
+    command,
+    result: {
+      name: 'Libgraph:' + command,
+      args: opts,
+      openedAt,
+      divisionChangedAt,
+      subGraphFilterChangedAt,
+      props: resultProps
+    }
+  })
 }
 </script>
