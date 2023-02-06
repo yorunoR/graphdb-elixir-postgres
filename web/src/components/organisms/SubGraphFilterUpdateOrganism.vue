@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2>Update SubGraphFilter</h2>
+    <h2>
+      {{ $t('subGraphFilter.update') }}
+    </h2>
     <SubGraphFilterFormMolecule
       v-bind="subGraphFilter"
       @update:values="(values) => (inputSubGraphFilter = values)"
@@ -8,7 +10,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickUpdateSubGraphFilter"
     />

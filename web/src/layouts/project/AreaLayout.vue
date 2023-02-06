@@ -4,7 +4,9 @@
       class="h-screen adjust-height flex flex-column justify-content-between"
     >
       <section>
-        <h2>Project</h2>
+        <h2>
+          {{ $t("project.title") }}
+        </h2>
         <div v-if="data">
           <ProjectMolecule v-bind="data.currentProject" />
         </div>
@@ -14,7 +16,7 @@
             style="border: none"
           >
             <router-link :to="{ name: 'towers' }">
-              Towers
+              {{ $t("project.towers") }}
             </router-link>
           </li>
           <li
@@ -22,7 +24,7 @@
             style="border: none"
           >
             <router-link :to="{ name: 'keys' }">
-              Api Keys
+              {{ $t("project.apiKeys") }}
             </router-link>
           </li>
           <li
@@ -30,7 +32,7 @@
             style="border: none"
           >
             <router-link :to="{ name: 'info' }">
-              Information
+              {{ $t("project.information") }}
             </router-link>
           </li>
           <li
@@ -38,13 +40,13 @@
             style="border: none"
           >
             <router-link :to="{ name: 'select' }">
-              Return Board
+              {{ $t("board.switch") }}
             </router-link>
           </li>
         </ul>
       </section>
       <Button @click="signOut">
-        Sign Out
+        {{ $t("account.signOut") }}
       </Button>
     </div>
   </Sidebar>

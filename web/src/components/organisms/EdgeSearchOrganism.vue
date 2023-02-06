@@ -1,6 +1,6 @@
 <template>
   <Panel
-    header="Search"
+    :header="$t('common.search')"
     :toggleable="toggleable"
     :collapsed="toggleable"
   >
@@ -9,12 +9,12 @@
       class="flex flex-column"
     >
       <Button
-        label="EdgeType"
+        :label="$t('edgeType.title')"
         class="p-button-outlined"
         @click="selected = 'edgeType'"
       />
       <Button
-        label="Name"
+        :label="$t('common.name')"
         class="p-button-outlined mt-2"
         @click="selected = 'name'"
       />
@@ -50,7 +50,7 @@
       <LogicalInput
         v-model:not="nameNot"
         v-model:text="name"
-        placeholder="Name"
+        :placeholder="$t('common.name')"
         :errors="nameErrors.join(' ')"
         :showOr="parameters.length > 0"
         :disabled="!nameMeta.valid"
@@ -128,7 +128,9 @@
       class="text-left"
     >
       <div class="py-3">
-        <strong>EdgeType</strong>
+        <strong>
+          {{ $t('edgeType.title') }}
+        </strong>
       </div>
       <div
         v-if="data && data.division"
@@ -184,7 +186,7 @@
       <div class="col panel-outline">
         <Button
           class="w-full p-button-secondary"
-          label="Reset"
+          :label="$t('common.reset')"
           :disabled="lastParameter == null"
           @click="() => reset()"
         />

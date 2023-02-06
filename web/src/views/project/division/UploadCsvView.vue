@@ -1,11 +1,15 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Upload CSV</h1>
+    <h1>
+      {{ $t('division.uploadCsv') }}
+    </h1>
     <section
       v-if="nodeTypesData && nodeTypesData.division"
       class="text-left mt-4"
     >
-      <h2>Nodes</h2>
+      <h2>
+        {{ $t('node.title') }}
+      </h2>
       <div class="grid">
         <div
           v-for="nodeType in nodeTypesData.division.nodeTypes"
@@ -13,10 +17,10 @@
           class="p-3 col-12 md:col-6 lg:col-6 border-round panel-outline"
         >
           <div>
-            <strong>NodeType: {{ nodeType.name }}</strong>
+            <strong>{{ $t('nodeType.title') }}: {{ nodeType.name }}</strong>
           </div>
           <div class="mt-2">
-            UID: {{ nodeType.uid }}
+            {{ $t('common.uid') }}: {{ nodeType.uid }}
           </div>
           <NodesCsvDownloadLinkMolecule
             class="mt-2"
@@ -32,7 +36,9 @@
       v-if="edgeTypesData && edgeTypesData.division"
       class="text-left mt-4"
     >
-      <h2>Edges</h2>
+      <h2>
+        {{ $t('edge.title') }}
+      </h2>
       <div class="grid">
         <div
           v-for="edgeType in edgeTypesData.division.edgeTypes"
@@ -40,10 +46,10 @@
           class="p-3 col-12 md:col-6 lg:col-6 border-round panel-outline"
         >
           <div>
-            <strong>EdgeType: {{ edgeType.name }}</strong>
+            <strong>{{ $t('edgeType.title') }}: {{ edgeType.name }}</strong>
           </div>
           <div class="mt-2">
-            UID: {{ edgeType.uid }}
+            {{ $t('common.uid') }}: {{ edgeType.uid }}
           </div>
           <EdgesCsvDownloadLinkMolecule
             class="mt-2"

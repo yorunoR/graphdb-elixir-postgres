@@ -2,13 +2,13 @@
   <div class="flex justify-content-between align-items-center">
     <div class="text-left w-10">
       <div class="text-lg wrap">
-        Name: {{ node.name }}
+        {{ $t('common.name') }}: {{ node.name }}
       </div>
       <div class="text-base font-semibold mt-2">
-        UID: {{ node.uid }}
+        {{ $t('common.uid') }}: {{ node.uid }}
       </div>
       <div class="text-base mt-2">
-        NodeType: {{ node.nodeType.name }}
+        {{ $t('nodeType.title') }}: {{ node.nodeType.name }}
       </div>
     </div>
     <div class="text-right">

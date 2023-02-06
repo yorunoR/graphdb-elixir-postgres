@@ -1,17 +1,19 @@
 <template>
-  <h1>Edges</h1>
+  <h1>
+    {{ $t('division.edges') }}
+  </h1>
   <EdgeSearchOrganism
     :division-id="divisionId"
     toggleable
     nodeSearch
-    buttonLabel="Search"
+    :buttonLabel="$t('common.search')"
     initial="[]"
     @search="search($event)"
   />
   <section class="mt-3">
     <Button
       class="w-full"
-      label="Create"
+      :label="$t('common.create')"
       @click="() => emit('click:createEdge')"
     />
   </section>

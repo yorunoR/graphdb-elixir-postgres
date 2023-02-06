@@ -2,7 +2,7 @@
   <div class="flex justify-content-between align-items-center">
     <div class="text-left w-10">
       <div class="text-lg wrap">
-        Name: {{ subGraphFilter.name }}
+        {{ $t('common.name') }}: {{ subGraphFilter.name }}
       </div>
     </div>
     <div class="text-right">

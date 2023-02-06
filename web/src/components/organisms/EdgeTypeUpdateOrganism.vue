@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2>Update EdgeType</h2>
+    <h2>
+      {{ $t('edgeType.update') }}
+    </h2>
     <EdgeTypeFormMolecule
       v-bind="edgeType"
       @update:values="(values) => (inputEdgeType = values)"
@@ -8,7 +10,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickUpdateEdgeType"
     />

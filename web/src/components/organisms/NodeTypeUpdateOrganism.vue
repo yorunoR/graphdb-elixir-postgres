@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2>Update NodeType</h2>
+    <h2>
+      {{ $t('nodeType.update') }}
+    </h2>
     <NodeTypeFormMolecule
       v-bind="nodeType"
       @update:values="(values) => (inputNodeType = values)"
@@ -8,7 +10,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickUpdateNodeType"
     />

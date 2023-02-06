@@ -1,6 +1,8 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Summary</h1>
+    <h1>
+      {{ $t('division.summary') }}
+    </h1>
     <section>
       <div v-if="data">
         <DataTable

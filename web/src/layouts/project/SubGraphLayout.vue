@@ -6,7 +6,9 @@
       <section
         style="height: calc(100% - 96px)"
       >
-        <h2>SubGraph</h2>
+        <h2>
+          {{ $t('subGraph.title') }}
+        </h2>
         <div>
           <ProjectMolecule v-bind="data.subGraphFilter?.project" />
           <TowerMolecule
@@ -30,7 +32,7 @@
             class="pl-3 mt-4 cursor-pointer flex align-items-center"
             @click="visibleToggle = !visibleToggle"
           >
-            <span>Division </span>
+            <span>{{ $t('division.title') }}</span>
             <i
               v-show="!visibleToggle"
               class="ml-2 pi pi-angle-left"
@@ -56,7 +58,7 @@
                 }"
                 @click="() => close()"
               >
-                Summary
+                {{ $t('division.summary') }}
               </router-link>
             </li>
             <li
@@ -70,7 +72,7 @@
                 }"
                 @click="() => close()"
               >
-                NodeTypes
+                {{ $t('division.nodeTypes') }}
               </router-link>
             </li>
             <li
@@ -84,7 +86,7 @@
                 }"
                 @click="() => close()"
               >
-                EdgeTypes
+                {{ $t('division.edgeTypes') }}
               </router-link>
             </li>
             <li
@@ -95,7 +97,7 @@
                 :to="{ name: 'upload_csv', params: { divisionId: data.subGraphFilter.division.id } }"
                 @click="() => close()"
               >
-                Upload CSV
+                {{ $t('division.uploadCsv') }}
               </router-link>
             </li>
             <li
@@ -109,7 +111,7 @@
                 }"
                 @click="() => close()"
               >
-                Nodes
+                {{ $t('division.nodes') }}
               </router-link>
             </li>
             <li
@@ -123,7 +125,7 @@
                 }"
                 @click="() => close()"
               >
-                Edges
+                {{ $t('division.edges') }}
               </router-link>
             </li>
             <li
@@ -136,12 +138,12 @@
                   params: { divisionId: data.subGraphFilter.division.id },
                 }"
               >
-                SubGraphFilters
+                {{ $t('division.subGraphFilters') }}
               </router-link>
             </li>
           </ul>
           <div class="pl-3 mt-4">
-            SubGraph
+            {{ $t('subGraph.title') }}
           </div>
           <ul class="pl-3 mt-0">
             <li
@@ -155,7 +157,7 @@
                 }"
                 @click="() => close()"
               >
-                Search
+                {{ $t('subGraph.searchCondition') }}
               </router-link>
             </li>
             <li
@@ -169,7 +171,7 @@
                 }"
                 @click="() => close()"
               >
-                Status
+                {{ $t('subGraph.control') }}
               </router-link>
             </li>
             <li
@@ -183,7 +185,7 @@
                 }"
                 @click="() => close()"
               >
-                Results
+                {{ $t('subGraph.results') }}
               </router-link>
             </li>
             <li
@@ -197,24 +199,41 @@
                 }"
                 @click="() => close()"
               >
-                Diagram
+                {{ $t('subGraph.diagram') }}
               </router-link>
             </li>
           </ul>
           <ul>
             <li
+              v-if="data && data.subGraphFilter"
+              class="list"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'divisions', params: { towerId: data.subGraphFilter.tower.id}}">
+                {{ $t('division.return') }}
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'towers' }">
+                {{ $t('tower.return') }}
+              </router-link>
+            </li>
+            <li
               class="list"
               style="border: none"
             >
               <router-link to="/board/select">
-                Return Board
+                {{ $t('board.switch') }}
               </router-link>
             </li>
           </ul>
         </div>
       </section>
       <Button @click="signOut">
-        Sign Out
+        {{ $t('account.signOut') }}
       </Button>
     </div>
   </Sidebar>

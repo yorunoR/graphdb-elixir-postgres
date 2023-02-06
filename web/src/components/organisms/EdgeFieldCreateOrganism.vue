@@ -1,13 +1,15 @@
 <template>
   <section>
-    <h2>Add EdgeField</h2>
+    <h2>
+      {{ $t('edgeType.addEdgeField') }}
+    </h2>
     <EdgeFieldFormMolecule
       @update:values="(values) => (inputEdgeField = values)"
       @update:meta="(meta) => (disabled = !meta.valid)"
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickAddEdgeField"
     />

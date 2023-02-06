@@ -1,6 +1,8 @@
 <template>
-  <main style="max-width: 768px; margin: auto">
-    <h1>Diagram</h1>
+  <main style="max-width: 78vw; margin: auto">
+    <h1>
+      {{ $t('subGraph.diagram') }}
+    </h1>
     <VisDiagramMolecule
       v-if="data"
       :key="resetKey"

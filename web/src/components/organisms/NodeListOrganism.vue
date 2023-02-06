@@ -1,16 +1,18 @@
 <template>
-  <h1>Nodes</h1>
+  <h1>
+    {{ $t('division.nodes') }}
+  </h1>
   <NodeSearchOrganism
     :division-id="divisionId"
     toggleable
-    buttonLabel="Search"
+    :buttonLabel="$t('common.search')"
     initial="[]"
     @search="search($event)"
   />
   <section class="mt-3">
     <Button
       class="w-full"
-      label="Create"
+      :label="$t('common.create')"
       @click="() => emit('click:createNode')"
     />
   </section>

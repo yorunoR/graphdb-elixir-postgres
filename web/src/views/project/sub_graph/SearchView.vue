@@ -1,6 +1,8 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Search condition</h1>
+    <h1>
+      {{ $t('subGraph.searchCondition') }}
+    </h1>
     <section
       v-if="data"
       class="text-left mt-4"
@@ -10,10 +12,10 @@
         <div
           class="p-3 col-12 md:col-6 lg:col-6 border-round panel-outline"
         >
-          <h2>Nodes</h2>
+          <h2>{{ $t('node.title') }}</h2>
           <NodeSearchOrganism
             :divisionId="divisionId"
-            buttonLabel="Save"
+            :buttonLabel="$t('subGraph.save')"
             :initial="data.subGraphFilter.nodeFilter"
             @search="saveNodeFilter($event)"
           />
@@ -21,10 +23,10 @@
         <div
           class="p-3 col-12 md:col-6 lg:col-6 border-round panel-outline"
         >
-          <h2>Edges</h2>
+          <h2>{{ $t('edge.title') }}</h2>
           <EdgeSearchOrganism
             :divisionId="divisionId"
-            buttonLabel="Save"
+            :buttonLabel="$t('subGraph.save')"
             :initial="data.subGraphFilter.edgeFilter"
             @search="saveEdgeFilter($event)"
           />
@@ -39,7 +41,7 @@
         ref="tabview"
         v-model:activeIndex="active"
       >
-        <TabPanel header="Nodes">
+        <TabPanel :header="$t('division.nodes')">
           <ul v-if="nodesData">
             <li
               v-for="node in nodesData.nodes.entries"
@@ -58,7 +60,7 @@
             @page="onNodesPage($event)"
           />
         </TabPanel>
-        <TabPanel header="Edges">
+        <TabPanel :header="$t('division.edges')">
           <ul v-if="edgesData">
             <li
               v-for="edge in edgesData.nodeBoundEdges.entries"

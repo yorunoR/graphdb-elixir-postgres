@@ -1,13 +1,15 @@
 <template>
   <section>
-    <h2>Add NodeField</h2>
+    <h2>
+      {{ $t('nodeType.addNodeField') }}
+    </h2>
     <NodeFieldFormMolecule
       @update:values="(values) => (inputNodeField = values)"
       @update:meta="(meta) => (disabled = !meta.valid)"
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickAddNodeField"
     />

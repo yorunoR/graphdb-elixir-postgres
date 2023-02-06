@@ -6,7 +6,9 @@
       <section
         style="height: calc(100% - 72px)"
       >
-        <h2>Division</h2>
+        <h2>
+          {{ $t('division.title') }}
+        </h2>
         <div v-if="data">
           <ProjectMolecule v-bind="data.division?.project" />
           <TowerMolecule
@@ -24,27 +26,12 @@
         >
           <ul>
             <li
-              class="list"
-              style="border: none"
-            >
-              <router-link :to="{ name: 'towers' }">
-                Towers
-              </router-link>
-            </li>
-            <li
-              v-if="data.division"
-              class="list"
-              style="border: none"
-            >
-              <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
-                Divisions
-              </router-link>
-            </li>
-            <li
               class="mt-3 py-0 list"
               style="border: none"
             >
-              <div>Division</div>
+              <div>
+                {{ $t('division.title') }}
+              </div>
               <ul class="my-0">
                 <li
                   class="list"
@@ -54,7 +41,7 @@
                     :to="{ name: 'summary', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Summary
+                    {{ $t('division.summary') }}
                   </router-link>
                 </li>
                 <li
@@ -65,7 +52,7 @@
                     :to="{ name: 'node_types', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    NodeTypes
+                    {{ $t('division.nodeTypes') }}
                   </router-link>
                 </li>
                 <li
@@ -76,7 +63,7 @@
                     :to="{ name: 'edge_types', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    EdgeTypes
+                    {{ $t('division.edgeTypes') }}
                   </router-link>
                 </li>
                 <li
@@ -87,7 +74,7 @@
                     :to="{ name: 'upload_csv', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Upload CSV
+                    {{ $t('division.uploadCsv') }}
                   </router-link>
                 </li>
                 <li
@@ -98,7 +85,7 @@
                     :to="{ name: 'nodes', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Nodes
+                    {{ $t('division.nodes') }}
                   </router-link>
                 </li>
                 <li
@@ -109,7 +96,7 @@
                     :to="{ name: 'edges', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Edges
+                    {{ $t('division.edges') }}
                   </router-link>
                 </li>
                 <li
@@ -120,7 +107,7 @@
                     :to="{ name: 'sub_graph_filters', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    SubGraphFilters
+                    {{ $t('division.subGraphFilters') }}
                   </router-link>
                 </li>
               </ul>
@@ -128,18 +115,35 @@
           </ul>
           <ul>
             <li
+              v-if="data.division"
+              class="list"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
+                {{ $t('division.return') }}
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'towers' }">
+                {{ $t('tower.return') }}
+              </router-link>
+            </li>
+            <li
               class="list"
               style="border: none"
             >
               <router-link to="/board/select">
-                Return Board
+                {{ $t('board.switch') }}
               </router-link>
             </li>
           </ul>
         </div>
       </section>
       <Button @click="signOut">
-        Sign Out
+        {{ $t('account.signOut') }}
       </Button>
     </div>
   </Sidebar>

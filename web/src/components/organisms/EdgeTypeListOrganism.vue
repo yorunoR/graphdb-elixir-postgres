@@ -1,9 +1,11 @@
 <template>
-  <h1>EdgeTypes</h1>
+  <h1>
+    {{ $t('division.edgeTypes') }}
+  </h1>
   <section>
     <Button
       class="w-full"
-      label="Create"
+      :label="$t('common.create')"
       @click="() => emit('click:createEdgeType')"
     />
   </section>

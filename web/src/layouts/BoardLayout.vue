@@ -4,14 +4,16 @@
       class="h-screen adjust-height flex flex-column justify-content-between"
     >
       <section>
-        <h2>Board</h2>
+        <h2>
+          {{ $t("board.title") }}
+        </h2>
         <ul>
           <li
             class="list"
             style="border: none"
           >
             <router-link to="/board/select">
-              Select
+              {{ $t("board.projects") }}
             </router-link>
           </li>
           <li
@@ -19,13 +21,13 @@
             style="border: none"
           >
             <router-link to="/board/about">
-              About
+              {{ $t("board.about") }}
             </router-link>
           </li>
         </ul>
       </section>
       <Button @click="signOut">
-        Sign Out
+        {{ $t("account.signOut") }}
       </Button>
     </div>
   </Sidebar>

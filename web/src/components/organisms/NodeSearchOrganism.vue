@@ -1,6 +1,6 @@
 <template>
   <Panel
-    header="Search"
+    :header="$t('common.search')"
     :toggleable="toggleable"
     :collapsed="toggleable"
   >
@@ -9,17 +9,17 @@
       class="flex flex-column"
     >
       <Button
-        label="NodeType"
+        :label="$t('nodeType.title')"
         class="p-button-outlined"
         @click="selected = 'nodeType'"
       />
       <Button
-        label="Name"
+        :label="$t('common.name')"
         class="p-button-outlined mt-2"
         @click="selected = 'name'"
       />
       <Button
-        label="UID"
+        :label="$t('common.uid')"
         class="p-button-outlined mt-2"
         @click="selected = 'uid'"
       />
@@ -31,7 +31,7 @@
       <LogicalInput
         v-model:not="nameNot"
         v-model:text="name"
-        placeholder="Name"
+        :placeholder="$t('common.name')"
         :errors="nameErrors.join(' ')"
         :showOr="parameters.length > 0"
         :disabled="!nameMeta.valid"
@@ -47,7 +47,7 @@
       <LogicalInput
         v-model:not="uidNot"
         v-model:text="uid"
-        placeholder="UID"
+        :placeholder="$t('common.uid')"
         :errors="uidErrors.join(' ')"
         :showOr="parameters.length > 0"
         :disabled="!uidMeta.valid"
@@ -61,7 +61,7 @@
       class="text-left"
     >
       <div class="py-3">
-        <strong>NodeType</strong>
+        <strong>{{ $t('nodeType.title') }}</strong>
       </div>
       <div
         v-if="data && data.division"
@@ -117,7 +117,7 @@
       <div class="col panel-outline">
         <Button
           class="w-full p-button-secondary"
-          label="Reset"
+          :label="$t('common.reset')"
           :disabled="lastParameter == null"
           @click="() => reset()"
         />

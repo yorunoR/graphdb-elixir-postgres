@@ -4,7 +4,7 @@
       v-model="name"
       class="w-full"
       type="text"
-      placeholder="Name"
+      :placeholder="$t('common.name')"
     />
     <div class="mt-2 p-error">
       {{ nameErrors.join(" ") }}
@@ -34,7 +34,9 @@
     </div>
   </div>
   <div class="mt-4">
-    <strong>EdgeType</strong>
+    <strong>
+      {{ $t('edgeType.title') }}
+    </strong>
     <div
       v-for="option in options ?? []"
       :key="objId(option.id)"
@@ -60,7 +62,9 @@
     v-if="selectedEdgeType"
     class="mt-4"
   >
-    <strong>EdgeFields</strong>
+    <strong>
+      {{ $t('edge.edgeField') }}
+    </strong>
     <div
       v-for="edgeField in selectedEdgeType.edgeFields"
       :key="objId(edgeField)"

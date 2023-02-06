@@ -3,14 +3,14 @@
     <div>
       <Button
         class="w-6"
-        label="Highlight"
+        :label="$t('common.highlight')"
         @click="() => highlight()"
       />
     </div>
     <div>
       <Button
         class="p-button-outlined w-6 mt-2"
-        label="Reset"
+        :label="$t('common.reset')"
         @click="() => emit('reset')"
       />
     </div>
@@ -23,7 +23,7 @@
     v-model:visible="visibleRight"
     position="right"
   >
-    <strong>Results</strong>
+    <strong>{{ $t('subGraph.results') }}</strong>
     <div
       v-for="result in results"
       :key="objId(result.id)"
@@ -45,7 +45,7 @@
     </div>
     <Button
       class="w-full mt-4"
-      label="Apply"
+      :label="$t('common.apply')"
       @click="() => apply()"
     />
   </Sidebar>
