@@ -1,5 +1,6 @@
 <template>
   <div>
-    <h1>This is a setting page</h1>
+    <h1>Under construction</h1>
+    <p>Access restriction settings, etc.</p>
   </div>
 </template>
