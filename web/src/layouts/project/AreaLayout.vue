@@ -50,13 +50,21 @@
       </Button>
     </div>
   </Sidebar>
-  <div class="fixed top-0 flex flex-row p-3">
-    <Button
-      icon="pi pi-arrow-right"
-      @click="visibleLeft = true"
-    />
+  <div class="fixed top-0 flex flex-row p-3 w-full z-1">
+    <div class="flex-none">
+      <Button
+        icon="pi pi-arrow-right"
+        @click="visibleLeft = true"
+      />
+    </div>
+    <div
+      v-if="data"
+      class="flex-grow-1"
+    >
+      <AreaBreadcrumb :project="data.currentProject" />
+    </div>
   </div>
-  <div class="pt-6 px-3 pb-3">
+  <div class="pt-8 px-3 pb-3">
     <router-view />
   </div>
 </template>
@@ -67,6 +75,7 @@ import { ref } from 'vue'
 import {
   useProjectTowersQuery
 } from '@/auto_generated/graphql'
+import AreaBreadcrumb from '@/components/molecules/AreaBreadcrumb.vue'
 import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
 import router from '@/router'
 import firebase from '@/services/firebase'

@@ -147,13 +147,21 @@
       </Button>
     </div>
   </Sidebar>
-  <div class="fixed top-0 flex flex-row p-3">
-    <Button
-      icon="pi pi-arrow-right"
-      @click="visibleLeft = true"
-    />
+  <div class="fixed top-0 flex flex-row p-3 w-full z-1">
+    <div class="flex-none">
+      <Button
+        icon="pi pi-arrow-right"
+        @click="visibleLeft = true"
+      />
+    </div>
+    <div
+      v-if="data"
+      class="flex-grow-1"
+    >
+      <DivisionBreadcrumb :division="data.division" />
+    </div>
   </div>
-  <div class="pt-6 px-3 pb-3">
+  <div class="pt-8 px-3 pb-3">
     <router-view :division-id="divisionId" />
   </div>
 </template>
@@ -162,6 +170,7 @@
 import { ref } from 'vue'
 
 import { callDivisionSummaryQuery } from '@/call/queries'
+import DivisionBreadcrumb from '@/components/molecules/DivisionBreadcrumb.vue'
 import DivisionMolecule from '@/components/molecules/DivisionMolecule.vue'
 import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
 import TowerMolecule from '@/components/molecules/TowerMolecule.vue'

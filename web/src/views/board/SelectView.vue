@@ -5,7 +5,7 @@
     </h1>
     <section>
       <Button
-        class="w-full"
+        class="w-full p-button-secondary"
         :label="$t('common.create')"
         @click="visibleRight = true"
       />
@@ -63,7 +63,7 @@
         :placeholder="$t('common.name')"
       />
       <Button
-        class="mt-3 w-full"
+        class="mt-3 w-full p-button-secondary"
         :label="$t('common.submit')"
         @click="clickCreateProject"
       />

@@ -26,13 +26,17 @@
           </li>
         </ul>
       </section>
-      <Button @click="signOut">
+      <Button
+        class="p-button-secondary"
+        @click="signOut"
+      >
         {{ $t("account.signOut") }}
       </Button>
     </div>
   </Sidebar>
   <div class="fixed top-0 flex flex-row p-3">
     <Button
+      class="p-button-secondary"
       icon="pi pi-arrow-right"
       @click="visibleLeft = true"
     />

@@ -4,6 +4,7 @@ import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
 import 'primevue/resources/primevue.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
+import Breadcrumb from 'primevue/breadcrumb'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
 import Column from 'primevue/column'
@@ -33,6 +34,7 @@ createApp(App)
   .use(store)
   .use(PrimeVue)
   .use(ToastService)
+  .component('Breadcrumb', Breadcrumb)
   .component('Button', Button)
   .component('Chip', Chip)
   .component('Column', Column)

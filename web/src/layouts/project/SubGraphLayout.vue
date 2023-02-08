@@ -237,15 +237,23 @@
       </Button>
     </div>
   </Sidebar>
-  <div class="fixed top-0 flex flex-row p-3">
-    <Button
-      icon="pi pi-arrow-right"
-      @click="visibleLeft = true"
-    />
+  <div class="fixed top-0 flex flex-row p-3 w-full z-1">
+    <div class="flex-none">
+      <Button
+        icon="pi pi-arrow-right"
+        @click="visibleLeft = true"
+      />
+    </div>
+    <div
+      v-if="data"
+      class="flex-grow-1"
+    >
+      <SubGraphBreadcrumb :subGraphFilter="data.subGraphFilter" />
+    </div>
   </div>
   <div
     v-if="data && data.subGraphFilter"
-    class="pt-6 px-3 pb-3"
+    class="pt-8 px-3 pb-3"
   >
     <router-view
       :divisionId="data.subGraphFilter.division.id"
@@ -260,6 +268,7 @@ import { ref } from 'vue'
 import { useSubGraphFilterQuery } from '@/auto_generated/graphql'
 import DivisionMolecule from '@/components/molecules/DivisionMolecule.vue'
 import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
+import SubGraphBreadcrumb from '@/components/molecules/SubGraphBreadcrumb.vue'
 import SubGraphMolecule from '@/components/molecules/SubGraphMolecule.vue'
 import TowerMolecule from '@/components/molecules/TowerMolecule.vue'
 import router from '@/router'

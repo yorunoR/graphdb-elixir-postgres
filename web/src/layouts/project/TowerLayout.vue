@@ -54,13 +54,21 @@
       </Button>
     </div>
   </Sidebar>
-  <div class="fixed top-0 flex flex-row p-3">
-    <Button
-      icon="pi pi-arrow-right"
-      @click="visibleLeft = true"
-    />
+  <div class="fixed top-0 flex flex-row p-3 w-full z-1">
+    <div class="flex-none">
+      <Button
+        icon="pi pi-arrow-right"
+        @click="visibleLeft = true"
+      />
+    </div>
+    <div
+      v-if="data"
+      class="flex-grow-1"
+    >
+      <TowerBreadcrumb :tower="data.tower" />
+    </div>
   </div>
-  <div class="pt-6 px-3 pb-3">
+  <div class="pt-8 px-3 pb-3">
     <router-view :tower-id="towerId" />
   </div>
 </template>
@@ -72,6 +80,7 @@ import {
   useTowerDivisionsQuery
 } from '@/auto_generated/graphql'
 import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
+import TowerBreadcrumb from '@/components/molecules/TowerBreadcrumb.vue'
 import TowerMolecule from '@/components/molecules/TowerMolecule.vue'
 import router from '@/router'
 import firebase from '@/services/firebase'

@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
-      <strong>&emsp;&emsp;└ S: {{ name }}</strong>
+      <strong>&emsp;&emsp;└ {{ name }}</strong>
     </div>
   </section>
 </template>

@@ -20,11 +20,14 @@ body {
 }
 
 a {
-  font-weight: bold;
   color: #2c3e50;
 
   &.router-link-exact-active {
     color: #42b983;
+  }
+
+  &.bold {
+    font-weight: bold;
   }
 }
 
@@ -39,9 +42,10 @@ li {
     padding: 1rem;
     border: solid 1px;
     border-bottom: none;
+
+    &:last-child {
+      border-bottom: solid 1px;
+    }
   }
-}
-li:last-child {
-  border-bottom: solid 1px;
 }
 </style>
