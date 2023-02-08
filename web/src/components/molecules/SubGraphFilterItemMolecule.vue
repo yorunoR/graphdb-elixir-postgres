@@ -7,7 +7,7 @@
     </div>
     <div class="text-right">
       <i
-        class="pi pi-pencil ml-3"
+        class="pi pi-pencil ml-0"
         style="cursor: pointer"
         @click="() => emit('click:updateSubGraphFilter')"
       />

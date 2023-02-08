@@ -34,7 +34,7 @@
               <li
                 v-for="item in result.props"
                 :key="item.key"
-                class="list w-full"
+                class="list w-full text-left"
               >
                 <span>{{ item.key }}: {{ item.val }}</span>
               </li>
