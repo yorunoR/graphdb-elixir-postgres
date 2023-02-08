@@ -41,7 +41,7 @@
                     :to="{ name: 'summary', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    {{ $t('division.summary') }}
+                    <span style="white-space: nowrap">{{ $t('division.summary') }} / {{ $t('division.subGraphFilters') }}</span>
                   </router-link>
                 </li>
                 <li
@@ -99,7 +99,7 @@
                     {{ $t('division.edges') }}
                   </router-link>
                 </li>
-                <li
+                <!--li
                   class="list"
                   style="border: none"
                 >
@@ -109,7 +109,7 @@
                   >
                     {{ $t('division.subGraphFilters') }}
                   </router-link>
-                </li>
+                </li-->
               </ul>
             </li>
           </ul>

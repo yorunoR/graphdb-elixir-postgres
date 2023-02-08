@@ -1,7 +1,4 @@
 <template>
-  <h1>
-    {{ $t('division.subGraphFilters') }}
-  </h1>
   <section>
     <Button
       class="w-full"

@@ -58,7 +58,7 @@
                 }"
                 @click="() => close()"
               >
-                {{ $t('division.summary') }}
+                <span style="white-space: nowrap">{{ $t('division.summary') }} / {{ $t('division.subGraphFilters') }}</span>
               </router-link>
             </li>
             <li
