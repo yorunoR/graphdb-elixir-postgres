@@ -10,7 +10,7 @@ import { ref } from 'vue'
 
 import type { Project } from '@/auto_generated/graphql'
 
-const props = defineProps<{
+defineProps<{
   project: Project;
 }>()
 
