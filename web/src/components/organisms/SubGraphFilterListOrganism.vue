@@ -1,9 +1,8 @@
 <template>
-  <h1>SubGraphFilters</h1>
   <section>
     <Button
       class="w-full"
-      label="Create"
+      :label="$t('common.create')"
       @click="() => emit('click:createSubGraphFilter')"
     />
   </section>

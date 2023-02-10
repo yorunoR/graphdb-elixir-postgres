@@ -1,6 +1,8 @@
 <template>
   <section v-if="data">
-    <h2>Update Edge</h2>
+    <h2>
+      {{ $t('edge.update') }}
+    </h2>
     <EdgeFormMolecule
       v-bind="edge"
       :options="data.division.edgeTypes"
@@ -9,7 +11,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickUpdateEdge"
     />

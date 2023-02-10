@@ -6,7 +6,9 @@
       <section
         style="height: calc(100% - 72px)"
       >
-        <h2>Division</h2>
+        <h2>
+          {{ $t('division.title') }}
+        </h2>
         <div v-if="data">
           <ProjectMolecule v-bind="data.division?.project" />
           <TowerMolecule
@@ -24,27 +26,12 @@
         >
           <ul>
             <li
-              class="list"
-              style="border: none"
-            >
-              <router-link :to="{ name: 'towers' }">
-                Towers
-              </router-link>
-            </li>
-            <li
-              v-if="data.division"
-              class="list"
-              style="border: none"
-            >
-              <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
-                Divisions
-              </router-link>
-            </li>
-            <li
               class="mt-3 py-0 list"
               style="border: none"
             >
-              <div>Division</div>
+              <div>
+                {{ $t('division.title') }}
+              </div>
               <ul class="my-0">
                 <li
                   class="list"
@@ -54,7 +41,7 @@
                     :to="{ name: 'summary', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Summary
+                    <span style="white-space: nowrap">{{ $t('division.summary') }} / {{ $t('division.subGraphFilters') }}</span>
                   </router-link>
                 </li>
                 <li
@@ -65,7 +52,7 @@
                     :to="{ name: 'node_types', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    NodeTypes
+                    {{ $t('division.nodeTypes') }}
                   </router-link>
                 </li>
                 <li
@@ -76,7 +63,7 @@
                     :to="{ name: 'edge_types', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    EdgeTypes
+                    {{ $t('division.edgeTypes') }}
                   </router-link>
                 </li>
                 <li
@@ -87,7 +74,7 @@
                     :to="{ name: 'upload_csv', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Upload CSV
+                    {{ $t('division.uploadCsv') }}
                   </router-link>
                 </li>
                 <li
@@ -98,7 +85,7 @@
                     :to="{ name: 'nodes', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Nodes
+                    {{ $t('division.nodes') }}
                   </router-link>
                 </li>
                 <li
@@ -109,10 +96,10 @@
                     :to="{ name: 'edges', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    Edges
+                    {{ $t('division.edges') }}
                   </router-link>
                 </li>
-                <li
+                <!--li
                   class="list"
                   style="border: none"
                 >
@@ -120,36 +107,61 @@
                     :to="{ name: 'sub_graph_filters', params: { divisionId } }"
                     @click="() => close()"
                   >
-                    SubGraphFilters
+                    {{ $t('division.subGraphFilters') }}
                   </router-link>
-                </li>
+                </li-->
               </ul>
             </li>
           </ul>
           <ul>
             <li
+              v-if="data.division"
+              class="list"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
+                {{ $t('division.return') }}
+              </router-link>
+            </li>
+            <li
+              class="list"
+              style="border: none"
+            >
+              <router-link :to="{ name: 'towers' }">
+                {{ $t('tower.return') }}
+              </router-link>
+            </li>
+            <li
               class="list"
               style="border: none"
             >
               <router-link to="/board/select">
-                Return Board
+                {{ $t('board.switch') }}
               </router-link>
             </li>
           </ul>
         </div>
       </section>
       <Button @click="signOut">
-        Sign Out
+        {{ $t('account.signOut') }}
       </Button>
     </div>
   </Sidebar>
-  <div class="fixed top-0 flex flex-row p-3">
-    <Button
-      icon="pi pi-arrow-right"
-      @click="visibleLeft = true"
-    />
+  <div class="fixed top-0 flex flex-row p-3 w-full z-1">
+    <div class="flex-none">
+      <Button
+        icon="pi pi-arrow-right"
+        @click="visibleLeft = true"
+      />
+    </div>
+    <div
+      v-if="data"
+      class="flex-grow-1"
+    >
+      <DivisionBreadcrumb :division="data.division" />
+    </div>
   </div>
-  <div class="pt-6 px-3 pb-3">
+  <div class="pt-8 px-3 pb-3">
     <router-view :division-id="divisionId" />
   </div>
 </template>
@@ -158,6 +170,7 @@
 import { ref } from 'vue'
 
 import { callDivisionSummaryQuery } from '@/call/queries'
+import DivisionBreadcrumb from '@/components/molecules/DivisionBreadcrumb.vue'
 import DivisionMolecule from '@/components/molecules/DivisionMolecule.vue'
 import ProjectMolecule from '@/components/molecules/ProjectMolecule.vue'
 import TowerMolecule from '@/components/molecules/TowerMolecule.vue'

@@ -1,6 +1,8 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Result</h1>
+    <h1>
+      {{ $t('subGraph.results') }}
+    </h1>
     <section>
       <div
         v-if="fetching"
@@ -22,8 +24,8 @@
             class="list"
           >
             <div class="flex justify-content-between align-items-center">
-              <span>Name: <strong>{{ result.name }}</strong></span>
-              <span>Command: {{ result.algorithm.name }}{{ result.args }}</span>
+              <span>{{ $t('common.name') }}: <strong>{{ result.name }}</strong></span>
+              <span>{{ $t('subGraph.command') }}: {{ result.algorithm.name }} {{ result.args }}</span>
             </div>
             <div class="mt-2 flex justify-content-end align-items-center">
               <span>OpenedAt: {{ result.openedAt }}</span>
@@ -32,7 +34,7 @@
               <li
                 v-for="item in result.props"
                 :key="item.key"
-                class="list w-full"
+                class="list w-full text-left"
               >
                 <span>{{ item.key }}: {{ item.val }}</span>
               </li>

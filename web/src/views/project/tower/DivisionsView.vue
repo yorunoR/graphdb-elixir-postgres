@@ -1,10 +1,12 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Division</h1>
+    <h1>
+      {{ $t('tower.divisions') }}
+    </h1>
     <section>
       <Button
         class="w-full"
-        label="Create"
+        :label="$t('common.create')"
         @click="visibleRight = true"
       />
     </section>
@@ -50,16 +52,18 @@
     position="right"
   >
     <section>
-      <h2>Create Division</h2>
+      <h2>
+        {{ $t('division.create') }}
+      </h2>
       <InputText
         v-model="name"
         class="w-full"
         type="text"
-        placeholder="Name"
+        :placeholder="$t('common.name')"
       />
       <Button
         class="mt-3 w-full"
-        label="Submit"
+        :label="$t('common.submit')"
         @click="clickCreateDivision"
       />
     </section>

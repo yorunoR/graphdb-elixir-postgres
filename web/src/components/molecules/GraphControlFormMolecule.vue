@@ -4,7 +4,7 @@
     :class="{'border-double': old}"
   >
     <div class="p-2 text-left surface-100">
-      <b>Status</b>
+      {{ $t('subGraph.status') }}
     </div>
     <div class="p-2 text-right">
       {{ graphStatus.status }}
@@ -21,13 +21,13 @@
       </div>
     </div>
     <Button
-      label="Start"
+      :label="$t('subGraph.start')"
       class="w-full mt-4"
       :disabled="graphStatus.status"
       @click="() => emit('start')"
     />
     <Button
-      label="Stop"
+      :label="$t('subGraph.stop')"
       class="w-full mt-2"
       :disabled="!graphStatus.status"
       @click="() => emit('stop')"
@@ -39,7 +39,7 @@
       :options="graphStatus.commands"
       optionLabel="name"
       optionValue="name"
-      placeholder="Command"
+      :placeholder="$t('subGraph.selectCommand')"
     />
     <div
       v-if="selectedCommand"
@@ -63,7 +63,7 @@
       :disabled="!graphStatus.status || !command || selectedCommand.arity < 2"
     />
     <Button
-      label="Submit"
+      :label="$t('subGraph.execute')"
       class="w-full mt-2"
       :disabled="!graphStatus.status || !meta.valid"
       @click="() => clickCommand()"
@@ -74,7 +74,9 @@
     modal
   >
     <template #header>
-      <h3>Result</h3>
+      <h3>
+        {{ $t('result.title') }}
+      </h3>
     </template>
     <DataTable
       :value="result.props"
@@ -91,16 +93,17 @@
     </DataTable>
     <template #footer>
       <Button
-        label="Close"
-        icon="pi pi-times"
-        class="p-button-text"
-        @click="visible = false"
-      />
-      <Button
-        label="Save"
+        :label="$t('result.save')"
         icon="pi pi-check"
         autofocus
+        class="w-full"
         @click="() => clickSave()"
+      />
+      <Button
+        :label="$t('common.close')"
+        icon="pi pi-times"
+        class="w-full p-button-text mt-2"
+        @click="visible = false"
       />
     </template>
   </Dialog>

@@ -1,10 +1,12 @@
 <template>
   <main style="max-width: 768px; margin: auto">
-    <h1>Api Key</h1>
+    <h1>
+      {{ $t('project.apiKeys') }}
+    </h1>
     <section>
       <Button
         class="w-full"
-        label="Create"
+        :label="$t('common.create')"
         @click="visibleRight = true"
       />
     </section>

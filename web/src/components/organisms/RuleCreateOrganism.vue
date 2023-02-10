@@ -1,6 +1,8 @@
 <template>
   <section v-if="data">
-    <h2>Add Rule</h2>
+    <h2>
+      {{ $t('rule.add') }}
+    </h2>
     <RuleFormMolecule
       :options="data.division.nodeTypes"
       @update:values="(values) => (inputRule = values)"
@@ -8,7 +10,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickAddRule"
     />

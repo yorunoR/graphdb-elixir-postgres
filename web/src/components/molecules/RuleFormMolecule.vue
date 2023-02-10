@@ -4,7 +4,7 @@
       v-model="name"
       class="w-full"
       type="text"
-      placeholder="Name"
+      :placeholder="$t('common.name')"
     />
     <div class="mt-2 p-error">
       {{ nameErrors.join(" ") }}

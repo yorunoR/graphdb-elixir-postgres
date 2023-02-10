@@ -1,5 +1,4 @@
 {
-  "common": {},
   "apiError": {
     "networkError": "サーバへ接続できません。ネットワーク環境をご確認ください。",
     "badRequest": "不正な形式のリクエストです。",
@@ -22,5 +21,103 @@
       "argumentError": "入力値に不備があります。",
       "networkFailed": "接続に失敗しました。"
     }
+  },
+  "common": {
+    "name": "名前",
+    "uid": "UID",
+    "create": "新規作成",
+    "submit": "確定",
+    "search": "検索",
+    "cancel": "キャンセル",
+    "reset": "リセット",
+    "close": "閉じる",
+    "highlight": "ハイライト",
+    "apply": "適用する"
+  },
+  "account": {
+    "signIn": "サインイン",
+    "signOut": "サインアウト"
+  },
+  "board": {
+    "title": "プロジェクト管理",
+    "switch": "プロジェクトを切替える",
+    "projects": "プロジェクト一覧",
+    "about": "このサービスについて"
+  },
+  "project": {
+    "title": "プロジェクト",
+    "towers": "アプリケーション一覧",
+    "apiKeys": "APIキー一覧",
+    "information": "プロジェクト設定",
+    "create": "プロジェクト作成"
+  },
+  "tower": {
+    "title": "アプリケーション",
+    "return": "アプリケーション一覧に戻る",
+    "create": "アプリケーション作成",
+    "divisions": "データ区画一覧",
+    "setting": "アプリケーション設定"
+  },
+  "division": {
+    "title": "データ区画",
+    "create": "データ区画作成",
+    "summary": "概略",
+    "nodeTypes": "ノードタイプ一覧",
+    "edgeTypes": "エッジタイプ一覧",
+    "nodes": "ノード一覧",
+    "edges": "エッジ一覧",
+    "uploadCsv": "アップロードCSV",
+    "subGraphFilters": "グラフ抽出フィルター一覧",
+    "return": "データ区画一覧に戻る"
+  },
+  "nodeType": {
+    "title": "ノードタイプ",
+    "create": "ノードタイプ作成",
+    "update": "ノードタイプ更新",
+    "addNodeField": "ノードフィールド登録"
+  },
+  "edgeType": {
+    "title": "エッジタイプ",
+    "create": "エッジタイプ作成",
+    "update": "エッジタイプ更新",
+    "addEdgeField": "エッジフィールド登録"
+  },
+  "rule": {
+    "title": "ルール",
+    "add": "ルール追加"
+  },
+  "node": {
+    "title": "ノード",
+    "create": "ノード作成",
+    "update": "ノード更新",
+    "nodeField": "ノードフィールド"
+  },
+  "edge": {
+    "title": "エッジ",
+    "create": "エッジ作成",
+    "update": "ノード更新",
+    "edgeField": "エッジフィールド"
+  },
+  "subGraphFilter": {
+    "create": "フィルタ作成",
+    "update": "フィルタ更新"
+  },
+  "subGraph": {
+    "title": "サブグラフ",
+    "searchCondition": "抽出条件",
+    "control": "メモリ展開＆処理実行",
+    "status": "メモリ展開中",
+    "results": "キャッシュ結果一覧",
+    "diagram": "図",
+    "save": "条件保存",
+    "start": "メモリに展開する",
+    "stop": "メモリを閉じる",
+    "command": "処理",
+    "selectCommand": "処理選択",
+    "execute": "実行する"
+  },
+  "result": {
+    "title": "結果",
+    "save": "一時保存"
   }
 }

@@ -4,7 +4,7 @@
       v-model="name"
       class="w-full"
       type="text"
-      placeholder="Name"
+      :placeholder="$t('common.name')"
     />
     <div class="mt-2 p-error">
       {{ nameErrors.join(" ") }}
@@ -17,7 +17,7 @@
         v-model="uid"
         class="w-full"
         type="text"
-        placeholder="UID"
+        :placeholder="$t('common.uid')"
       />
       <div class="mt-2 p-error">
         {{ uidErrors.join(" ") }}
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="mt-4">
-    <strong>NodeType</strong>
+    <strong>{{ $t('nodeType.title') }}</strong>
     <div
       v-for="option in options ?? []"
       :key="objId(option.id)"
@@ -50,7 +50,7 @@
     v-if="selectedNodeType"
     class="mt-4"
   >
-    <strong>NodeFields</strong>
+    <strong>{{ $t('node.nodeField') }}</strong>
     <div
       v-for="nodeField in selectedNodeType.nodeFields"
       :key="objId(nodeField)"

@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2>Create SubGraphFilter</h2>
+    <h2>
+      {{ $t('subGraphFilter.create') }}
+    </h2>
     <SubGraphFilterFormMolecule
       is-create
       @update:values="(values) => (inputSubGraphFilter = values)"
@@ -8,7 +10,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickCreateSubGraphFilter"
     />

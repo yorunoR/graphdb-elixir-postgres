@@ -2,10 +2,10 @@
   <div class="flex justify-content-between align-items-center">
     <div class="text-left w-10">
       <div class="text-lg wrap">
-        Name: {{ nodeType.name }}
+        {{ $t('common.name') }}: {{ nodeType.name }}
       </div>
       <div class="text-base font-semibold mt-2">
-        UID: {{ nodeType.uid }}
+        {{ $t('common.uid') }}: {{ nodeType.uid }}
       </div>
       <div class="mt-2">
         <span

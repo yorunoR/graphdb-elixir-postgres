@@ -2,10 +2,10 @@
   <div class="flex justify-content-between align-items-center">
     <div class="text-left w-10">
       <div class="text-lg wrap">
-        Name: {{ edgeType.name }}
+        {{ $t('common.name') }}: {{ edgeType.name }}
       </div>
       <div class="text-base font-semibold mt-2">
-        UID: {{ edgeType.uid }}
+        {{ $t('common.uid') }}: {{ edgeType.uid }}
       </div>
       <div class="mt-2">
         <span
@@ -38,14 +38,14 @@
     </div>
   </div>
   <div class="mt-3 text-left">
-    <strong>Rule</strong>
+    <strong>{{ $t('rule.title') }}</strong>
     <ul class="mt-1">
       <li
         v-for="rule in edgeType.rules"
         :key="objId(rule)"
         class="list"
       >
-        <div>Name: {{ rule.name }}</div>
+        <div>{{ $t('common.name') }}: {{ rule.name }}</div>
         <div class="mt-1">
           StartNodeType: {{ rule.startNodeType.name }}
         </div>
@@ -56,7 +56,7 @@
     </ul>
     <Button
       class="w-full mt-2 p-button-outlined"
-      label="Add rule"
+      :label="$t('rule.add')"
       @click="() => emit('click:createRule')"
     />
   </div>

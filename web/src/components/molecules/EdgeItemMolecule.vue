@@ -2,14 +2,14 @@
   <div class="flex justify-content-between align-items-center">
     <div class="text-left w-10">
       <div class="text-lg wrap">
-        Name: {{ edge.name }}
+        {{ $t('common.name') }}: {{ edge.name }}
       </div>
       <div class="text-base font-semibold mt-2">
         Start node: {{ edge.startNode.name }} ({{ edge.startNode.uid }}) - End
         node: {{ edge.endNode.name }} ({{ edge.endNode.uid }})
       </div>
       <div class="text-base mt-2">
-        EdgeType: {{ edge.edgeType.name }}
+        {{ $t('edgeType.title') }}: {{ edge.edgeType.name }}
       </div>
     </div>
     <div class="text-right">

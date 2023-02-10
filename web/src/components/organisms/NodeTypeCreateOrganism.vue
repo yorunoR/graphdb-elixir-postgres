@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2>Create NodeType</h2>
+    <h2>
+      {{ $t('nodeType.create') }}
+    </h2>
     <NodeTypeFormMolecule
       is-create
       @update:values="(values) => (inputNodeType = values)"
@@ -8,7 +10,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickCreateNodeType"
     />

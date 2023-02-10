@@ -2,12 +2,12 @@
   <div class="flex justify-content-between align-items-center">
     <div class="text-left w-10">
       <div class="text-lg wrap">
-        Name: {{ subGraphFilter.name }}
+        {{ $t('common.name') }}: {{ subGraphFilter.name }}
       </div>
     </div>
     <div class="text-right">
       <i
-        class="pi pi-pencil ml-3"
+        class="pi pi-pencil ml-0"
         style="cursor: pointer"
         @click="() => emit('click:updateSubGraphFilter')"
       />

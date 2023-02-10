@@ -1,5 +1,6 @@
 <template>
   <div>
-    <h1>This is an about page</h1>
+    <h1>Under construction</h1>
+    <p>About this service</p>
   </div>
 </template>

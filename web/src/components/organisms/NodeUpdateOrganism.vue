@@ -1,6 +1,8 @@
 <template>
   <section v-if="data">
-    <h2>Update Node</h2>
+    <h2>
+      {{ $t('node.update') }}
+    </h2>
     <NodeFormMolecule
       v-bind="node"
       :options="data.division.nodeTypes"
@@ -9,7 +11,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickUpdateNode"
     />

@@ -2,15 +2,15 @@
   <div class="grid">
     <div class="col panel-outline">
       <Button
-        class="w-full p-button-secondary"
-        label="Cancel"
+        class="w-full p-button-secondary text-xs"
+        :label="$t('common.cancel')"
         @click="() => emit('click:cancel')"
       />
     </div>
     <div class="col panel-outline">
       <Button
-        class="w-full"
-        label="AND"
+        class="w-full text-xs"
+        label="ＡＮＤ"
         :disabled="disabled"
         @click="() => emit('click:and')"
       />
@@ -20,8 +20,8 @@
       class="col panel-outline"
     >
       <Button
-        class="w-full"
-        label="OR"
+        class="w-full text-xs"
+        label="ＯＲ"
         :disabled="disabled"
         @click="() => emit('click:or')"
       />

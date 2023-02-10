@@ -1,6 +1,8 @@
 <template>
   <section v-if="data && data.division">
-    <h2>Create Node</h2>
+    <h2>
+      {{ $t('node.create') }}
+    </h2>
     <NodeFormMolecule
       is-create
       :options="data.division.nodeTypes"
@@ -9,7 +11,7 @@
     />
     <Button
       class="mt-3 w-full"
-      label="Submit"
+      :label="$t('common.submit')"
       :disabled="disabled"
       @click="clickCreateNode"
     />
