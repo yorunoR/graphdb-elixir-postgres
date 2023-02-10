@@ -10,6 +10,7 @@ defmodule U7406.Repo.Migrations.CreateUsers do
       add :profile_image, :string
       add :role, :integer, null: false, default: 0
       add :uid, :string
+      add :anonymous, :boolean, null: false, default: false
 
       timestamps()
       soft_delete_columns()
