@@ -27,7 +27,7 @@ alias U7406.Repo
 Repo.as_admin(fn ->
   case Repo.get_by(Tower, name: "検証用アプリケーション") do
     nil ->
-      project = Repo.one(Project)
+      project = Repo.get_by!(Project, project_key: "---ThisIsAnAnonymousProject.----")
 
       tower =
         build_assoc(project, :towers)

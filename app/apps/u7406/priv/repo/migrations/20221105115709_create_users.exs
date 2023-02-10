@@ -5,7 +5,7 @@ defmodule U7406.Repo.Migrations.CreateUsers do
   def change do
     create table(:users) do
       add :activated, :boolean, null: false, default: false
-      add :email, :string, null: false
+      add :email, :string, null: true
       add :name, :string, null: false
       add :profile_image, :string
       add :role, :integer, null: false, default: 0

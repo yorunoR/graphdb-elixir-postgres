@@ -7,7 +7,7 @@ defmodule Resolvers.AccountResolver do
 
   def call(action, parent, args, %{context: context}) do
     case action do
-      action when action in [:signin_user, :user_and_project, :project_and_hash] ->
+      action when action in [:signin_user, :signin_guest, :user_and_project, :project_and_hash] ->
         run(action, parent, args, context)
 
       :create_api_key ->
@@ -38,6 +38,9 @@ defmodule Resolvers.AccountResolver do
 
       :signin_user ->
         Mutation.SigninUser.run(parent, args, context)
+
+      :signin_guest ->
+        Mutation.SigninGuest.run(parent, args, context)
 
       :create_project ->
         Mutation.CreateProject.run(parent, args, context)
