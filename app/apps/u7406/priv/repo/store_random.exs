@@ -25,18 +25,18 @@ alias Schemas.Graph.Tower
 alias U7406.Repo
 
 Repo.as_admin(fn ->
-  case Repo.get_by(Tower, name: "検証用構造体") do
+  case Repo.get_by(Tower, name: "検証用アプリケーション") do
     nil ->
       project = Repo.one(Project)
 
       tower =
         build_assoc(project, :towers)
-        |> change(%{name: "検証用構造体"})
+        |> change(%{name: "検証用アプリケーション"})
         |> Repo.insert!
 
       division =
         build_assoc(tower, :divisions)
-        |> change(DivisionFuncs.Create.set_hash(%{name: "Random graph"}))
+        |> change(DivisionFuncs.Create.set_hash(%{name: "ランダムに作成されたグラフ"}))
         |> Repo.insert!
 
       node_type_list = [
