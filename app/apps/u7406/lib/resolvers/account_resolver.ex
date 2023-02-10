@@ -11,7 +11,8 @@ defmodule Resolvers.AccountResolver do
         run(action, parent, args, context)
 
       :create_api_key ->
-        with %Project{} = project <- Map.get(context, :current_project) do
+        with %Project{} = project <- Map.get(context, :current_project),
+             %User{anonymous: false} <- Map.get(context, :current_user) do
           Repo.as_user(project.id, fn ->
             run(action, parent, args, context)
           end)
@@ -20,7 +21,7 @@ defmodule Resolvers.AccountResolver do
         end
 
       :create_project ->
-        with %User{} <- Map.get(context, :current_user) do
+        with %User{anonymous: false} <- Map.get(context, :current_user) do
           run(action, parent, args, context)
         else
           _ -> {:error, "No current user"}
