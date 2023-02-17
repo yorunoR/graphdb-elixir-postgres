@@ -7,11 +7,12 @@ defmodule Resolvers.AccountResolver do
 
   def call(action, parent, args, %{context: context}) do
     case action do
-      action when action in [:signin_user, :user_and_project, :project_and_hash] ->
+      action when action in [:signin_user, :signin_guest, :user_and_project, :project_and_hash] ->
         run(action, parent, args, context)
 
       :create_api_key ->
-        with %Project{} = project <- Map.get(context, :current_project) do
+        with %Project{} = project <- Map.get(context, :current_project),
+             %User{anonymous: false} <- Map.get(context, :current_user) do
           Repo.as_user(project.id, fn ->
             run(action, parent, args, context)
           end)
@@ -20,7 +21,7 @@ defmodule Resolvers.AccountResolver do
         end
 
       :create_project ->
-        with %User{} <- Map.get(context, :current_user) do
+        with %User{anonymous: false} <- Map.get(context, :current_user) do
           run(action, parent, args, context)
         else
           _ -> {:error, "No current user"}
@@ -38,6 +39,9 @@ defmodule Resolvers.AccountResolver do
 
       :signin_user ->
         Mutation.SigninUser.run(parent, args, context)
+
+      :signin_guest ->
+        Mutation.SigninGuest.run(parent, args, context)
 
       :create_project ->
         Mutation.CreateProject.run(parent, args, context)

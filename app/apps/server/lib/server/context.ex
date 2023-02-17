@@ -21,16 +21,28 @@ defmodule Server.Context do
       api_err ->
         with [project_id] <- get_req_header(conn, "cid"),
              ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-             {:ok, %{"email" => email, "user_id" => uid, "name" => name}} <- verify(token),
+             {:ok, verified = %{"user_id" => uid}} <- verify(token),
              {:ok, {current_user, current_project}} =
                get_user_and_project(uid, String.to_integer(project_id)) do
-          %{
-            current_user: current_user,
-            email: email,
-            uid: uid,
-            name: name,
-            current_project: current_project
-          }
+          case verified do
+            %{"email" => email, "name" => name} ->
+              %{
+                current_user: current_user,
+                email: email,
+                uid: uid,
+                name: name,
+                current_project: current_project,
+                anonymous: false
+              }
+
+            %{"provider_id" => "anonymous"} ->
+              %{
+                current_user: current_user,
+                uid: uid,
+                current_project: current_project,
+                anonymous: true
+              }
+          end
         else
           user_err ->
             api_err |> inspect |> Logger.error()

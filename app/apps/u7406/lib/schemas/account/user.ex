@@ -11,6 +11,7 @@ defmodule Schemas.Account.User do
     field :profile_image, :string
     field :role, :integer
     field :uid, :string
+    field :anonymous, :boolean
 
     timestamps()
     soft_delete_schema()
