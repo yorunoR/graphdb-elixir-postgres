@@ -1,15 +1,16 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
 import type { FirebaseError } from 'firebase/app'
 import {
+  GoogleAuthProvider,
   getAuth,
+  getIdToken,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  signInAnonymously,
   signInWithEmailAndPassword,
-  GoogleAuthProvider,
   signInWithPopup,
   signOut,
-  sendPasswordResetEmail,
-  getIdToken
+  sendPasswordResetEmail
 } from 'firebase/auth'
 // import 'firebase/messaging'
 // import 'firebase/analytics'
@@ -75,6 +76,14 @@ export default {
     try {
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
+    } catch (err) {
+      alertMessage(err, t('firebaseAuth.signin'))
+      throw err
+    }
+  },
+  async signinWithGuest () {
+    try {
+      await signInAnonymously(auth)
     } catch (err) {
       alertMessage(err, t('firebaseAuth.signin'))
       throw err

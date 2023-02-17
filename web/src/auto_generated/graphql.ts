@@ -288,6 +288,7 @@ export type RootMutationType = {
   createRule?: Maybe<Rule>;
   createSubGraphFilter?: Maybe<SubGraphFilter>;
   createTower?: Maybe<Tower>;
+  signinGuest?: Maybe<User>;
   signinUser?: Maybe<User>;
   startLibgraph: GraphStatus;
   startSubGraph: GraphStatus;
@@ -692,6 +693,11 @@ export type CreateTowerMutationVariables = Exact<{
 
 export type CreateTowerMutation = { __typename?: 'RootMutationType', createTower?: { __typename?: 'Tower', id: string } | null };
 
+export type SigninGuestMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SigninGuestMutation = { __typename?: 'RootMutationType', signinGuest?: { __typename?: 'User', uid?: string | null } | null };
+
 export type SigninUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1062,6 +1068,17 @@ export const CreateTowerDocument = gql`
 
 export function useCreateTowerMutation() {
   return Urql.useMutation<CreateTowerMutation, CreateTowerMutationVariables>(CreateTowerDocument);
+};
+export const SigninGuestDocument = gql`
+    mutation SigninGuest {
+  signinGuest {
+    uid
+  }
+}
+    `;
+
+export function useSigninGuestMutation() {
+  return Urql.useMutation<SigninGuestMutation, SigninGuestMutationVariables>(SigninGuestDocument);
 };
 export const SigninUserDocument = gql`
     mutation SigninUser {

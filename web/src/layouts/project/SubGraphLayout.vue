@@ -222,6 +222,7 @@
               </router-link>
             </li>
             <li
+              v-if="visibleSwitch"
               class="list"
               style="border: none"
             >
@@ -280,6 +281,7 @@ const props = defineProps<{
 
 const visibleLeft = ref(false)
 const visibleToggle = ref(false)
+const visibleSwitch = ref(!firebase.currentUser().isAnonymous)
 
 const { data } = useSubGraphFilterQuery({
   variables: { subGraphFilterId: props.subGraphFilterId }

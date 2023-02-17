@@ -28,6 +28,7 @@
             </router-link>
           </li>
           <li
+            v-if="visibleSwitch"
             class="list"
             style="border: none"
           >
@@ -36,6 +37,7 @@
             </router-link>
           </li>
           <li
+            v-if="visibleSwitch"
             class="list"
             style="border: none"
           >
@@ -81,6 +83,7 @@ import router from '@/router'
 import firebase from '@/services/firebase'
 
 const visibleLeft = ref(false)
+const visibleSwitch = ref(!firebase.currentUser().isAnonymous)
 
 const { data } = useProjectTowersQuery({
   context: { additionalTypenames: ['Tower'] }
