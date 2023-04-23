@@ -1,17 +1,17 @@
 version: '3'
 services:
-  db:
-    image: postgres:14.5-alpine
-    ports:
-      - '5432:5432'
-    volumes:
-      - .postgres:/var/lib/postgresql/data
-      - ./db/init:/docker-entrypoint-initdb.d
-      - ./db/scripts:/scripts
-    environment:
-      POSTGRES_PASSWORD: secret
-    tty: true
-    stdin_open: true
+  # db:
+  #   image: postgres:14.5-alpine
+  #   ports:
+  #     - '5432:5432'
+  #   volumes:
+  #     - .postgres:/var/lib/postgresql/data
+  #     - ./db/init:/docker-entrypoint-initdb.d
+  #     - ./db/scripts:/scripts
+  #   environment:
+  #     POSTGRES_PASSWORD: secret
+  #   tty: true
+  #   stdin_open: true
   app:
     build:
       context: ./app
@@ -28,6 +28,8 @@ services:
       - db
     tty: true
     stdin_open: true
+    networks:
+      - my-network
   mgt:
     build:
       context: ./mgt
@@ -38,3 +40,8 @@ services:
     volumes:
       - ./mgt:/mgt
       - /mgt/node_modules
+    networks:
+      - my-network
+networks:
+  my-network:
+    external: true
