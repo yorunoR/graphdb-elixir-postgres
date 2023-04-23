@@ -1,3 +1,5 @@
+import 'quasar/dist/quasar.css'
+import '@quasar/extras/material-icons/material-icons.css'
 // eslint-disable-next-line import/order
 import PrimeVue from 'primevue/config'
 import 'primeflex/primeflex.css'
@@ -21,6 +23,7 @@ import TabView from 'primevue/tabview'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 import ToggleButton from 'primevue/togglebutton'
+import { Quasar } from 'quasar'
 import { createApp } from 'vue'
 
 import App from './App.vue'
@@ -28,7 +31,13 @@ import router from './router'
 import i18n from './services/i18n'
 import store from './store'
 
+const quasarUserOptions = {
+  config: {},
+  plugins: {}
+}
+
 createApp(App)
+  .use(Quasar, quasarUserOptions)
   .use(i18n)
   .use(router)
   .use(store)

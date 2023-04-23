@@ -19,6 +19,14 @@ body {
   height: 100%;
 }
 
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 {
+  font-size: 1.6rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
 a {
   color: #2c3e50;
 

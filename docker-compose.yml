@@ -28,14 +28,13 @@ services:
       - db
     tty: true
     stdin_open: true
-  web:
+  mgt:
     build:
-      context: ./web
+      context: ./mgt
       dockerfile: containers/development/Dockerfile
     command: /bin/sh -c "yarn install && yarn serve"
     ports:
-      - '8080:8080'
-      - '24678:24678'
+      - '8000:8000'
     volumes:
-      - ./web:/web
-      - /web/node_modules
+      - ./mgt:/mgt
+      - /mgt/node_modules

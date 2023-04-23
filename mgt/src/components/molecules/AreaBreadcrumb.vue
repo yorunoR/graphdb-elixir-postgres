@@ -1,6 +1,6 @@
 <template>
   <Breadcrumb
-    class="ml-2 px-2 py-1 text-sm"
+    class="px-2 py-1 text-sm"
     :home="home"
   />
 </template>
