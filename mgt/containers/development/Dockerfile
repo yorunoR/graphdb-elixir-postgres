@@ -1,8 +1,8 @@
 FROM node:18.12-alpine
 
-WORKDIR /web
+WORKDIR /mgt
 
-COPY package.json /web/package.json
+COPY package.json /mgt/package.json
 
 RUN apk --no-cache --virtual build-dependencies add \
     && yarn install \
