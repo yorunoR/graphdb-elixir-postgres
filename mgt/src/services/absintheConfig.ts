@@ -1,5 +1,5 @@
 // NOTE: https://dev.to/joehua87/simple-way-to-use-abinsthe-subscription-in-urql-1j59
-import type { SubscriptionOperation } from '@urql/core/dist/types/exchanges/subscription'
+import type { SubscriptionOperation } from '@urql/core'
 import { Socket } from 'phoenix'
 import type { Channel } from 'phoenix'
 import { make, pipe, toObservable } from 'wonka'

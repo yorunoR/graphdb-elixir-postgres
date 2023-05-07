@@ -1227,6 +1227,7 @@ export const DivisionEdgeTypesDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useDivisionEdgeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionEdgeTypesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionEdgeTypesQuery>({ query: DivisionEdgeTypesDocument, ...options });
 };
@@ -1250,6 +1251,7 @@ export const DivisionNodeTypesDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useDivisionNodeTypesQuery(options: Omit<Urql.UseQueryArgs<never, DivisionNodeTypesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionNodeTypesQuery>({ query: DivisionNodeTypesDocument, ...options });
 };
@@ -1267,6 +1269,7 @@ export const DivisionSubGraphFiltersDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useDivisionSubGraphFiltersQuery(options: Omit<Urql.UseQueryArgs<never, DivisionSubGraphFiltersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionSubGraphFiltersQuery>({ query: DivisionSubGraphFiltersDocument, ...options });
 };
@@ -1292,6 +1295,7 @@ export const DivisionSummaryDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useDivisionSummaryQuery(options: Omit<Urql.UseQueryArgs<never, DivisionSummaryQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DivisionSummaryQuery>({ query: DivisionSummaryDocument, ...options });
 };
@@ -1330,6 +1334,7 @@ export const EdgesDocument = gql`
     `;
 
 export function useEdgesQuery(options: Omit<Urql.UseQueryArgs<never, EdgesQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<EdgesQuery>({ query: EdgesDocument, ...options });
 };
 export const LibgraphCommandDocument = gql`
@@ -1348,6 +1353,7 @@ export const LibgraphCommandDocument = gql`
     `;
 
 export function useLibgraphCommandQuery(options: Omit<Urql.UseQueryArgs<never, LibgraphCommandQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<LibgraphCommandQuery>({ query: LibgraphCommandDocument, ...options });
 };
 export const LibgraphStatusDocument = gql`
@@ -1369,6 +1375,7 @@ export const LibgraphStatusDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useLibgraphStatusQuery(options: Omit<Urql.UseQueryArgs<never, LibgraphStatusQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<LibgraphStatusQuery>({ query: LibgraphStatusDocument, ...options });
 };
@@ -1413,6 +1420,7 @@ export const NodeBoundEdgesDocument = gql`
     `;
 
 export function useNodeBoundEdgesQuery(options: Omit<Urql.UseQueryArgs<never, NodeBoundEdgesQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<NodeBoundEdgesQuery>({ query: NodeBoundEdgesDocument, ...options });
 };
 export const NodesDocument = gql`
@@ -1440,6 +1448,7 @@ export const NodesDocument = gql`
     `;
 
 export function useNodesQuery(options: Omit<Urql.UseQueryArgs<never, NodesQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<NodesQuery>({ query: NodesDocument, ...options });
 };
 export const PingDocument = gql`
@@ -1451,6 +1460,7 @@ export const PingDocument = gql`
     `;
 
 export function usePingQuery(options: Omit<Urql.UseQueryArgs<never, PingQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<PingQuery>({ query: PingDocument, ...options });
 };
 export const ProjectApiKeysDocument = gql`
@@ -1468,6 +1478,7 @@ export const ProjectApiKeysDocument = gql`
     `;
 
 export function useProjectApiKeysQuery(options: Omit<Urql.UseQueryArgs<never, ProjectApiKeysQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<ProjectApiKeysQuery>({ query: ProjectApiKeysDocument, ...options });
 };
 export const ProjectTowersDocument = gql`
@@ -1484,6 +1495,7 @@ export const ProjectTowersDocument = gql`
     `;
 
 export function useProjectTowersQuery(options: Omit<Urql.UseQueryArgs<never, ProjectTowersQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<ProjectTowersQuery>({ query: ProjectTowersDocument, ...options });
 };
 export const SubGraphCommandDocument = gql`
@@ -1502,6 +1514,7 @@ export const SubGraphCommandDocument = gql`
     `;
 
 export function useSubGraphCommandQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphCommandQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<SubGraphCommandQuery>({ query: SubGraphCommandDocument, ...options });
 };
 export const SubGraphDataDocument = gql`
@@ -1544,6 +1557,7 @@ export const SubGraphDataDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useSubGraphDataQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphDataQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphDataQuery>({ query: SubGraphDataDocument, ...options });
 };
@@ -1572,6 +1586,7 @@ export const SubGraphFilterDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useSubGraphFilterQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphFilterQuery>({ query: SubGraphFilterDocument, ...options });
 };
@@ -1598,6 +1613,7 @@ export const SubGraphFilterResultsDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useSubGraphFilterResultsQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphFilterResultsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphFilterResultsQuery>({ query: SubGraphFilterResultsDocument, ...options });
 };
@@ -1620,6 +1636,7 @@ export const SubGraphStatusDocument = gql`
 }
     `;
 
+// @ts-expect-error TS2741
 export function useSubGraphStatusQuery(options: Omit<Urql.UseQueryArgs<never, SubGraphStatusQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SubGraphStatusQuery>({ query: SubGraphStatusDocument, ...options });
 };
@@ -1648,6 +1665,7 @@ export const TowerDivisionsDocument = gql`
     `;
 
 export function useTowerDivisionsQuery(options: Omit<Urql.UseQueryArgs<never, TowerDivisionsQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<TowerDivisionsQuery>({ query: TowerDivisionsDocument, ...options });
 };
 export const UserProjectsDocument = gql`
@@ -1665,6 +1683,7 @@ export const UserProjectsDocument = gql`
     `;
 
 export function useUserProjectsQuery(options: Omit<Urql.UseQueryArgs<never, UserProjectsQueryVariables>, 'query'> = {}) {
+  // @ts-expect-error TS2345
   return Urql.useQuery<UserProjectsQuery>({ query: UserProjectsDocument, ...options });
 };
 export const NewUserDocument = gql`
