@@ -4,10 +4,19 @@
       v-model="visibleLeft"
       :breakpoint="1380"
       :width="320"
+      overlay
+      persistent
       style="border-right: 1px solid #eeeeee"
     >
+      <div class="text-left pt-3 pl-3">
+        <Button
+          icon="pi pi-arrow-left"
+          @click="visibleLeft = false"
+        />
+      </div>
       <div
-        class="h-screen flex flex-column justify-content-between text-left px-3 pt-6 pb-3"
+        class="flex flex-column justify-content-between text-left px-3 pb-3"
+        style="height: calc(100vh - 58px)"
       >
         <section>
           <h3>
@@ -66,7 +75,7 @@
         />
       </div>
     </div>
-    <div class="fixed top-0 w-full z-1">
+    <div class="fixed top-0 w-full z-1 bg-white">
       <div
         class="p-3 flex"
         style="max-width: 768px; margin: auto"
@@ -83,7 +92,7 @@
       class="p-3"
       style="max-width: 768px; margin: auto"
     >
-      <div class="mt-8">
+      <div class="mt-8 pt-4">
         <router-view />
       </div>
     </div>

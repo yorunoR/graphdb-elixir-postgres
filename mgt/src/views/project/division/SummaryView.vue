@@ -1,7 +1,7 @@
 <template>
   <main style="max-width: 768px; margin: auto">
     <h1>
-      {{ $t('division.summary') }} / {{ $t('division.subGraphFilters') }}
+      {{ $t('division.subGraphFilters') }}
     </h1>
     <section>
       <div v-if="data">

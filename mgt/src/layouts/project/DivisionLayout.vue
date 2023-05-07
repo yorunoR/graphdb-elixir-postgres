@@ -1,170 +1,191 @@
 <template>
-  <Sidebar v-model:visible="visibleLeft">
-    <div
-      class="h-screen adjust-height flex flex-column justify-content-between"
+  <q-layout>
+    <q-drawer
+      v-model="visibleLeft"
+      :breakpoint="1380"
+      :width="320"
+      overlay
+      persistent
+      style="border-right: 1px solid #eeeeee"
     >
-      <section
-        style="height: calc(100% - 72px)"
+      <div class="text-left pt-3 pl-3">
+        <Button
+          icon="pi pi-arrow-left"
+          @click="visibleLeft = false"
+        />
+      </div>
+      <div
+        class="flex flex-column justify-content-between text-left px-3 pb-3"
+        style="height: calc(100vh - 58px)"
       >
-        <h2>
-          {{ $t('division.title') }}
-        </h2>
-        <div v-if="data">
-          <ProjectMolecule v-bind="data.division?.project" />
-          <TowerMolecule
-            class="mt-1"
-            v-bind="data.division?.tower"
-          />
-          <DivisionMolecule
-            class="mt-1"
-            v-bind="data.division"
-          />
-        </div>
-        <div
-          style="height: calc(100% - 124px)"
-          class="overflow-y-scroll"
+        <section
+          style="height: calc(100% - 72px)"
         >
-          <ul>
-            <li
-              class="mt-3 py-0 list"
-              style="border: none"
-            >
-              <div>
-                {{ $t('division.title') }}
-              </div>
-              <ul class="my-0">
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'summary', params: { divisionId } }"
-                    @click="() => close()"
+          <h3>
+            {{ $t('division.title') }}
+          </h3>
+          <div v-if="data">
+            <ProjectMolecule v-bind="data.division?.project" />
+            <TowerMolecule
+              class="mt-1"
+              v-bind="data.division?.tower"
+            />
+            <DivisionMolecule
+              class="mt-1"
+              v-bind="data.division"
+            />
+          </div>
+          <div
+            style="height: calc(100% - 124px)"
+            class="overflow-y-scroll"
+          >
+            <ul>
+              <li
+                class="mt-3 py-0 list"
+                style="border: none"
+              >
+                <div>
+                  {{ $t('division.title') }}
+                </div>
+                <ul class="my-0">
+                  <li
+                    class="list"
+                    style="border: none"
                   >
-                    <span style="white-space: nowrap">{{ $t('division.summary') }} / {{ $t('division.subGraphFilters') }}</span>
-                  </router-link>
-                </li>
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'node_types', params: { divisionId } }"
-                    @click="() => close()"
+                    <router-link
+                      :to="{ name: 'summary', params: { divisionId } }"
+                    >
+                      <span style="white-space: nowrap">{{ $t('division.subGraphFilters') }}</span>
+                    </router-link>
+                  </li>
+                  <li
+                    class="list"
+                    style="border: none"
                   >
-                    {{ $t('division.nodeTypes') }}
-                  </router-link>
-                </li>
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'edge_types', params: { divisionId } }"
-                    @click="() => close()"
+                    <router-link
+                      :to="{ name: 'node_types', params: { divisionId } }"
+                    >
+                      {{ $t('division.nodeTypes') }}
+                    </router-link>
+                  </li>
+                  <li
+                    class="list"
+                    style="border: none"
                   >
-                    {{ $t('division.edgeTypes') }}
-                  </router-link>
-                </li>
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'upload_csv', params: { divisionId } }"
-                    @click="() => close()"
+                    <router-link
+                      :to="{ name: 'edge_types', params: { divisionId } }"
+                    >
+                      {{ $t('division.edgeTypes') }}
+                    </router-link>
+                  </li>
+                  <li
+                    class="list"
+                    style="border: none"
                   >
-                    {{ $t('division.uploadCsv') }}
-                  </router-link>
-                </li>
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'nodes', params: { divisionId } }"
-                    @click="() => close()"
+                    <router-link
+                      :to="{ name: 'upload_csv', params: { divisionId } }"
+                    >
+                      {{ $t('division.uploadCsv') }}
+                    </router-link>
+                  </li>
+                  <li
+                    class="list"
+                    style="border: none"
                   >
-                    {{ $t('division.nodes') }}
-                  </router-link>
-                </li>
-                <li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'edges', params: { divisionId } }"
-                    @click="() => close()"
+                    <router-link
+                      :to="{ name: 'nodes', params: { divisionId } }"
+                    >
+                      {{ $t('division.nodes') }}
+                    </router-link>
+                  </li>
+                  <li
+                    class="list"
+                    style="border: none"
                   >
-                    {{ $t('division.edges') }}
-                  </router-link>
-                </li>
-                <!--li
-                  class="list"
-                  style="border: none"
-                >
-                  <router-link
-                    :to="{ name: 'sub_graph_filters', params: { divisionId } }"
-                    @click="() => close()"
+                    <router-link
+                      :to="{ name: 'edges', params: { divisionId } }"
+                    >
+                      {{ $t('division.edges') }}
+                    </router-link>
+                  </li>
+                  <!--li
+                    class="list"
+                    style="border: none"
                   >
-                    {{ $t('division.subGraphFilters') }}
-                  </router-link>
-                </li-->
-              </ul>
-            </li>
-          </ul>
-          <ul>
-            <li
-              v-if="data.division"
-              class="list"
-              style="border: none"
-            >
-              <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
-                {{ $t('division.return') }}
-              </router-link>
-            </li>
-            <li
-              class="list"
-              style="border: none"
-            >
-              <router-link :to="{ name: 'towers' }">
-                {{ $t('tower.return') }}
-              </router-link>
-            </li>
-            <li
-              v-if="visibleSwitch"
-              class="list"
-              style="border: none"
-            >
-              <router-link to="/board/select">
-                {{ $t('board.switch') }}
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <Button @click="signOut">
-        {{ $t('account.signOut') }}
-      </Button>
+                    <router-link
+                      :to="{ name: 'sub_graph_filters', params: { divisionId } }"
+                    >
+                      {{ $t('division.subGraphFilters') }}
+                    </router-link>
+                  </li-->
+                </ul>
+              </li>
+            </ul>
+            <ul>
+              <li
+                v-if="data"
+                class="list"
+                style="border: none"
+              >
+                <router-link :to="{ name: 'divisions', params: { towerId: data.division.tower.id}}">
+                  {{ $t('division.return') }}
+                </router-link>
+              </li>
+              <li
+                class="list"
+                style="border: none"
+              >
+                <router-link :to="{ name: 'towers' }">
+                  {{ $t('tower.return') }}
+                </router-link>
+              </li>
+              <li
+                v-if="visibleSwitch"
+                class="list"
+                style="border: none"
+              >
+                <router-link to="/board/select">
+                  {{ $t('board.switch') }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <Button @click="signOut">
+          {{ $t('account.signOut') }}
+        </Button>
+      </div>
+    </q-drawer>
+    <div class="fixed top-0 flex flex-row p-3 w-full z-2">
+      <div class="flex-none">
+        <Button
+          icon="pi pi-arrow-right"
+          @click="visibleLeft = true"
+        />
+      </div>
     </div>
-  </Sidebar>
-  <div class="fixed top-0 flex flex-row p-3 w-full z-1">
-    <div class="flex-none">
-      <Button
-        icon="pi pi-arrow-right"
-        @click="visibleLeft = true"
-      />
+    <div class="fixed top-0 w-full z-1 bg-white">
+      <div
+        class="p-3 flex"
+        style="max-width: 768px; margin: auto"
+      >
+        <div
+          v-if="data"
+          class="flex-grow-1 mt-6"
+        >
+          <DivisionBreadcrumb :division="data.division" />
+        </div>
+      </div>
     </div>
     <div
-      v-if="data"
-      class="flex-grow-1"
+      class="p-3"
+      style="max-width: 768px; margin: auto"
     >
-      <DivisionBreadcrumb :division="data.division" />
+      <div class="mt-8 pt-4">
+        <router-view :division-id="divisionId" />
+      </div>
     </div>
-  </div>
-  <div class="pt-8 px-3 pb-3">
-    <router-view :division-id="divisionId" />
-  </div>
+  </q-layout>
 </template>
 
 <script setup lang="ts">
@@ -182,7 +203,7 @@ const props = defineProps<{
   divisionId: string;
 }>()
 
-const visibleLeft = ref(false)
+const visibleLeft = ref(true)
 const visibleSwitch = ref(!firebase.currentUser().isAnonymous)
 
 const { data } = callDivisionSummaryQuery(props.divisionId)
@@ -190,10 +211,6 @@ const { data } = callDivisionSummaryQuery(props.divisionId)
 const signOut = async () => {
   await firebase.signout()
   router.push({ name: 'sign_in' })
-}
-
-const close = () => {
-  visibleLeft.value = false
 }
 </script>
 
