@@ -1,4 +1,4 @@
-defmodule Actions.Graph.Mixin.DivisionFuncs.Create do
+defmodule Schemas.Graph.Division.Create do
   def set_hash(attrs) do
     now = DateTime.utc_now()
     datetime = Calendar.strftime(now, "_%y-%m-%d_%H:%M:%S")

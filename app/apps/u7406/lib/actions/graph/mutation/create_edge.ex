@@ -1,6 +1,6 @@
 defmodule Actions.Graph.Mutation.CreateEdge do
-  alias Actions.Graph.Mixin.EdgeFuncs.Create
   alias Ecto.Multi
+  alias Schemas.Graph.Edge
   alias Schemas.Graph.EdgeType
   alias Schemas.Graph.Node
   alias U7406.Repo
@@ -27,15 +27,15 @@ defmodule Actions.Graph.Mutation.CreateEdge do
     Multi.new()
     |> Multi.run(
       :check_rule,
-      &Create.check_rule(&1, &2, edge_type, start_node, end_node)
+      &Edge.Create.check_rule(&1, &2, edge_type, start_node, end_node)
     )
     |> Multi.run(
       :create_edge,
-      &Create.create_edge(&1, &2, start_node, end_node, name, random, Utils.list_to_map(props))
+      &Edge.Create.create_edge(&1, &2, start_node, end_node, name, random, Utils.list_to_map(props))
     )
     |> Multi.run(
       :connect_edge,
-      &Create.connect_edge(&1, &2, edge_type, start_node, end_node)
+      &Edge.Create.connect_edge(&1, &2, edge_type, start_node, end_node)
     )
     |> Repo.transaction()
     |> transaction_result()

@@ -13,8 +13,8 @@
 import Ecto.Changeset
 import U7406
 
-alias Actions.Graph.Mixin.DivisionFuncs.Create
 alias Schemas.Account.Project
+alias Schemas.Graph.Division
 alias Schemas.Graph.EdgeType
 alias Schemas.Graph.NodeType
 alias Schemas.Graph.Tower
@@ -32,7 +32,7 @@ Repo.as_admin(fn ->
 
       division =
         build_assoc(tower, :divisions)
-        |> change(Create.set_hash(%{name: "映画と監督と主演"}))
+        |> change(Division.Create.set_hash(%{name: "映画と監督と主演"}))
         |> Repo.insert!
 
       node_type_list = [

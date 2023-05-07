@@ -1,4 +1,4 @@
-defmodule Actions.Account.Mixin.ApiKeyFuncs.Crypt do
+defmodule Schemas.Account.ApiKey.Crypt do
   @default_ttl :infinity
 
   def encrypt(plaintext, user_salt) when is_binary(plaintext) do

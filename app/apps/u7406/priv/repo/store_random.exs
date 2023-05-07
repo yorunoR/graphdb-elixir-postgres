@@ -14,11 +14,11 @@ require Integer
 import Ecto.Changeset
 import U7406
 
-alias Actions.Graph.Mixin.EdgeFuncs
-alias Actions.Graph.Mixin.DivisionFuncs
 alias Schemas.Account.Project
+alias Schemas.Graph.Division
 alias Schemas.Graph.EdgeType
 alias Schemas.Graph.NodeType
+alias Schemas.Graph.Edge
 alias Schemas.Graph.Node
 alias Schemas.Graph.Rule
 alias Schemas.Graph.Tower
@@ -36,7 +36,7 @@ Repo.as_admin(fn ->
 
       division =
         build_assoc(tower, :divisions)
-        |> change(DivisionFuncs.Create.set_hash(%{name: "ランダムに作成されたグラフ"}))
+        |> change(Division.Create.set_hash(%{name: "ランダムに作成されたグラフ"}))
         |> Repo.insert!
 
       node_type_list = [
@@ -126,8 +126,8 @@ Repo.as_admin(fn ->
       |> Enum.each(fn [n, m] ->
         start_node = Repo.get_by!(Node, uid: to_string(n))
         end_node = Repo.get_by!(Node, uid: to_string(m))
-        edge = EdgeFuncs.Create.do_create_edge(Repo, rule, start_node, end_node, "#{n}-#{m}", n*limit + m, %{})
-        EdgeFuncs.Create.do_connect_edge(Repo, edge, edge_type, start_node, end_node)
+        edge = Edge.Create.do_create_edge(Repo, rule, start_node, end_node, "#{n}-#{m}", n*limit + m, %{})
+        Edge.Create.do_connect_edge(Repo, edge, edge_type, start_node, end_node)
       end)
 
       IO.inspect("store random data")

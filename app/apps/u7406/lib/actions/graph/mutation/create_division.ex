@@ -2,7 +2,6 @@ defmodule Actions.Graph.Mutation.CreateDivision do
   import Ecto.Changeset
   import U7406
 
-  alias Actions.Graph.Mixin.DivisionFuncs.Create
   alias Schemas.Graph.Tower
   alias Schemas.Graph.Division
   alias U7406.Repo
@@ -11,7 +10,7 @@ defmodule Actions.Graph.Mutation.CreateDivision do
     %{tower_id: id, division: attrs} = args
     tower = Repo.get(Tower, id)
 
-    attrs = Create.set_hash(attrs)
+    attrs = Division.Create.set_hash(attrs)
 
     division =
       build_assoc(tower, :divisions)

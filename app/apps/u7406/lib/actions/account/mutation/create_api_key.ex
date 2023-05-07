@@ -2,7 +2,6 @@ defmodule Actions.Account.Mutation.CreateApiKey do
   import Ecto.Changeset
   import U7406
 
-  alias Actions.Account.Mixin.ApiKeyFuncs.Crypt
   alias Schemas.Account.ApiKey
   alias U7406.Repo
 
@@ -29,7 +28,7 @@ defmodule Actions.Account.Mutation.CreateApiKey do
 
   def put_api_key(changeset, user_salt) do
     {:ok, key} = PrefixedApiKey.generate("mildeaw")
-    value = key.api_key |> Crypt.encrypt(user_salt)
+    value = key.api_key |> ApiKey.Crypt.encrypt(user_salt)
 
     changeset
     |> put_change(:short_token, key.short_token)

@@ -1,4 +1,4 @@
-defmodule Actions.Graph.Mixin.EdgeFuncs.Create do
+defmodule Schemas.Graph.Edge.Create do
   import Ecto.Changeset
   import U7406
 
