@@ -1,23 +1,21 @@
 <template>
   <section>
-    <div>
+    <div
+      ref="root"
+      class="diagram"
+    />
+    <div class="flex flex-row mt-4">
       <Button
-        class="w-6"
+        class="mr-2 flex-grow-1"
         :label="$t('common.highlight')"
         @click="() => highlight()"
       />
-    </div>
-    <div>
       <Button
-        class="p-button-outlined w-6 mt-2"
+        class="p-button-outlined ml-2 flex-grow-1"
         :label="$t('common.reset')"
         @click="() => emit('reset')"
       />
     </div>
-    <div
-      ref="root"
-      class="diagram mt-2"
-    />
   </section>
   <Sidebar
     v-model:visible="visibleRight"
@@ -125,7 +123,7 @@ const apply = () => {
 
 <style lang="scss">
   .diagram {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 360px);
     border: 1px solid lightgray;
   }
 </style>

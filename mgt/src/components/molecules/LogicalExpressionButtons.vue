@@ -3,7 +3,7 @@
     <div class="col panel-outline">
       <Button
         class="w-full p-button-secondary text-xs"
-        :label="$t('common.cancel')"
+        label="Cancel"
         @click="() => emit('click:cancel')"
       />
     </div>

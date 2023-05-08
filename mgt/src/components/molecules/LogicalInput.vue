@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex flex-nowrap">
     <ToggleButton
       v-model="notComputed"
       on-label="NOT"
@@ -11,7 +11,7 @@
     />
     <InputText
       v-model="textComputed"
-      class="ml-2 w-full"
+      class="ml-2 flex-grow-1"
       type="text"
       :placeholder="placeholder"
     />
