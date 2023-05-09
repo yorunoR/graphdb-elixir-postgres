@@ -20,6 +20,7 @@
   <Sidebar
     v-model:visible="visibleRight"
     position="right"
+    :modal="false"
   >
     <strong>{{ $t('subGraph.results') }}</strong>
     <div
