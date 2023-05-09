@@ -38,7 +38,7 @@ defmodule Queries.GraphQuery do
 
           [query, next_operator]
 
-        %{"key" => key, "values" => values}, [query, next_operator] ->
+        %{"key" => key, "values" => values} = parameter, [query, next_operator] ->
           filter =
             case key do
               "nodeTypeUid" ->
@@ -65,6 +65,10 @@ defmodule Queries.GraphQuery do
                 [:end_node, :name]
                 |> dynamic_condition(values, like: true)
 
+              "props" ->
+                [:props, parameter["attr"]]
+                |> dynamic_condition(values, like: true)
+
               "name" ->
                 key
                 |> String.to_existing_atom()
@@ -87,6 +91,93 @@ defmodule Queries.GraphQuery do
       end)
 
     query
+  end
+
+  def dynamic_condition([:props, attr], values, like: like_option) do
+    connect_operator = :and
+    column = :props
+
+    [dynamic_filter, _connect_operator] =
+      Enum.reduce(values, [dynamic(true), connect_operator], fn
+        %{"type" => "term", "value" => value}, [dynamic, connect_operator] ->
+          matcher = "%#{value}%"
+
+          dynamic =
+            case {like_option, connect_operator} do
+              {true, :and} ->
+                dynamic(
+                  [n],
+                  ^dynamic and like(fragment("?->>?", field(n, ^column), ^attr), ^matcher)
+                )
+
+              {true, :or} ->
+                dynamic(
+                  [n],
+                  ^dynamic or like(fragment("?->>?", field(n, ^column), ^attr), ^matcher)
+                )
+
+              {false, :and} ->
+                dynamic([n], ^dynamic and fragment("?->>?", field(n, ^column), ^attr) == ^value)
+
+              {false, :or} ->
+                dynamic([n], ^dynamic or fragment("?->>?", field(n, ^column), ^attr) == ^value)
+
+              _ ->
+                dynamic
+            end
+
+          [dynamic, connect_operator]
+
+        %{"type" => "not_term", "value" => value}, [dynamic, connect_operator] ->
+          matcher = "%#{value}%"
+
+          dynamic =
+            case {like_option, connect_operator} do
+              {true, :and} ->
+                dynamic(
+                  [n],
+                  ^dynamic and not like(fragment("?->>?", field(n, ^column), ^attr), ^matcher)
+                )
+
+              {true, :or} ->
+                dynamic(
+                  [n],
+                  ^dynamic or not like(fragment("?->>?", field(n, ^column), ^attr), ^matcher)
+                )
+
+              {false, :and} ->
+                dynamic(
+                  [n],
+                  ^dynamic and not fragment("?->>?", field(n, ^column), ^attr) == ^value
+                )
+
+              {false, :or} ->
+                dynamic(
+                  [n],
+                  ^dynamic or not fragment("?->>?", field(n, ^column), ^attr) == ^value
+                )
+
+              _ ->
+                dynamic
+            end
+
+          [dynamic, connect_operator]
+
+        %{"type" => "operator", "value" => value}, [dynamic, _connect_operator] ->
+          connect_operator =
+            case value do
+              "+" -> :or
+              "*" -> :and
+              _ -> :and
+            end
+
+          [dynamic, connect_operator]
+
+        _, [dynamic, connect_operator] ->
+          [dynamic, connect_operator]
+      end)
+
+    dynamic_filter
   end
 
   def dynamic_condition([association, column], values, like: like_option) do

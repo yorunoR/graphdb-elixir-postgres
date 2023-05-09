@@ -31,7 +31,15 @@ defmodule Actions.Graph.Mutation.CreateEdge do
     )
     |> Multi.run(
       :create_edge,
-      &Edge.Create.create_edge(&1, &2, start_node, end_node, name, random, Utils.list_to_map(props))
+      &Edge.Create.create_edge(
+        &1,
+        &2,
+        start_node,
+        end_node,
+        name,
+        random,
+        Utils.list_to_map(props)
+      )
     )
     |> Multi.run(
       :connect_edge,
