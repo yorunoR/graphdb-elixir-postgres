@@ -16,8 +16,8 @@
             <div class="h-2rem flex align-items-center">
               {{
                 cutString(nodeField.name, 7) +
-                  " :" +
-                  nodeField.type.toLowerCase()
+                  " " + nodeField.uid +
+                  ":" + nodeField.type.toLowerCase()
               }}
             </div>
           </Chip>

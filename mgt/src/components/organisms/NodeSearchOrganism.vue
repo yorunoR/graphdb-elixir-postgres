@@ -23,6 +23,11 @@
         class="p-button-outlined mt-2"
         @click="selected = 'uid'"
       />
+      <Button
+        :label="$t('common.attrValue')"
+        class="p-button-outlined mt-2"
+        @click="selected = 'attr'"
+      />
     </div>
     <div
       v-show="selected == 'name'"
@@ -54,6 +59,22 @@
         @click:cancel="selected = null"
         @click:and="() => addParameter('uid', '*')"
         @click:or="() => addParameter('uid', '+')"
+      />
+    </div>
+    <div
+      v-show="selected == 'attr'"
+      class="mt-2"
+    >
+      <LogicalAttrInput
+        v-model:not="attrNot"
+        v-model:uid="attrUid"
+        v-model:text="attrValue"
+        :errors="attrUidErrors.concat(attrValueErrors).join(' ')"
+        :showOr="parameters.length > 0"
+        :disabled="!(attrUidMeta.valid && attrValueMeta.valid)"
+        @click:cancel="selected = null"
+        @click:and="() => addAttrParameter('*')"
+        @click:or="() => addAttrParameter('+')"
       />
     </div>
     <div
@@ -141,6 +162,7 @@ import VueJsonPretty from 'vue-json-pretty'
 import 'vue-json-pretty/lib/styles.css'
 
 import { callDivisionNodeTypesQuery } from '@/call/queries'
+import LogicalAttrInput from '@/components/molecules/LogicalAttrInput.vue'
 import LogicalExpressionButtons from '@/components/molecules/LogicalExpressionButtons.vue'
 import LogicalInput from '@/components/molecules/LogicalInput.vue'
 
@@ -163,7 +185,8 @@ const { data } = callDivisionNodeTypesQuery(props.divisionId)
 const { resetForm, values: inputValues } = useForm({
   initialValues: {
     nameNot: false,
-    uidNot: false
+    uidNot: false,
+    attrNot: false
   }
 })
 
@@ -172,6 +195,9 @@ const { value: name, errors: nameErrors, meta: nameMeta } = useField('name', isR
 const { value: nameNot } = useField('nameNot')
 const { value: uid, errors: uidErrors, meta: uidMeta } = useField('uid', isRequired)
 const { value: uidNot } = useField('uidNot')
+const { value: attrUid, errors: attrUidErrors, meta: attrUidMeta } = useField('attrUid', isRequired)
+const { value: attrValue, errors: attrValueErrors, meta: attrValueMeta } = useField('attrValue', isRequired)
+const { value: attrNot } = useField('attrNot')
 const { value: nodeTypeUid, errors: _nodeTypeUidErrors, meta: nodeTypeUidMeta } = useField(
   'nodeTypeUid',
   isRequired
@@ -192,6 +218,32 @@ const addParameter = (key, operator) => {
   } else if (lastParameter.value.key !== key) {
     parameters.value.push({ key: 'operator', value: operator })
     parameters.value.push({ key, values: [term] })
+  } else {
+    lastParameter.value.values.push({ type: 'operator', value: operator })
+    lastParameter.value.values.push(term)
+  }
+
+  resetForm()
+  selected.value = null
+}
+
+const addAttrParameter = (operator) => {
+  const term = {
+    type: inputValues.attrNot ? 'not_term' : 'term',
+    value: inputValues.attrValue
+  }
+
+  const key = 'props'
+  const attr = inputValues.attrUid
+
+  if (lastParameter.value == null) {
+    parameters.value.push({ key, values: [term], attr })
+  } else if (lastParameter.value.key !== key) {
+    parameters.value.push({ key: 'operator', value: operator })
+    parameters.value.push({ key, values: [term], attr })
+  } else if (lastParameter.value.key === key && lastParameter.value.attr !== attr) {
+    parameters.value.push({ key: 'operator', value: operator })
+    parameters.value.push({ key, values: [term], attr })
   } else {
     lastParameter.value.values.push({ type: 'operator', value: operator })
     lastParameter.value.values.push(term)

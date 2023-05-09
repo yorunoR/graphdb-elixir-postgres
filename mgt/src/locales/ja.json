@@ -25,6 +25,8 @@
   "common": {
     "name": "名前",
     "uid": "UID",
+    "attrUid": "属性UID",
+    "attrValue": "属性値",
     "create": "新規作成",
     "submit": "確定",
     "search": "検索",
