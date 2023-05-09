@@ -36,8 +36,8 @@ import { computed } from 'vue'
 import LogicalExpressionButtons from '@/components/molecules/LogicalExpressionButtons.vue'
 
 const props = defineProps<{
-  not: boolean,
-  text?: string,
+  not: boolean;
+  text?: string;
   placeholder: string;
   errors: string;
   showOr?: boolean;
